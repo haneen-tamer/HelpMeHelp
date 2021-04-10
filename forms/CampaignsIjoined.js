@@ -3,7 +3,7 @@ import React ,{ useState } from 'react';
 import { StyleSheet, Text, View,Button,FlatList,TouchableOpacity,ScrollView,SafeAreaView} from 'react-native';
 import CampaignItem from '../shared/CampaignItem'
 import {globalStyles} from '../shared/globalStyles'
-
+//hi
 export default function App() {
   const [campgin, setCampagin] = useState([
     {name:'qqq',organizationName:'ggg',start:'8/4/2021',end:'10/4/2021',class:'A',subClass:['dd','dddd'],progress:7,target:7,status:'completed',id:'1'},

@@ -9,6 +9,8 @@ import OrgReg from '../forms/orgResgister';
 import DrawNav from './drawerNavigation';
 import Header from '../shared/header';
 import Username from '../shared/username';
+import CampaignsIjoined from '../forms/CampaignsIjoined'
+import userCampaignDetails from '../forms/userCampaignDetails'
 import React from 'react';
 
 const forms = 
@@ -43,7 +45,18 @@ const forms =
         navigationOptions: {
             
         }
+    },
+    CampaignsIjoined: {
+        screen: CampaignsIjoined,
+       
+    },
+    userCampaignDetails:{
+        screen: userCampaignDetails,
+        navigationOptions: {
+            title: "Campaign Details"
+        }
     }
+
 }
 
 const startStack = createStackNavigator(forms);

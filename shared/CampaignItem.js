@@ -17,7 +17,8 @@ export default function CampaignItem({item}){
     }
 
     return(
-        <TouchableOpacity style={styles.container}>
+       
+<View style={styles.container}>
 
 
         <Image
@@ -50,7 +51,7 @@ export default function CampaignItem({item}){
          borderRadius={8}  />
         </View>
 
-        </TouchableOpacity>
+        </View>
         
 );
 }

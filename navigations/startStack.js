@@ -29,8 +29,8 @@ const forms =
             headerRight: () => <Username />,
             gestureEnabled: false,
             title: "",
-            //headerStyle: { height: 30},
-            //headerTitle: () => <Header />,
+            // headerStyle: { height: 30},
+            // headerTitle: () => <Header />,
 
         }
     },

@@ -4,6 +4,7 @@ import { createAppContainer } from 'react-navigation';
 import UserProfile from '../forms/userProfile';
 import UserHome from '../forms/userHome';
 import CampaignsIjoined from '../forms/CampaignsIjoined';
+import myCampaignsStack from './myCampaignsStack';
 import Trial from '../forms/trial';
 import Logout from '../forms/logout';
 import { Alert, Button } from 'react-native';
@@ -25,6 +26,12 @@ const DrawScreens = {
         screen: CampaignsIjoined,
         navigationOptions: {
             title: "Campaigns I joined"
+        }
+    },
+    userMyCampaigns: {
+        screen: myCampaignsStack,
+        navigationOptions: {
+            title: "Campaigns I created"
         }
     },
     Logout: {

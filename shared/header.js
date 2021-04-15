@@ -9,13 +9,13 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function Header(){
 
     const drawMenu = () => {
-        //nav.openDrawer();
+        // navigation.openDrawer();
     }
 
     return (
         <View style={styles.header}>
             {/* <MaterialIcons name='menu' size={28} onPress={drawMenu} style={styles.icon}/> */}
-            <MaterialCommunityIcons name="menu-open" size={30} style={styles.icon} color="black" />
+            <MaterialCommunityIcons name="menu" size={30} style={styles.icon} color="black" />
         </View>
     );
 }

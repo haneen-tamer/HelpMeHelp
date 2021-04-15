@@ -1,99 +1,120 @@
 import { StatusBar } from 'expo-status-bar';
-import React ,{ useState } from 'react';
+import React ,{ useState,useEffect } from 'react';
 import { StyleSheet, Text, View,Button,FlatList,TouchableOpacity,ScrollView,SafeAreaView,Image} from 'react-native';
 import CampaignItem from '../shared/CampaignItem'
 import {globalStyles} from '../shared/globalStyles'
 import * as Progress from 'react-native-progress';
 
 
-export default function App({route,navigation}) {
-//const [shouldShow,setShouldShow]=useState(true);
-//const {show}=route.params;
-//let shouldShow=false;
+export default function App({navigation}) {
+    const [organization, setOrganization] = useState([
+         {Name:'Resala',class:'A',subClass:['dd','dddd'],purpose:'ffffff',id:'1',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',organizationType:'clothes',userStatus:'Approved',website:'ddd',hotline:'001221',facebook:'ss',instagram:'dd',twitter:'dddd'},
+         {Name:'ddddd',class:'A',subClass:['dd','dddd'],purpose:'ffffff',id:'2',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',organizationType:'clothes',userStatus:'Approved',website:'ddd',hotline:'001221',facebook:'ss',instagram:'dd',twitter:'dddd'},
+         {Name:'sssss',class:'A',subClass:['dd','dddd'],purpose:'ffffff',id:'1',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',organizationType:'clothes',userStatus:'Approved',website:'ddd',hotline:'001221',facebook:'ss',instagram:'dd',twitter:'dddd'},
+         {Name:'ddddd',class:'A',subClass:['dd','dddd'],purpose:'ffffff',id:'2',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',organizationType:'clothes',userStatus:'Approved',website:'ddd',hotline:'001221',facebook:'ss',instagram:'dd',twitter:'dddd'},
+         {Name:'Redddsala',class:'A',subClass:['dd','dddd'],purpose:'ffffff',id:'1',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',organizationType:'clothes',userStatus:'Approved',website:'ddd',hotline:'001221',facebook:'ss',instagram:'dd',twitter:'dddd'},
+         {Name:'ddddd',class:'A',subClass:['dd','dddd'],purpose:'ffffff',id:'2',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',organizationType:'clothes',userStatus:'Approved',website:'ddd',hotline:'001221',facebook:'ss',instagram:'dd',twitter:'dddd'},
+        
+   ])
+      
     return (
         
         <ScrollView>
 
-        
+       
         <View style={styles.container}>
 
-        <View style={styles.columnAlginStyle}>
+        <View style={globalStyles.columnAlginStyle}>
        
-            <View style={styles.imageAlginStyle}>
+            <View style={globalStyles.imageAlginStyle}>
 
             <TouchableOpacity>
                     <Image
-                    style={styles.topIconsStyle}
+                    style={globalStyles.topIconsStyle}
                     source={require('../images/chat.png')}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity>
                     <Image
-                    style={styles.topIconsStyle}
+                    style={globalStyles.topIconsStyle}
                     source={require('../images/share.png')}/>
                 </TouchableOpacity>
 
                 </View>
 
                 <Image
-                    style={styles.campaignImage}
+                    style={globalStyles.headerImageStyle}
                     source={require('../images/CampaignImage.png')}
                     />
 
                 </View>
  
-        <View style={styles.rowAlginStyle}>
+        <View style={globalStyles.rowAlginStyle}>
 
-           <View style={styles.columnAlginStyle}>
-            <Text style={styles.Campaginstyle}>{navigation.getParam('name')}  </Text> 
-            <Text style={styles.OrganizationStyles}>{navigation.getParam('organizationName')}</Text>
-            <View style={styles.lineStyle}></View>
+           <View style={globalStyles.columnAlginStyle}>
+            <Text style={globalStyles.headerStyle}>{navigation.getParam('name')}  </Text> 
+            {
+                <FlatList
+                    keyExtractor={(item) => item.id} 
+                    data={organization} 
+                    renderItem={({ item }) => ( 
+                     navigation.getParam('organizationName')===item.Name &&
+                    <TouchableOpacity  onPress={()=>{navigation.navigate('userOrganizationProfile',item);}}>
+                    <Text style={styles.OrganizationStyles}>{navigation.getParam('organizationName')}</Text>
+                    </TouchableOpacity >
+                        
+                    )}
+            />
+            }
+        
+
+            <View style={globalStyles.lineStyle}></View>
             </View>
            
             <Text style={styles.circuleStyle}>   {navigation.getParam('month')} {'\n'}    {navigation.getParam('start')}</Text>
             
         </View>
      
-        <View style={styles.columnAlginStyle}>
+        <View style={globalStyles.columnAlginStyle}>
 
-            <View style={styles.iconTextStyle}>
+            <View style={globalStyles.iconTextStyle}>
             <Image
-            style={styles.bottomiconsStyle}
+            style={globalStyles.bottomiconsStyle}
             source={require('../images/address.png')}
             />
-          <Text style={styles.headerStyle}> Address </Text>
+          <Text style={globalStyles.smalllHeaderStyle}> Address </Text>
         
         </View>
-        <Text style={styles.textStyle}>{navigation.getParam('adress')}</Text>
+        <Text style={globalStyles.smallTextStyle}>{navigation.getParam('adress')}</Text>
 
-        <View style={styles.iconTextStyle}>
+        <View style={globalStyles.iconTextStyle}>
             <Image
-            style={styles.bottomiconsStyle}
+            style={globalStyles.bottomiconsStyle}
             source={require('../images/deadline.png')}
             />
-           <Text style={styles.headerStyle}> End Date </Text>
+           <Text style={globalStyles.smalllHeaderStyle}> End Date </Text>
         
         </View>
         
-        <Text style={styles.textStyle}>{navigation.getParam('end')}</Text>
+        <Text style={globalStyles.smallTextStyle}>{navigation.getParam('end')}</Text>
 
-        <View style={styles.iconTextStyle}>
+        <View style={globalStyles.iconTextStyle}>
             <Image
-            style={styles.bottomiconsStyle2}
+            style={globalStyles.bottomiconsStyle2}
             source={require('../images/idea.png')}
             />
-           <Text style={styles.headerStyle}>Descreption</Text>
+           <Text style={globalStyles.smalllHeaderStyle}>Descreption</Text>
         
         </View>
         
-        <Text style={styles.textStyle}>{navigation.getParam('descreption')}</Text>
+        <Text style={globalStyles.smallTextStyle}>{navigation.getParam('descreption')}</Text>
 
-        <View style={styles.iconTextStyle}>
+        <View style={globalStyles.iconTextStyle}>
             <Image
-            style={styles.bottomiconsStyle3}
+            style={globalStyles.bottomiconsStyle3}
             source={require('../images/goal.png')}
             />
-            <Text style={styles.headerStyle}> Progress</Text>
+            <Text style={globalStyles.smalllHeaderStyle}> Progress</Text>
         
         </View>
        
@@ -106,16 +127,16 @@ export default function App({route,navigation}) {
             borderRadius={8}  />
         </View>
 
-        <View style={styles.iconTextStyle}>
+        <View style={globalStyles.iconTextStyle}>
             <Image
-            style={styles.bottomiconsStyle}
+            style={globalStyles.bottomiconsStyle}
             source={require('../images/information.png')}
             />
-           <Text style={styles.headerStyle}> Tags</Text>
+           <Text style={globalStyles.smalllHeaderStyle}> Tags</Text>
         
         </View>
         
-        <View style={styles.rowAlginStyle}>
+        <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.campaignClassStyle}>{navigation.getParam('class')}</Text>
             <Text style={globalStyles.campaignClassStyle}>{navigation.getParam('subClass')}</Text>
             <Text style={globalStyles.campaignClassStyle}>{navigation.getParam('donationType')}</Text>
@@ -156,27 +177,12 @@ export default function App({route,navigation}) {
             height: 230,
             alignSelf:'center'
         },
-        Campaginstyle:{
-            fontSize: 30,
-            color: "#000",
-            fontWeight: "bold",
-            padding:5,
-        },
         OrganizationStyles:{
             fontSize: 20,
             color: "#000",
             fontWeight: "bold",
             padding:5,
         },  
-        rowAlginStyle:{
-            flexDirection:'row',
-            alignContent:"space-between",
-            
-        },
-        columnAlginStyle:{
-            flexDirection:'column',
-            padding:13,
-        },
         circuleStyle:{
 
         borderColor:'#06A9F0',
@@ -196,37 +202,6 @@ export default function App({route,navigation}) {
         fontWeight: "bold",
         elevation:30
         },
-
-        lineStyle:{
-            borderBottomColor: '#06A9F0',
-            borderBottomWidth:3
-        },
-
-        topIconsStyle:{
-            width:50,
-            height:50,
-            margin:10,
-           alignSelf:'center',
-           padding:20
-        },
-        bottomiconsStyle:{
-            width:30,
-            height:30,
-          
-        },
-        headerStyle:{
-            fontSize:25,
-            fontWeight:"bold",
-            paddingBottom:10,
-            paddingLeft:5,
-            color:'#000'
-        },
-        textStyle:{
-            fontSize:20,
-            paddingBottom:20,
-            marginLeft:40,
-            color:'#000'
-        },
         progressBarStyle:{
             alignSelf:'center',
             paddingBottom:15
@@ -240,26 +215,14 @@ export default function App({route,navigation}) {
             justifyContent: 'space-around',
        },
        
-       imageAlginStyle:{
-            flex:1,
-            flexDirection:'row',
-            paddingBottom:5,
-            justifyContent:"flex-end",
-            alignContent:"space-between",
-        
-    },
-    iconTextStyle:{
-        flexDirection:'row',
-        paddingBottom:5,
-        justifyContent:"flex-start",
-    },
-    bottomiconsStyle2:{
-        width:37,
-        height:37,
-    },
-    bottomiconsStyle3:{
-        width:35,
-        height:35,
-    }
+      
+    flatListStyle:{
+        justifyContent:'flex-start',
+        flex:2,
+        padding:20
+    
+      },
+     
+   
 });
       

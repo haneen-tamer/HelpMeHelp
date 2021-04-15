@@ -11,6 +11,7 @@ import Header from '../shared/header';
 import Username from '../shared/username';
 import CampaignsIjoined from '../forms/CampaignsIjoined'
 import userCampaignDetails from '../forms/userCampaignDetails'
+import userOrganizationProfile from '../forms/userOrganizationProfile'
 import React from 'react';
 
 const forms = 
@@ -54,6 +55,12 @@ const forms =
         screen: userCampaignDetails,
         navigationOptions: {
             title: "Campaign Details"
+        }
+    },
+    userOrganizationProfile:{
+        screen:userOrganizationProfile,
+        navigationOptions: {
+            title:"Organization Profile"
         }
     }
 

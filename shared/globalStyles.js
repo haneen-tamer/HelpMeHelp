@@ -74,9 +74,86 @@ export const globalStyles = StyleSheet.create({
        flexDirection: 'row',
       justifyContent: 'space-between',
       paddingTop:40,
-     
-      
-    
       },
-      
+      headerImageStyle:{
+        width: 230,
+        height: 230,
+        alignSelf:'center'
+      },
+      headerStyle:{
+        fontSize: 30,
+        color: "#000",
+        fontWeight: "bold",
+        padding:5,
+     //   paddingBottom:7
+    },
+    mediumHeaderStyle:{
+      fontSize:27,
+      fontWeight:"bold",
+      paddingBottom:10,
+      paddingLeft:5,
+     // paddingTop:5,
+      color:'#000'
+  },
+  smalllHeaderStyle:{
+    fontSize:25,
+    fontWeight:"bold",
+    paddingBottom:10,
+    paddingLeft:5,
+    paddingRight:20,
+   // paddingTop:5,
+    color:'#000'
+},
+columnAlginStyle:{
+  flexDirection:'column',
+  padding:13,
+},
+lineStyle:{
+  borderBottomColor: '#06A9F0',
+  borderBottomWidth:3,
+  paddingBottom:10
+},
+iconTextStyle:{
+  flexDirection:'row',
+  paddingBottom:5,
+  justifyContent:"flex-start",
+},
+bottomiconsStyle:{
+  width:30,
+  height:30,
+},
+smallTextStyle:{
+  fontSize:20,
+  paddingBottom:20,
+  marginLeft:40,
+  color:'#000'
+},
+rowAlginStyle:{
+  flexDirection:'row',
+  alignContent:"space-between",
+  
+},
+bottomiconsStyle2:{
+  width:37,
+  height:37,
+},
+bottomiconsStyle3:{
+  width:35,
+  height:35,
+},
+ imageAlginStyle:{
+  flex:1,
+  flexDirection:'row',
+  paddingBottom:5,
+  justifyContent:"flex-end",
+  alignContent:"space-between",
+
+},
+topIconsStyle:{
+  width:50,
+  height:50,
+  margin:10,
+ alignSelf:'center',
+ padding:20
+},
 });

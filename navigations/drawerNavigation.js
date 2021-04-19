@@ -5,13 +5,14 @@ import UserProfile from '../forms/userProfile';
 import UserHome from '../forms/userHome';
 import CampaignsIjoined from '../forms/CampaignsIjoined';
 import myCampaignsStack from './myCampaignsStack';
+import userHomeStack from './userHomeStack';
 import Trial from '../forms/trial';
 import Logout from '../forms/logout';
 import { Alert, Button } from 'react-native';
 
 const DrawScreens = {
     userHome: {
-        screen: UserHome,
+        screen: userHomeStack,
         navigationOptions: {
             title: "My Home"
         }

@@ -44,7 +44,7 @@ const forms =
     orgRegister: {
         screen: OrgReg,
         navigationOptions: {
-            
+            title:"Organization Registration"
         }
     },
     CampaignsIjoined: {

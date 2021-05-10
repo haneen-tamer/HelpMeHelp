@@ -8,7 +8,7 @@ import { globalStyles } from './../shared/globalStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Username from './../shared/username';
 
-export default function App() {
+export default function App({navigation}) {
   const [changeImage,setChangeImage]=useState(false);
   const [image,setImage]=useState(null);
   const [username,setUsername]=useState('');
@@ -34,6 +34,7 @@ export default function App() {
   const [categoryError,setCategoryError]=useState('');
   const [website,setWebsite]=useState('');
   const [hotline,setHotline]=useState('');
+
 
   useEffect(()=>{async()=>{
     if(Platform.OS !=='web')
@@ -105,6 +106,24 @@ export default function App() {
       }else {
         setOrgTypeError('')
       }
+      if(address===""){
+        setAddressError("Address filed can not be empty")
+      }
+      if(subcategory===""){
+        setAddressError("Category filed can not be empty")
+      }
+
+      if(name!=="" && password!=="" && username!=="" && email!=="" && governorate!=="" &&
+      description!=="" && purpose!=="" && orgType!=="" && address!=="")
+      {
+        navigation.navigate('pendingPage',{
+          Image: image, UserName: username, Name: name, Email:email, Password:password, Address:address,
+          Governorate:governorate, Description:description, Purpose:purpose, OrganizationType:orgType,
+          Category:category, Subcategory:subcategory, Website:website,hotline:hotline
+
+        })
+      }
+      
   }
   return (
     <ScrollView>
@@ -391,6 +410,7 @@ export default function App() {
                 placeholderTextColor="lightslategrey"
                 placeholder=" Website"
                 underlineColorAndroid="transparent"
+                onChangeText={(text)=>{setWebsite(text)}}
                 paddingLeft='3%'
                 />
             </View>
@@ -402,6 +422,7 @@ export default function App() {
                 placeholder=" Enter Hotline Number"
                 keyboardType="numeric"
                 underlineColorAndroid="transparent"
+                onChangeText={(text)=>{setHotline(text)}}
                 paddingLeft='3%'
                 />
             </View>

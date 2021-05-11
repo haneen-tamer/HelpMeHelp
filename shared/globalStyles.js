@@ -156,4 +156,12 @@ topIconsStyle:{
  alignSelf:'center',
  padding:20
 },
+buttonAlignStyle:{
+  paddingRight:10,
+  paddingLeft:10,
+  paddingBottom:10,
+  alignItems:'center',
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+},
 });

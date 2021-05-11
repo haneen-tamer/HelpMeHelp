@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableWithoutFeedback, Keyboard, 
-        KeyboardAvoidingView, Modal, ScrollView, Button, BackHandler} from 'react-native';
+        KeyboardAvoidingView, Modal, ScrollView, Button, BackHandler,TouchableOpacity} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import CustomButton from '../shared/button';
 import { Fontisto } from '@expo/vector-icons';
 import { Alert } from 'react-native';
+import { globalStyles } from './../shared/globalStyles';
 
 export default function Start({ navigation }) {
 
@@ -51,9 +52,7 @@ export default function Start({ navigation }) {
           </View>
 
         </Modal>
-
-      <View style={styles.head} />
-
+        
         <ScrollView>
           <View style={styles.logoCenter}>
             <Image style={styles.logo} source={require('../assets/logo.png')} />
@@ -61,32 +60,42 @@ export default function Start({ navigation }) {
           </View>
 
           <View style={styles.entryArea} >   
-            <TextInput 
-              style={styles.entryData}
-              placeholderTextColor="lightslategrey"
-              placeholder="Username"
-              onChangeText={(val) => setUsername(val)}
-              />
-            <TextInput
-              secureTextEntry={true}
-              style={styles.entryData}
-              placeholderTextColor="lightslategrey"
-              placeholder="Password"
-              />
-
-            <CustomButton text='Login' onPress={DrawNav} />
-
-            <View style={styles.horiztontalLine}>
-              <View style={styles.inLine} />
-                <View>
-                  <Text style={{width: 25, textAlign: 'center'}}>Or</Text>
-                </View>
-              <View style={styles.inLine} />
-            </View>
-
-            <CustomButton text='Sign up' onPress={() => setModal(true) } />
-
+              <TextInput 
+                style={styles.entryData}
+                placeholderTextColor="lightslategrey"
+                placeholder="Username"
+                onChangeText={(val) => setUsername(val)}
+                />
+              <TextInput
+                secureTextEntry={true}
+                style={styles.entryData}
+                placeholderTextColor="lightslategrey"
+                placeholder="Password"
+                />
           </View>
+
+               {/* <CustomButton text='Login' onPress={DrawNav} /> */}
+              <View style={globalStyles.buttonAlignStyle}>
+                <TouchableOpacity style={styles.blueButtonStyle} onPress={DrawNav}> 
+                <Text style={globalStyles.textStyle}>Login</Text>
+                </TouchableOpacity>
+                </View>
+
+              <View style={styles.horiztontalLine}>
+                <View style={styles.inLine} />
+                  <View>
+                    <Text style={styles.textStyle}>OR</Text>
+                  </View>
+                <View style={styles.inLine} />
+              </View>
+
+              {/* <CustomButton text='Sign up' onPress={() => setModal(true) } /> */}
+              <View style={globalStyles.buttonAlignStyle}>
+                <TouchableOpacity style={styles.greenButtonStyle} onPress={() => setModal(true)}> 
+                <Text style={globalStyles.textStyle}>Sign up</Text>
+                </TouchableOpacity>
+              </View>
+          
         
         </ScrollView>
       </View>
@@ -100,13 +109,9 @@ export default function Start({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white',
+    justifyContent:"flex-start",
     alignItems: 'center',
-  },
-  head: {
-    flex: 1,
-    flexDirection: 'row',
+    padding:"10%"
   },
   logoCenter: {
     alignItems: 'center',
@@ -117,7 +122,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   title: {
-    fontFamily: "Arial-BoldMT",
+    // fontFamily: "Arial-BoldMT",
     fontSize: 40,
   },
   entryData: {
@@ -132,28 +137,20 @@ const styles = StyleSheet.create({
   entryArea: {
     margin: 30,
   },
-  btn: {
-    backgroundColor: 'silver',
-    borderRadius: 4,
-    paddingVertical: 13,
-    margin: 10,
-  },
-  btnText: {
-    fontSize: 17,
-    fontWeight: 'bold',
-    fontFamily: 'Arial',
-    textAlign: 'center',
-  },
   horiztontalLine: {
     flexDirection: 'row',
     marginTop: 45,
     margin:10,
     alignItems: 'center',
+    paddingBottom:'10%'
   },
   inLine: {
     flex: 1,
-    height: 1,
+    height: 2,
     backgroundColor: 'black',
+    marginLeft:"1%",
+    marginRight:"1%"
+    
   },
   modalView: {
     position: 'absolute',
@@ -162,22 +159,40 @@ const styles = StyleSheet.create({
     width: '100%',
     opacity: 1,
     backgroundColor: 'dimgray',
-    //justifyContent: 'center',
-    /* paddingStart: 0,
-    flex: 1,
-    alignItems: "center",
-    margin: 40,
-    marginVertical: 100,
-    width: 300,
-    opacity: 0.9, */
   },
   closeIcon: {
     position: 'absolute',
-    //bottom: 20,
-    //alignItems: 'center',
-    //justifyContent: 'center',
     top: 10,
     right: 15,
     marginBottom: 5,
   },
+  blueButtonStyle:{
+    width: '67%',
+    height: 50,
+    elevation: 8,
+    backgroundColor: '#AACCDD',
+    borderRadius: 10,
+    paddingVertical: 10,
+    margin:1
+},
+greenButtonStyle:{
+  width: '67%',
+  height: 50,
+  elevation: 8,
+  backgroundColor: "#64CA80",
+  borderRadius: 10,
+  paddingVertical: 10,
+  margin:1
+},
+textStyle:
+{
+  width: 25, 
+  textAlign: 'center',
+  fontSize:18,
+  fontWeight:"bold",
+  marginRight:"1%",
+  marginLeft:"1%"
+  
+}
+  
 });

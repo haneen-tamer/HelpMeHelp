@@ -1,8 +1,11 @@
-import React ,{ useState } from 'react';
-import { StyleSheet, Text, View , Image, ScrollView,FlatList,TouchableOpacity} from 'react-native';
+import React ,{ useState,useEffect } from 'react';
+import { StyleSheet, Text, View , Image,BackHandler} from 'react-native';
 import {globalStyles} from '../shared/globalStyles'
 
 export default function App({navigation}) {
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => true);
+  }, []);
    
   return (
 

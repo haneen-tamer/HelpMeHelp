@@ -67,7 +67,8 @@ const forms =
     pendingPage:{
         screen:pendingPage,
         navigationOptions: {
-            title: "Pending"
+            title: "Pending",
+            headerLeft: null
         }
     }
 

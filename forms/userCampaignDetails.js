@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React ,{ useState,useEffect } from 'react';
 import { StyleSheet, Text, View,Button,FlatList,TouchableOpacity,ScrollView,SafeAreaView,Image} from 'react-native';
 import CampaignItem from '../shared/CampaignItem'
-import {globalStyles} from '../shared/globalStyles'
 import * as Progress from 'react-native-progress';
+import { globalStyles } from './../shared/globalStyles';
 
 
 export default function App({navigation}) {
@@ -147,7 +147,7 @@ export default function App({navigation}) {
         
         {
             navigation.getParam('userStatus')!=='Approved' &&
-            <View style={styles.buttonAlignStyle}>
+            <View style={globalStyles.buttonAlignStyle}>
             <TouchableOpacity style={globalStyles.greenButtonStyle}> 
             <Text style={globalStyles.textStyle}>Join</Text>
             </TouchableOpacity>
@@ -206,14 +206,7 @@ export default function App({navigation}) {
             alignSelf:'center',
             paddingBottom:15
         },
-       buttonAlignStyle:{
-            paddingRight:10,
-            paddingLeft:10,
-            paddingBottom:10,
-            alignItems:'center',
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-       },
+       
        
       
     flatListStyle:{

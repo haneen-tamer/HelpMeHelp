@@ -164,4 +164,11 @@ buttonAlignStyle:{
   flexDirection: 'row',
   justifyContent: 'space-around',
 },
+errorStyle:{
+  fontSize:15,
+  marginLeft:20,
+  height:'95%',
+  width:'85%',
+  color:"red"
+},
 });

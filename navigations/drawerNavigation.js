@@ -6,9 +6,9 @@ import UserHome from '../forms/userHome';
 import CampaignsIjoined from '../forms/CampaignsIjoined';
 import myCampaignsStack from './myCampaignsStack';
 import userHomeStack from './userHomeStack';
-import Trial from '../forms/trial';
+import Start from '../forms/start';
 import Logout from '../forms/logout';
-import { Alert, Button } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 
 const DrawScreens = {
     userHome: {
@@ -36,10 +36,9 @@ const DrawScreens = {
         }
     },
     Logout: {
-        screen: Logout,
-        navigationOptions: {
-            title: "Logout"
-        }
+        screen:Logout
+        
+       
     }
 }
 

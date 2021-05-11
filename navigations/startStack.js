@@ -5,14 +5,15 @@ import Start from '../forms/start';
 import Trial from '../forms/trial';
 import UserHome from '../forms/userHome';
 import UserReg from '../forms/userRegister';
-import OrgReg from '../forms/orgResgister';
+import OrgReg from '../OrganizationsForms/orgResgister';
 import DrawNav from './drawerNavigation';
+import orgDrawerNav from './orgDrawerNavigation';
 import Header from '../shared/header';
 import Username from '../shared/username';
 import CampaignsIjoined from '../forms/CampaignsIjoined'
 import userCampaignDetails from '../forms/userCampaignDetails'
 import userOrganizationProfile from '../forms/userOrganizationProfile'
-import pendingPage from '../forms/pendingPage'
+import pendingPage from '../OrganizationsForms/pendingPage'
 import React from 'react';
 
 const forms = 
@@ -33,6 +34,17 @@ const forms =
             title: "",
             // headerStyle: { height: 30},
             // headerTitle: () => <Header />,
+
+        }
+    },
+    orgDrawerNav: {
+        screen: orgDrawerNav,
+        navigationOptions: {
+            headerLeft: () => <Header />,
+            headerRight: () => <Username />,
+            gestureEnabled: false,
+            title: "",
+           
 
         }
     },

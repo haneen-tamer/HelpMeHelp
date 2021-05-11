@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableWithoutFeedback, Keyboard, 
-        KeyboardAvoidingView, Modal, ScrollView, Button, BackHandler,TouchableOpacity} from 'react-native';
+        KeyboardAvoidingView, Modal, ScrollView, FlatList, BackHandler,TouchableOpacity} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import CustomButton from '../shared/button';
 import { Fontisto } from '@expo/vector-icons';
@@ -9,12 +9,7 @@ import { globalStyles } from './../shared/globalStyles';
 
 export default function Start({ navigation }) {
 
-
-
-  const DrawNav = () => {
-    navigation.navigate('DrawNav');
-  }
-
+   
   const userSignUp = () => {
     navigation.navigate('userRegister');
   }
@@ -24,7 +19,44 @@ export default function Start({ navigation }) {
   }
   
   const [modal, setModal] = useState(false); 
-  //const [username, setUsername] = useState(""); 
+  const [username,setUsername]=useState(null);
+  const [password,setPassword]=useState(null);
+  const [loginInfo,setLoginIfo]=useState([
+    {username:"org",password:"hi",role:"org",id:'1'},
+    {username:"user",password:"bye",role:"user",id:'2'},
+  ]);
+  const [loginError,setLoginError]=useState('');
+  const [found,setFound]=useState(false);
+  
+
+  const loginBtn=()=>{
+    
+    loginInfo.map((item)=>{
+      if(item.username===username && item.password===password)
+      {
+        setFound(true);
+        setLoginError('')
+        if(item.role==="user")
+        {
+          return navigation.navigate('DrawNav');
+        }
+        else if(item.role==="org")
+        {
+          navigation.navigate('orgDrawerNav');
+        }
+       
+      }
+    
+    })
+
+    if(!found)
+    {
+      setLoginError('Invalid Username or Password. Please try again')
+    }
+   
+
+  }
+  
  
   return ( 
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
@@ -59,6 +91,7 @@ export default function Start({ navigation }) {
             <Text style={styles.title}>HELP ME HELP</Text>
           </View>
 
+          
           <View style={styles.entryArea} >   
               <TextInput 
                 style={styles.entryData}
@@ -66,21 +99,29 @@ export default function Start({ navigation }) {
                 placeholder="Username"
                 onChangeText={(val) => setUsername(val)}
                 />
+               
               <TextInput
                 secureTextEntry={true}
                 style={styles.entryData}
                 placeholderTextColor="lightslategrey"
                 placeholder="Password"
+                onChangeText={(val) => setPassword(val)}
                 />
-          </View>
 
-               {/* <CustomButton text='Login' onPress={DrawNav} /> */}
+              <View style={globalStyles.rowAlginStyle}>
+            
+                 <Text style={globalStyles.errorStyle}>{loginError}</Text>
+            
+               </View>
+          </View>
+           
+
               <View style={globalStyles.buttonAlignStyle}>
-                <TouchableOpacity style={styles.blueButtonStyle} onPress={DrawNav}> 
+                <TouchableOpacity style={styles.blueButtonStyle} onPress={loginBtn}> 
                 <Text style={globalStyles.textStyle}>Login</Text>
                 </TouchableOpacity>
                 </View>
-
+           
               <View style={styles.horiztontalLine}>
                 <View style={styles.inLine} />
                   <View>

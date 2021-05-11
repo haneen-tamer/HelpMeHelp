@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity , ScrollView} from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity , ScrollView,BackHandler} from 'react-native';
 import CampaignItem from '../shared/CampaignItem';
 import Header from '../shared/header';
 import { SearchBar } from 'react-native-elements';
@@ -10,6 +10,10 @@ import { SearchBar } from 'react-native-elements';
 export default function App({navigation}) {
 
   const [entry, setEntry] = useState("");
+  
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => true);
+  }, []);
 
   const [campaign] = useState([
     {name:'Ramdan Iftar',organizationName:'Resala',start:'8/4/2021',end:'10/4/2021',class:'A',subClass:['dd','dddd'],progress:7,target:7,status:'completed',id:'1',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'NotSent'},

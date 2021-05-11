@@ -8,6 +8,8 @@ import Start from './start';
 
 
 
+
+
 //const logoutModal = () => {
 export default function App() {
 
@@ -24,6 +26,7 @@ export default function App() {
       </View>
     
     </Modal>
+  
   );
 }
 

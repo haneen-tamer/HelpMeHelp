@@ -4,9 +4,9 @@ import { StyleSheet, Text, View, TouchableOpacity,Button,Image,Platform,ScrollVi
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import Header from '../shared/header';
-import { globalStyles } from './../shared/globalStyles';
+import { globalStyles } from '../shared/globalStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
-import Username from './../shared/username';
+import Username from '../shared/username';
 
 export default function App({navigation}) {
   const [changeImage,setChangeImage]=useState(false);
@@ -166,7 +166,7 @@ export default function App({navigation}) {
             <View style={globalStyles.rowAlginStyle}>
             
             
-              <Text style={styles.errorStyle}>{usernameError}</Text>
+              <Text style={globalStyles.errorStyle}>{usernameError}</Text>
             
               
             </View>
@@ -187,7 +187,7 @@ export default function App({navigation}) {
 
             <View style={globalStyles.rowAlginStyle}>
             
-            <Text style={styles.errorStyle}>{nameError}</Text>
+            <Text style={globalStyles.errorStyle}>{nameError}</Text>
             </View>
 
             <View style={globalStyles.rowAlginStyle}>
@@ -206,7 +206,7 @@ export default function App({navigation}) {
 
             <View style={globalStyles.rowAlginStyle}>
             
-            <Text style={styles.errorStyle}>{passwordError}</Text>
+            <Text style={globalStyles.errorStyle}>{passwordError}</Text>
             
           </View>
 
@@ -222,7 +222,7 @@ export default function App({navigation}) {
             </View>
             <View style={globalStyles.rowAlginStyle}>
             
-            <Text style={styles.errorStyle}>{emailError}</Text>
+            <Text style={globalStyles.errorStyle}>{emailError}</Text>
             
           </View>
 
@@ -256,7 +256,7 @@ export default function App({navigation}) {
 
             <View style={globalStyles.rowAlginStyle}>
             
-            <Text style={styles.errorStyle}>{govError}</Text>
+            <Text style={globalStyles.errorStyle}>{govError}</Text>
             
           </View>
               
@@ -274,7 +274,7 @@ export default function App({navigation}) {
 
             <View style={globalStyles.rowAlginStyle}>
             
-            <Text style={styles.errorStyle}>{descriptionError}</Text>
+            <Text style={globalStyles.errorStyle}>{descriptionError}</Text>
             
           </View>
             
@@ -292,7 +292,7 @@ export default function App({navigation}) {
 
             <View style={globalStyles.rowAlginStyle}>
             
-            <Text style={styles.errorStyle}>{purposeError}</Text>
+            <Text style={globalStyles.errorStyle}>{purposeError}</Text>
             
           </View>
 
@@ -310,7 +310,7 @@ export default function App({navigation}) {
 
             <View style={globalStyles.rowAlginStyle}>
             
-            <Text style={styles.errorStyle}>{addressError}</Text>
+            <Text style={globalStyles.errorStyle}>{addressError}</Text>
             
           </View>
 
@@ -341,7 +341,7 @@ export default function App({navigation}) {
 
             <View style={globalStyles.rowAlginStyle}>
             
-            <Text style={styles.errorStyle}>{orgTypeError}</Text>
+            <Text style={globalStyles.errorStyle}>{orgTypeError}</Text>
             
           </View>
 
@@ -400,7 +400,7 @@ export default function App({navigation}) {
 
               <View style={globalStyles.rowAlginStyle}>
             
-            <Text style={styles.errorStyle}>{categoryError}</Text>
+            <Text style={globalStyles.errorStyle}>{categoryError}</Text>
             
           </View>
 
@@ -559,13 +559,6 @@ const styles = StyleSheet.create({
     paddingRight:10,
     paddingLeft:10,
     paddingBottom:60,
-},
-errorStyle:{
-  fontSize:15,
-  marginLeft:20,
-  height:'90%',
-  width:'80%',
-  color:"red"
 },
 requiredStyle:{
   color:"lightslategrey",

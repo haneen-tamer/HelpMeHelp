@@ -7,6 +7,10 @@ import userCampaignDetails from '../forms/userCampaignDetails'
 const screens = {
     home:{
         screen: userHome,
+        navigationOptions: {
+            title:"",
+            headerLeft: null
+        }
     },
     seeAll:{
         screen: seeAllCampaigns,

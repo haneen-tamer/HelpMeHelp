@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
   },
   entryArea: {
     margin: 30,
+    alignSelf:'center'
   },
   horiztontalLine: {
     flexDirection: 'row',

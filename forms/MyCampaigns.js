@@ -1,8 +1,9 @@
 import React ,{ useState } from 'react';
 import { StyleSheet, View,FlatList,TouchableOpacity} from 'react-native';
 import CampaignItem from '../shared/CampaignItem'
+import CreateCampaignBtn from '../shared/CreateCampaignBtn';
 import {globalStyles} from '../shared/globalStyles'
-import { FloatingAction } from "react-native-floating-action";
+// import { FloatingAction } from "react-native-floating-action";
 
 export default function MyCampaigns({navigation}) {
     const [campaign] = useState([
@@ -12,12 +13,12 @@ export default function MyCampaigns({navigation}) {
       {name:'qqq',organizationName:'ggg',start:'8/4/2021',end:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:4,target:7,status:'ongoing',id:'4',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
       {name:'qqq',organizationName:'ggg',start:'8/4/2021',end:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:5,target:7,status:'completed',id:'5',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
     ])
-    const actions = [{
-        text: "Create",
-        icon: require("../images/plus.png"),
-        name: "bt_createCampaign",
-        position: 1
-    }]
+    // const actions = [{
+    //     text: "Create",
+    //     icon: require("../images/plus.png"),
+    //     name: "bt_createCampaign",
+    //     position: 1
+    // }]
     return(
         <View style={styles.container}>
             <View style={styles.flatListStyle}>
@@ -31,7 +32,8 @@ export default function MyCampaigns({navigation}) {
                 </TouchableOpacity>
             )}
             />
-            <FloatingAction
+            <CreateCampaignBtn navigation={navigation}/>
+            {/* <FloatingAction
             actions={actions}
             onPressItem={name => {
             console.log('create campaign');
@@ -41,7 +43,7 @@ export default function MyCampaigns({navigation}) {
             color='#92E3A9'
             iconHeight={40}
             iconWidth={40}
-            />
+            /> */}
             </View>
         </View>
     )

@@ -1,8 +1,8 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import orgHome from '../OrganizationsForms/orgHome';
-import Applicant from '../OrganizationsForms/Applicant';
-import CampaignItem from '../shared/CampaignItem'
+import applicantRequests from '../OrganizationsForms/applicantRequests';
+import orgUserProfile from '../OrganizationsForms/orgUserProfile';
 
 const screens = {
     orgHome:{
@@ -12,14 +12,22 @@ const screens = {
             headerLeft: null
         }
     },
-    Applicant:{
-        screen:Applicant,
+    applicantRequests:{
+        screen:applicantRequests,
         navigationOptions: {
             title: "Applicants Requests",
            
         }
 
     },
+    orgUserProfile:{
+        screen:orgUserProfile,
+        navigationOptions: {
+            title: " User Profile",
+           
+        }
+        
+    }
     
    
 

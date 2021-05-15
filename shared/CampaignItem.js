@@ -24,10 +24,10 @@ export default function CampaignItem({navigation,item,addUser}){
 <View style={styles.container}>
         
         { addUser &&
-         <TouchableOpacity onPress={()=>navigation.navigate('Applicant')}>
+         <TouchableOpacity onPress={()=>navigation.navigate('applicantRequests')}>
             <Image
             style={styles.addImageStyle}
-            source={require('../images/add-user.png')}
+            source={require('../images/add-group.png')}
             />
          </TouchableOpacity>
         }

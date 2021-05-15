@@ -22,6 +22,7 @@ export default function CreateCampaignBtn({navigation}){
         }}
         overrideWithAction='true'
         color='#92E3A9'
+        // color='#454545'
         iconHeight={40}
         iconWidth={40}
         />

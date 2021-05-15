@@ -17,7 +17,7 @@ export default function ApplicantCard({item,navigation}){
             <View style={styles.textAlign}>
                 <Text style={styles.nameTextStyle} >{item.name}</Text>
             </View>
-                <TouchableOpacity onPress={()=>navigation.navigate('orgUserProfile')}>
+                <TouchableOpacity onPress={()=>navigation.navigate('orgUserProfile',item)}>
                     <Image 
                     style={styles.userImageStyle}
                     source={require("../images/user.png")}

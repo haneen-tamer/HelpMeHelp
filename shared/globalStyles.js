@@ -76,9 +76,9 @@ export const globalStyles = StyleSheet.create({
       paddingTop:40,
       },
       headerImageStyle:{
-        width: 230,
-        height: 230,
-        alignSelf:'center'
+        width: 190,
+        height: 190,
+        alignSelf:'center',
       },
       headerStyle:{
         fontSize: 30,

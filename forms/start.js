@@ -6,6 +6,7 @@ import CustomButton from '../shared/button';
 import { Fontisto } from '@expo/vector-icons';
 import { Alert } from 'react-native';
 import { globalStyles } from './../shared/globalStyles';
+import Username from './../shared/username';
 
 export default function Start({ navigation }) {
 
@@ -38,12 +39,13 @@ export default function Start({ navigation }) {
         setLoginError('')
         if(item.role==="user")
         {
-          return navigation.navigate('DrawNav');
+          return navigation.navigate('DrawNav',item);
         }
         else if(item.role==="org")
         {
-          navigation.navigate('orgDrawerNav');
+          navigation.navigate('orgDrawerNav',item);
         }
+        
        
       }
     

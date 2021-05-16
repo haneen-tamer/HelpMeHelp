@@ -5,8 +5,11 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import Header from '../shared/header';
 import { globalStyles } from '../shared/globalStyles';
-import DropDownPicker from 'react-native-dropdown-picker';
-import Username from '../shared/username';
+import GovernoratePicker from '../shared/governorateDropDown';
+import OrgTypePicker from '../shared/orgTypeDropDown';
+import CategoryPicker from '../shared/categoryDropDown';
+import TextInputCard from './../shared/textInputCard';
+import { onChange } from 'react-native-reanimated';
 
 export default function App({navigation}) {
   const [changeImage,setChangeImage]=useState(false);
@@ -34,6 +37,9 @@ export default function App({navigation}) {
   const [categoryError,setCategoryError]=useState('');
   const [website,setWebsite]=useState('');
   const [hotline,setHotline]=useState('');
+  const [facebook,setFacebook]=useState('');
+  const [instagram,setInstagram]=useState('');
+  const [twitter,setTwitter]=useState('');
 
 
   useEffect(()=>{async()=>{
@@ -151,318 +157,82 @@ export default function App({navigation}) {
             <View style={globalStyles.rowAlginStyle}> 
                 <Text style={styles.requiredStyle}>* Required</Text>
             </View>
-            <View style={globalStyles.rowAlginStyle}>
 
-              <TextInput style={styles.dataStyle}
-                placeholderTextColor="lightslategrey"
-                placeholder=" Username                          *"
-                underlineColorAndroid="transparent"
-                paddingLeft='3%'
-                textContentType="username"
-                onChangeText={(text)=>{setUsername(text)}}
-                />
-            </View>
-            
+            <TextInputCard value={" Username                          *" } onChange={value=> setUsername(value)} allow_pass={false} allow_multi={false}/>
+           
             <View style={globalStyles.rowAlginStyle}>
-            
-            
               <Text style={globalStyles.errorStyle}>{usernameError}</Text>
-            
-              
             </View>
-          
             
+            <TextInputCard value={" Name                                 *"} onChange={value=> setName(value) } allow_pass={false} allow_multi={true}/>
 
             <View style={globalStyles.rowAlginStyle}>
-
-              <TextInput style={styles.dataStyle}
-                placeholderTextColor="lightslategrey"
-                placeholder=" Name                                 *"
-                textContentType="name"
-                underlineColorAndroid="transparent"
-                paddingLeft='3%'
-                onChangeText={(text)=>{setName(text)}}
-                />
-            </View>
-
-            <View style={globalStyles.rowAlginStyle}>
-            
             <Text style={globalStyles.errorStyle}>{nameError}</Text>
             </View>
 
+            <TextInputCard value={" Password                          *"} onChange={value=> setPassword(value)} allow_pass={true} allow_multi={false}/>
+      
             <View style={globalStyles.rowAlginStyle}>
-
-              <TextInput style={styles.dataStyle}
-                placeholderTextColor="lightslategrey"
-                placeholder=" Password                          *"
-                underlineColorAndroid="transparent"
-                textContentType="password"
-                secureTextEntry={true}
-                paddingLeft='3%'
-                onChangeText={(text)=>{setPassword(text)}}
-                />
-            </View>
-            
-
-            <View style={globalStyles.rowAlginStyle}>
-            
-            <Text style={globalStyles.errorStyle}>{passwordError}</Text>
-            
-          </View>
-
-            <View style={globalStyles.rowAlginStyle}>
-
-              <TextInput style={styles.dataStyle}
-                placeholderTextColor="lightslategrey"
-                placeholder="  Email Address                 *"
-                underlineColorAndroid="transparent"
-                paddingLeft='3%'
-                onChangeText={(text)=>{setEmail(text)}}
-                />
-            </View>
-            <View style={globalStyles.rowAlginStyle}>
-            
-            <Text style={globalStyles.errorStyle}>{emailError}</Text>
-            
-          </View>
-
-            <View style={styles.DDstyle}>
-                <DropDownPicker
-                  items={[
-                      {label: 'Cairo', value: 'Cairo'}, {label: 'Alexandria', value: 'Alexandria'}, {label: 'Giza', value: 'Giza'},
-                      {label: 'Aswan', value: 'Aswan'}, {label: 'Asyut', value: 'Asyut'}, {label: 'Beheira', value: 'Beheira'},
-                      {label: 'Bein Suef', value: 'Bein Suef'}, {label: 'Dakahlia', value: 'Dakahlia'}, {label: 'Damietta', value: 'Damietta'},
-                      {label: 'Faiyum', value: 'Faiyum'}, {label: 'Ghariba', value: 'Ghariba'}, {label: 'Ismailia', value: 'Ismailia'},
-                      {label: 'Kafr El Sheikh', value: 'Kafr El Sheikh'}, {label: 'Luxor', value: 'Luxor'}, {label: 'Matruh', value: 'Matruh'},
-                      {label: 'Minya', value: 'Minya'}, {label: 'Qalyubia', value: 'Qalyubia'}, {label: 'Qena', value: 'Qena'},
-                      {label: 'Red Sea', value: 'Red Sea'}, {label: 'Sharqia', value: 'Sharqia'}, {label: 'Sohag', value: 'Sohag'},
-                      {label: 'South Sinai', value: 'South Sinai'},{label: 'Suez', value: 'Suez'}
-                  ]}
-                  containerStyle={{height: '4.5%',width:'84%',paddingLeft:15,paddingTop:10}}
-                  style={{backgroundColor: 'lightgrey', borderColor:"#64CA80",
-                  borderWidth:1.5}}
-                  itemStyle={{
-                      justifyContent: 'flex-start',
-                  }}
-                  labelStyle={{fontSize:20,color:"#000"}}
-                  dropDownStyle={{backgroundColor: '#fafafa'}}
-                  onChangeItem={item => setGovernorate(item.label)}
-                  placeholder="Choose Governorate    *"
-                  placeholderStyle={{fontWeight:"bold",fontSize:25,color:"lightslategrey"}}
-                  selectedLabelStyle={{fontWeight:"bold",fontSize:25,color:"#000"}}
-                  arrowSize={20}
-              />
+               <Text style={globalStyles.errorStyle}>{passwordError}</Text>
             </View>
 
-            <View style={globalStyles.rowAlginStyle}>
-            
-            <Text style={globalStyles.errorStyle}>{govError}</Text>
-            
-          </View>
-              
-            <View style={globalStyles.rowAlginStyle}>
+            <TextInputCard value={"  Email Address                 *"} onChange={value=> setEmail(value)} allow_pass={false} allow_multi={true}/>
 
-              <TextInput style={styles.dataStyle}
-                placeholderTextColor="lightslategrey"
-                placeholder=" Description                       *"
-                underlineColorAndroid="transparent"
-                multiline={true}
-                paddingLeft='3%'
-                onChangeText={(text)=>{setDescription(text)}}
-                />
+            <View style={globalStyles.rowAlginStyle}>
+              <Text style={globalStyles.errorStyle}>{emailError}</Text>
             </View>
 
-            <View style={globalStyles.rowAlginStyle}>
-            
-            <Text style={globalStyles.errorStyle}>{descriptionError}</Text>
-            
-          </View>
-            
-            <View style={globalStyles.rowAlginStyle}>
+           <GovernoratePicker onChange={value=> setGovernorate(value)}/>
 
-              <TextInput style={styles.dataStyle}
-                placeholderTextColor="lightslategrey"
-                placeholder=" Purpose                            *"
-                underlineColorAndroid="transparent"
-                multiline={true}
-                paddingLeft='3%'
-                onChangeText={(text)=>{setPurpose(text)}}
-                />
+            <View style={globalStyles.rowAlginStyle}>
+               <Text style={globalStyles.errorStyle}>{govError}</Text>
+            </View>
+            
+            <TextInputCard value={" Description                       *"} onChange={value=> setDescription(value)} allow_pass={false} allow_multi={true}/>
+
+            <View style={globalStyles.rowAlginStyle}>
+              <Text style={globalStyles.errorStyle}>{descriptionError}</Text>
+            </View>
+        
+            <TextInputCard value={" Purpose                            *"} onChange={value=> setPurpose(value)} allow_pass={false} allow_multi={true}/>
+
+            <View style={globalStyles.rowAlginStyle}>
+              <Text style={globalStyles.errorStyle}>{purposeError}</Text>
+             </View>
+
+            <TextInputCard value={" Address                            *"} onChange={value=> setAddress(value)} allow_pass={false} allow_multi={true}/>
+
+            <View style={globalStyles.rowAlginStyle}>
+              <Text style={globalStyles.errorStyle}>{addressError}</Text>
             </View>
 
-            <View style={globalStyles.rowAlginStyle}>
-            
-            <Text style={globalStyles.errorStyle}>{purposeError}</Text>
-            
-          </View>
+             <OrgTypePicker onChange={value=> setOrgType(value)} />
 
             <View style={globalStyles.rowAlginStyle}>
+               <Text style={globalStyles.errorStyle}>{orgTypeError}</Text>
+             </View>
 
-              <TextInput style={styles.dataStyle}
-                placeholderTextColor="lightslategrey"
-                placeholder=" Address                            *"
-                underlineColorAndroid="transparent"
-                multiline={true}
-                paddingLeft='3%'
-                onChangeText={(text)=>{setAddress(text)}}
-                />
+            <CategoryPicker onChangeCatgory={value=> setCategory(value)} onChangeSubCatgory={value=> setSubcategory(value)}/>
+
+            <View style={globalStyles.rowAlginStyle}>
+              <Text style={globalStyles.errorStyle}>{categoryError}</Text>
             </View>
 
-            <View style={globalStyles.rowAlginStyle}>
-            
-            <Text style={globalStyles.errorStyle}>{addressError}</Text>
-            
-          </View>
-
-          <View style={styles.DDstyle}>
-            <DropDownPicker
-                    items={[
-                        {label: 'Company(Other)', value: 'Company'}, {label: 'Company Limitied by Guaran', value: 'CLBG'}, {label: 'Friendly Society', value: 'FS'},
-                        {label: 'Political Party', value: 'PP'}, {label: 'Primay School', value: 'PS'}, {label: 'Private Charitable Trust', value: 'PCT'},
-                        {label: 'Secondary School', value: 'SS'}, {label: 'Sport Body', value: 'SB'}, {label: 'Statutory or Charter Body', value: 'SORB'},
-                        {label: 'Third-level Education Institution', value: 'TLEI'}, {label: 'Trade Union', value: 'TU'}, {label: 'Trust', value: 'Trust'},
-                        {label: 'Unincorporated Association', value: 'UA'}
-                    ]}
-                    containerStyle={{height: '4.5%',width:'84%',paddingLeft:15,paddingTop:10}}
-                    style={{backgroundColor: 'lightgrey', borderColor:"#64CA80",
-                    borderWidth:1.5}}
-                    itemStyle={{
-                        justifyContent: 'flex-start',
-                    }}
-                    labelStyle={{fontSize:20,color:"#000"}}
-                    dropDownStyle={{backgroundColor: '#fafafa'}}
-                    onChangeItem={item => setOrgType(item.label)}
-                    placeholder="Organisation Type       *"
-                    placeholderStyle={{fontWeight:"bold",fontSize:25,color:"lightslategrey"}}
-                    selectedLabelStyle={{fontWeight:"bold",fontSize:25,color:"#000", multiline:true}}
-                    arrowSize={20}
-                />
-            </View>
-
-            <View style={globalStyles.rowAlginStyle}>
-            
-            <Text style={globalStyles.errorStyle}>{orgTypeError}</Text>
-            
-          </View>
-
-            <View style={styles.DDstyle}>
-              <DropDownPicker
-                    items={[
-                        {label: 'Advocacy,Law,Politics', value: 'Law',untouchable:true}, {label: 'Health', value: 'Health',untouchable:true,parent:'na'}, {label: 'Arts, Culture, Media', value: 'Art',untouchable:true},
-                        {label: 'International', value: 'International',untouchable:true}, {label: 'Professional, Vocational', value: 'Professional',untouchable:true}, {label: 'Recreation, Sports', value: 'Sports',untouchable:true},
-                        {label: 'Religion', value: 'Religion',untouchable:true}, {label: 'Education, Research', value: 'Education',untouchable:true}, {label: 'Local Development, Housing', value: 'Housing',untouchable:true},
-                        {label: 'Social Services', value: 'SS',untouchable:true}, {label: 'Philanthropy, Voluntarism', value: 'Voluntarism',untouchable:true}, {label: 'Environment', value: 'Environment',untouchable:true},
-                        
-                        {label: 'Advocacy', value: 'Advocacy',parent:'Law'}, {label: 'Civil and human rights', value: 'HR',parent:'Law'}, {label: 'Legal services', value: 'LS',parent:'Law'}, {label: 'Politics', value: 'Politics',parent:'Law'},
-
-                        {label: 'Arts', value: 'a',parent:'Art'}, {label: 'Heritage and visitor attractions', value: 'HAVA',parent:'Art'}, {label: 'Media, Film', value: 'Media',parent:'Art'},{label: 'Museums and libraries', value: 'Museums',parent:'Art'},
-
-                        {label: 'Addiction Support', value: 'AS',parent:'Health'}, {label: 'Health services and health promotion', value: 'HSAHP',parent:'Health'}, {label: 'Hospices', value: 'Hospices',parent:'Health'},
-                        {label: 'Hospitals', value: 'Hospitals',parent:'Health'},{label: 'Mental health services', value: 'MHS',parent:'Health'},{label: 'Residential mental health services', value: 'RMHS',parent:'Health'},{label: 'Residential care centres', value: 'RCC',parent:'Health'},
-
-                        {label: 'International affiliation', value: 'IA',parent:'International'}, {label: 'International development', value: 'ID',parent:'International'},
-
-                        {label: 'Chambers of commerce', value: 'COC',parent:'Professional'}, {label: 'Professional or sector representative bodies', value: 'POSR',parent:'Professional'}, {label: 'Trade unions, employer organisations', value: 'TUEO',parent:'Professional'},
-
-                        {label: 'Agricultural fairs', value: 'AF',parent:'Sports'}, {label: 'Recreational clubs, societies', value: 'RCS',parent:'Sports'}, {label: 'Sports organisations', value: 'SO',parent:'Sports'},
-                        
-                        {label: 'Diocesan, parishes', value: 'DP',parent:'Religion'}, {label: 'Places of worship', value: 'POW',parent:'Religion'}, {label: 'Religious associations', value: 'RA',parent:'Religion'},
-
-                        {label: 'Adult and continuing education', value: 'AOCE',parent:'Education'}, {label: 'Education support', value: 'ES',parent:'Education'}, {label: 'Pre-Primary education', value: 'PPE',parent:'Education'},
-                        {label: 'Primary education', value: 'PE',parent:'Education'},{label: 'Research', value: 'Research',parent:'Education'},{label: 'Secondary education', value: 'SE',parent:'Education'},
-
-                        {label: 'Job creation', value: 'JC',parent:'Housing'}, {label: 'Local development', value: 'LD',parent:'Housing'}, {label: 'Sheltered housing', value: 'Sh',parent:'Housing'},
-                        {label: 'Social enterprise', value: 'SE',parent:'Housing'},{label: 'Social housing', value: 'SH',parent:'Housing'},
-
-                        {label: 'Emergency relief services', value: 'ERS',parent:'SS'}, {label: 'Family support services', value: 'FSS',parent:'SS'}, {label: 'Homelessness services', value: 'HS',parent:'SS'},{label: 'Youth services', value: 'YS',parent:'SS'},
-                        {label: 'Pre-school childcare', value: 'PC',parent:'SS'},{label: 'Services for older people', value: 'SFOP',parent:'SS'},{label: 'Services for people with disabilities', value: 'SFPWD',parent:'SS'},{label: 'Services for Travellers and ethnic minorities', value: 'SFTAEM',parent:'SS'},
-                        
-                        {label: 'Fund-raising', value: 'FR',parent:'Voluntarism'}, {label: 'Philanthropy', value: 'Philanthropy',parent:'Voluntarism'}, {label: 'Voluntarism', value: 'voluntarisms',parent:'Voluntarism'},
-
-                        {label: 'Animal welfare', value: 'AW',parent:'Environment'}, {label: 'Environmental enhancement', value: 'EE',parent:'Environment'}, {label: 'Environmental sustainability', value: 'ES',parent:'Environment'}, {label: 'Group water schemes', value: 'GWS',parent:'Environment'}
-                    ]}
-                    containerStyle={{height: '4.5%',width:'84%',paddingLeft:15,paddingTop:10}}
-                    style={{backgroundColor: 'lightgrey', borderColor:"#64CA80",
-                    borderWidth:1.5}}
-                    itemStyle={{
-                        justifyContent: 'flex-start'
-                        
-                    }}
-                    labelStyle={{fontSize:20,color:"#000"}}
-                    dropDownStyle={{backgroundColor: '#fafafa'}}
-                    onChangeItem={item =>{ setCategory(item.parent.label),setSubcategory(item.label)}}
-                    placeholder="Category                       *"
-                    placeholderStyle={{fontWeight:"bold",fontSize:25,color:"lightslategrey"}}
-                    selectedLabelStyle={{fontWeight:"bold",fontSize:25,color:"#000"}}
-                    arrowSize={20}
-                />
-              </View>
-
-              <View style={globalStyles.rowAlginStyle}>
-            
-            <Text style={globalStyles.errorStyle}>{categoryError}</Text>
-            
-          </View>
-
-            <View style={globalStyles.rowAlginStyle}>
-
-              <TextInput style={styles.dataStyle}
-                placeholderTextColor="lightslategrey"
-                placeholder=" Website"
-                underlineColorAndroid="transparent"
-                onChangeText={(text)=>{setWebsite(text)}}
-                paddingLeft='3%'
-                />
-            </View>
-
-            <View style={globalStyles.rowAlginStyle}>
-
-              <TextInput style={styles.dataStyle}
-                placeholderTextColor="lightslategrey"
-                placeholder=" Enter Hotline Number"
-                keyboardType="numeric"
-                underlineColorAndroid="transparent"
-                onChangeText={(text)=>{setHotline(text)}}
-                paddingLeft='3%'
-                />
-            </View>
-           
-
+            <TextInputCard value={" Website"} onChange={value=> setWebsite(value)} allow_pass={false} allow_multi={true}/>
+            <TextInputCard value={" Enter Hotline Number"} onChange={value=> setHotline(value)} allow_pass={false} allow_multi={true}/>
+        
             <Text style={styles.headerStyle}>  Socail Media: </Text>
 
               <View style={styles.socailStyle}>
-                <View style={globalStyles.rowAlginStyle}>
-                  <TextInput style={styles.dataStyle}
-                    placeholderTextColor="lightslategrey"
-                    placeholder=" Facebook"
-                    underlineColorAndroid="transparent"
-                    paddingLeft='3%'
-                    />
-                </View>
-
-                <View style={globalStyles.rowAlginStyle}>
-                  <TextInput style={styles.dataStyle}
-                    placeholderTextColor="lightslategrey"
-                    placeholder=" Instagram"
-                    underlineColorAndroid="transparent"
-                    paddingLeft='3%'
-                    />
-                </View>
-
-                <View style={globalStyles.rowAlginStyle}>
-                  <TextInput style={styles.dataStyle}
-                    placeholderTextColor="lightslategrey"
-                    placeholder=" Twitter"
-                    underlineColorAndroid="transparent"
-                    paddingLeft='3%'
-                    />
-                </View>
-            </View>
+                <TextInputCard value={" Facebook"} onChange={value=> setFacebook(value)} allow_pass={false} allow_multi={true}/>
+                <TextInputCard value={" Instagram"} onChange={value=> setInstagram(value)} allow_pass={false} allow_multi={true}/>
+                <TextInputCard value={" Twitter"} onChange={value=> setTwitter(value)} allow_pass={false} allow_multi={true}/>
+              </View>
              
             <View style={styles.buttonAlignStyle}>
-            <TouchableOpacity style={styles.buttonStyle} onPress={sumbit}> 
-            <Text style={globalStyles.textStyle}>Sumbit</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonStyle} onPress={sumbit}> 
+              <Text style={globalStyles.textStyle}>Sumbit</Text>
+              </TouchableOpacity>
             </View>
            
            
@@ -530,9 +300,7 @@ const styles = StyleSheet.create({
     paddingTop:15,
     color:'#000'
   },
-  DDstyle:{
-    marginBottom:2,
-  },
+  
   socailStyle:{
     paddingLeft:22
   },

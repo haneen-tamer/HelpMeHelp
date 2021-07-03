@@ -13,6 +13,30 @@ import CategoryPicker from '../shared/categoryDropDown';
 export default function App({navigation}) {
   const [changeImage,setChangeImage]=useState(false);
   const [image,setImage]=useState(null);
+  const [username,setUsername]=useState(navigation.getParam('username'));
+
+  fetch("http://10.0.2.2:8080/OrgProfile",{
+    method:"get",
+    headers:{
+      'Content-Type': 'application/json'
+    },
+    body:JSON.stringify({     
+      username,
+  })
+})
+  .then(res=>res.json())
+  .then(json =>{
+     console.log(json)
+     if(json==true)
+      {
+        navigation.navigate('orgDrawerNav');
+      }
+      else
+      {
+        setLoginError('Invalid Username or Password. Please try again')
+      }
+     
+  })
 
   useEffect(()=>{async()=>{
     if(Platform.OS !=='web')
@@ -68,16 +92,16 @@ export default function App({navigation}) {
          <View style={styles.textAlignStyle}> 
 
            <Text style={styles.titleStyle}>Username</Text>
-           <TextInputCard value={navigation.getParam('username') } allow_pass={false} allow_multi={true}/>
+           <TextInputCard value={navigation.getParam('username') } allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Name</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true}/>
+           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Password</Text>
-           <TextInputCard value={navigation.getParam('password')} allow_pass={true} allow_multi={false}/>
+           <TextInputCard value={navigation.getParam('password')} allow_pass={true} allow_multi={false} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Email Address</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true}/>
+           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Choose Governorate</Text>
 
@@ -85,13 +109,13 @@ export default function App({navigation}) {
            {/* onChange={value=> setGovernorate(value)}/> */}
            
            <Text style={styles.titleStyle}>Description</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true}/>
+           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Purpose</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true}/>
+           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Address</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true}/>
+           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Organization Type</Text>
            <OrgTypePicker />
@@ -99,22 +123,22 @@ export default function App({navigation}) {
            <Text style={styles.titleStyle}>Category</Text>
            <CategoryPicker />
            <Text style={styles.titleStyle}>Website</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true}/>
+           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Hotline</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true}/>
+           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.headerStyle}>  Socail Media: </Text>
 
           <View style={styles.socailStyle}>
               <Text style={styles.titleStyle}>Facebook</Text>
-              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true}/>
+              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
               <Text style={styles.titleStyle}>Instagram</Text>
-              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true}/>
+              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
               <Text style={styles.titleStyle}>Twitter</Text>
-              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true}/>
+              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
            </View>
 
 
@@ -185,7 +209,8 @@ const styles = StyleSheet.create({
     
     },
     socailStyle:{
-      paddingLeft:22
+      paddingLeft:22,
+      marginBottom:70
     },
     textAlignStyle:
   {

@@ -30,35 +30,42 @@ export default function Start({ navigation }) {
   const [found,setFound]=useState(false);
   
 
-  const loginBtn=()=>{
     
-    loginInfo.map((item)=>{
-      if(item.username===username && item.password===password)
+    const loginBtn=()=>{
+      setLoginError('')
+      if(username=="user" && password=="bye" )
       {
-        setFound(true);
-        setLoginError('')
-        if(item.role==="user")
-        {
-          return navigation.navigate('DrawNav',item);
-        }
-        else if(item.role==="org")
-        {
-          navigation.navigate('orgDrawerNav',item);
-        }
-        
-       
+        return navigation.navigate('DrawNav');
       }
-    
+      else
+      {
+        fetch("http://10.0.2.2:8080/OrgLogin",{
+      method:"post",
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({     
+        username,
+        password
+    })
+  })
+    .then(res=>res.json())
+    .then(json =>{
+       console.log(json)
+       if(json==true)
+        {
+          navigation.navigate('orgDrawerNav');
+        }
+        else
+        {
+          setLoginError('Invalid Username or Password. Please try again')
+        }
+       
     })
 
-    if(!found)
-    {
-      setLoginError('Invalid Username or Password. Please try again')
-    }
-   
-
+      }
+      
   }
-  
  
   return ( 
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">

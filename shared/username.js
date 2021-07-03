@@ -10,7 +10,7 @@ export default function Username(){
 
     return (
         <View /* style={styles.header} */>
-            <Text style={styles.name} Text>Whatsoever (username)</Text>
+            <Text style={styles.name} Text> username</Text>
         </View>
     );
 }

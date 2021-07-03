@@ -4,7 +4,7 @@ import { globalStyles } from './globalStyles';
 import { onChange } from 'react-native-reanimated';
 
 
-export default function TextInputCard({value,onChange,allow_pass,allow_multi}){
+export default function TextInputCard({value,onChange,allow_pass,allow_multi,allow_edit}){
 
     
     return(
@@ -18,6 +18,7 @@ export default function TextInputCard({value,onChange,allow_pass,allow_multi}){
           multiline={allow_multi}
           paddingLeft='3%'
           secureTextEntry={allow_pass}
+          editable={allow_edit}
           onChangeText={(text)=>onChange(text)}
           />
       </View>

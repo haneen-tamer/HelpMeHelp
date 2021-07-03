@@ -65,9 +65,7 @@ export default function App({navigation}) {
         keyExtractor={(item) => item.id} 
         data={filters} 
         renderItem={({ item }) => ( 
-          <TouchableOpacity style={styles.container} onPress={()=>navigation.navigate('userCampaignDetails',item)}>
          <CampaignItem item={item} addUser={true} navigation={navigation}/>
-         </TouchableOpacity>
         )}
         />
         

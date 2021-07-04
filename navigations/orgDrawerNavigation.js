@@ -1,8 +1,8 @@
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
 
-import orgProfile from '../OrganizationsForms/orgProfile';
 import orgHomeStack from './orgHomeStack';
+import orgProfileStack from './orgProfileStack';
 import Start from '../forms/start';
 import Logout from '../forms/logout';
 
@@ -14,7 +14,7 @@ const DrawScreens = {
         }
     },
     orgProfile: {
-        screen: orgProfile,
+        screen: orgProfileStack,
         navigationOptions: {
             title: "My Profile"
         }

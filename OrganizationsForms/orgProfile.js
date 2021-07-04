@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity , ScrollView}
 import * as ImagePicker from 'expo-image-picker';
 import { globalStyles } from './../shared/globalStyles';
 import TextInputCard from './../shared/textInputCard';
+import { useIsFocused } from '@react-navigation/native';
 import GovernoratePicker from '../shared/governorateDropDown';
 import OrgTypePicker from '../shared/orgTypeDropDown';
 import CategoryPicker from '../shared/categoryDropDown';
@@ -13,139 +14,127 @@ import CategoryPicker from '../shared/categoryDropDown';
 export default function App({navigation}) {
   const [changeImage,setChangeImage]=useState(false);
   const [image,setImage]=useState(null);
-  const [username,setUsername]=useState(navigation.getParam('username'));
+  const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('OrgUsername'));
+  const [usernameEdit,setUsernameEdit]=useState(null);
+  const [data,setData]=useState(null);
+  const [found,setFound]=useState(false);
+  
+  async function getDetails() {
+    const configs = {
+        methods: 'GET',
+        // mode: 'cors',
+        // headers: {'Content-Type': 'application/json'},
+        // body: JSON.stringify({
+        //     'country': country
+        // })
+    };
+    const response = await fetch("http://10.0.2.2:8080/OrgProfile/"+username, configs)
+    const data = await response.json();
+    setData(data)
+    setFound(true);
+}
 
-  fetch("http://10.0.2.2:8080/OrgProfile",{
-    method:"get",
-    headers:{
-      'Content-Type': 'application/json'
-    },
-    body:JSON.stringify({     
-      username,
-  })
-})
-  .then(res=>res.json())
-  .then(json =>{
-     console.log(json)
-     if(json==true)
-      {
-        navigation.navigate('orgDrawerNav');
-      }
-      else
-      {
-        setLoginError('Invalid Username or Password. Please try again')
-      }
-     
-  })
-
-  useEffect(()=>{async()=>{
-    if(Platform.OS !=='web')
-    {
-      const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if(status !=='granted')
-      {
-        alert('Permission denied!')
-      }
-    }
-  }
-  },[])
-
-  const PickImage = async ()=>{
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing:true,
-      aspect:[4,3],
-      quality:1
-    })
-
-    console.log(result)
-    if(!result.cancelled)
-    {
-      setChangeImage(true)
-      setImage(result.uri)
-    }
-  }
-
+  useEffect(() => {
+    getDetails();
+    //   fetch("http://10.0.2.2:8080/OrgProfile/"+username, {
+    //     method: 'GET',
+    // })
+    // .then(res=>res.json())
+    // .then(json => {
+    //   setData(json)
+    //   setFound(true);
+    // })
+    // .catch((error) => {
+    //     console.error(error);
+    // });
+  }, []);
   return (
     <ScrollView>
-     
       <View style={globalStyles.columnAlginStyle}>
         <View style={styles.imageborderStyle}>
-        
-              {changeImage &&
-                  <Image 
-                  style={styles.profileImageStyle}
-                  source={{uri:image}}
-                />
-              }
-              {!changeImage &&
-                  <Image 
-                  style={globalStyles.headerImageStyle}
-                  source={require('../images/CampaignImage.png')}
-                />
-              }
-         
+          <Image 
+          style={globalStyles.headerImageStyle}
+          source={require('../images/CampaignImage.png')}
+           />
          </View>
-         <TouchableOpacity onPress={PickImage}>
-         <Text style={styles.textStyle} >Change Profile Photo</Text>
+         <TouchableOpacity onPress={()=>{navigation.navigate('editOrgProfile',data)}}>
+         <Text style={styles.textStyle} >Edit Profile</Text>
          </TouchableOpacity>
+         {found &&
          <View style={styles.textAlignStyle}> 
-
-           <Text style={styles.titleStyle}>Username</Text>
-           <TextInputCard value={navigation.getParam('username') } allow_pass={false} allow_multi={true} allow_edit={false}/>
+         
+         
+            <Text style={styles.titleStyle}>Username</Text>
+           <TextInputCard value={username} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Name</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
-
-           <Text style={styles.titleStyle}>Password</Text>
-           <TextInputCard value={navigation.getParam('password')} allow_pass={true} allow_multi={false} allow_edit={false}/>
+           <TextInputCard value={data.name} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Email Address</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
+           <TextInputCard value={data.email} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
-           <Text style={styles.titleStyle}>Choose Governorate</Text>
+           <Text style={styles.titleStyle}>Phone Number</Text>
+           <TextInputCard value={data.phoneNumber.toString()} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
-           <GovernoratePicker/> 
+           {/* <Text style={styles.titleStyle}>Choose Governorate</Text> */}
+
+           {/* <GovernoratePicker/>  */}
            {/* onChange={value=> setGovernorate(value)}/> */}
+           <Text style={styles.titleStyle}> Governorate</Text>
+           <TextInputCard value={data.Governorate} allow_pass={false} allow_multi={true} allow_edit={false}/>
            
            <Text style={styles.titleStyle}>Description</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
+           <TextInputCard value={data.description} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Purpose</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
+           <TextInputCard value={data.purpose} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Address</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
+           {
+             data.location.map(address=><TextInputCard value={address} allow_pass={false} allow_multi={true} allow_edit={false}/>)
+           } 
+           
 
            <Text style={styles.titleStyle}>Organization Type</Text>
-           <OrgTypePicker />
+           <TextInputCard value={data.organizationType} allow_pass={false} allow_multi={true} allow_edit={false}/>
+           {/* <OrgTypePicker /> */}
 
            <Text style={styles.titleStyle}>Category</Text>
-           <CategoryPicker />
+           <TextInputCard value={data.category} allow_pass={false} allow_multi={true} allow_edit={false}/>
+
+           <Text style={styles.titleStyle}>SubCategory</Text>
+           <TextInputCard value={data.Subcategory} allow_pass={false} allow_multi={true} allow_edit={false}/>
+           {/* <CategoryPicker /> */}
            <Text style={styles.titleStyle}>Website</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
+           <TextInputCard value={data.website} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.titleStyle}>Hotline</Text>
-           <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
+           <TextInputCard value={data.hotline.toString()} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={styles.headerStyle}>  Socail Media: </Text>
 
           <View style={styles.socailStyle}>
-              <Text style={styles.titleStyle}>Facebook</Text>
+          {
+             data.socialMedia.map(links=><TextInputCard value={links} allow_pass={false} allow_multi={true} allow_edit={false}/>)
+           }
+            
+              {/* <Text style={styles.titleStyle}>Facebook</Text>
               <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
               <Text style={styles.titleStyle}>Instagram</Text>
               <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
               <Text style={styles.titleStyle}>Twitter</Text>
-              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
+              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/> */}
            </View>
 
-
+            
          
 
 
          </View>
+         
+}
        
 
         
@@ -190,12 +179,12 @@ const styles = StyleSheet.create({
   },
   textStyle:
   {
-    fontSize:20,
+    fontSize:25,
     fontWeight:"bold",
     alignSelf:"center",
     paddingTop:'5%',
-    color:"#000",
-    marginBottom:'15%'
+    color:"#3CB371",
+    marginBottom:'2%'
     
   },
   titleStyle:{

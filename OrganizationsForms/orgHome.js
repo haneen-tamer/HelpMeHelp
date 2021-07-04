@@ -4,9 +4,8 @@ import { StyleSheet, Text, View,Button,FlatList,TouchableOpacity,ScrollView,Safe
 import CampaignItem from '../shared/CampaignItem'
 import {globalStyles} from '../shared/globalStyles'
 import CreateCampaignBtn from '../shared/CreateCampaignBtn';
-
-
 export default function App({navigation}) {
+  // navigation.dangerouslyGetParent().getParam('OrgUsername')
   const [campgin, setCampagin] = useState([
     {name:'Ramdan Iftar',organizationName:'Resala',start:'8/4/2021',end:'10/4/2021',class:'A',subClass:['dd','dddd'],progress:7,target:7,status:'completed',id:'1',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
     {name:'qqq',organizationName:'ggg',start:'8/4/2021',end:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:1,target:7,status:'ongoing',id:'2',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},

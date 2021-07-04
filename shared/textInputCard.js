@@ -19,7 +19,7 @@ export default function TextInputCard({value,onChange,allow_pass,allow_multi,all
           paddingLeft='3%'
           secureTextEntry={allow_pass}
           editable={allow_edit}
-          onChangeText={(text)=>onChange(text)}
+          onChangeText={text=>onChange(text)}
           />
       </View>
     )}

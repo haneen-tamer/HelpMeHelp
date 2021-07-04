@@ -51,10 +51,9 @@ export default function Start({ navigation }) {
   })
     .then(res=>res.json())
     .then(json =>{
-       console.log(json)
        if(json==true)
         {
-          navigation.navigate('orgDrawerNav');
+          navigation.navigate('orgDrawerNav',{OrgUsername:username});
         }
         else
         {

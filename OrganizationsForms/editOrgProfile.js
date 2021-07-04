@@ -90,7 +90,7 @@ export default function App({navigation}) {
     //     }
     //   }
     // }
-    console.log(updatedAddress);
+    console.log(locationArray);
     fetch("http://10.0.2.2:8080/orgUpdate/"+username, {
       method:"post",
       headers:{
@@ -186,7 +186,7 @@ export default function App({navigation}) {
 
             <Text style={styles.titleStyle}>Address</Text>
            {
-             address.map((loc)=>{ return <TextInputCard value={loc} onChange={value=> setUpdatedAddress(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>})
+             address.map((loc)=>{ return <TextInputCard value={loc} onChange={value=> locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>})
            }
            {/* <TextInputCard value={address[0]} onChange={value=> locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
            <TextInputCard value={address[1]} onChange={value=> locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/> */}

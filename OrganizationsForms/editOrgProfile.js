@@ -36,8 +36,8 @@ export default function App({navigation}) {
   const [status,setStatus]=useState(navigation.getParam('requestStatus'));
   const[updatedAddress,setUpdatedAddress]=useState('');
   var socailMediaLinksArray = new Array(); var locationArray = new Array();
-  var indexLocationArray = new Array(); var indexLinksArray = new Array();
-
+  var socailMedia = new Array();var locations = new Array();
+  // locationArray.push(value)
   useEffect(()=>{async()=>{
     if(Platform.OS !=='web')
     {
@@ -67,30 +67,26 @@ export default function App({navigation}) {
   }
 
   const saveChanged=()=>{
-    // console.log("2"+name);
-    // console.log("2"+number);
-    // for(let i=0;i<address.length;i++)
-    // {
-    //   for(let j=0;j<indexLocationArray.length;j++)
-    //   {
-    //     if(i==indexLocationArray[j])
-    //     {
-    //       address[i]=locationArray[j]
-    //     }
-    //   }
-    // }
-    // console.log(address);
-    // for(let i=0;i<links.length;i++)
-    // {
-    //   for(let j=0;j<indexLinksArray.length;j++)
-    //   {
-    //     if(i==indexLinksArray[j])
-    //     {
-    //       address[i]=socailMediaLinksArray[j]
-    //     }
-    //   }
-    // }
-    console.log(locationArray);
+    for(let i=1;i<locationArray.length;i++)
+    {
+      if(locationArray[i].length==1)
+      {
+        locations.push(locationArray[i-1]);
+      }
+    }
+    locations.push(locationArray[locationArray.length-1]);
+
+    for(let i=1;i<socailMediaLinksArray.length;i++)
+    {
+      if(socailMediaLinksArray[i].length<socailMediaLinksArray[i-1].length)
+      {
+
+        socailMedia.push(socailMediaLinksArray[i-1]);
+      }
+    }
+    socailMedia.push(socailMediaLinksArray[socailMediaLinksArray.length-1]);
+    console.log(socailMediaLinksArray);
+    console.log(socailMedia);
     fetch("http://10.0.2.2:8080/orgUpdate/"+username, {
       method:"post",
       headers:{
@@ -109,12 +105,12 @@ export default function App({navigation}) {
         purpose,
         rating,
         website,
-        socialMedia:links,
+        socialMedia:socailMedia,
         hotline,
         logo:image,
         requestStatus:status,
         phoneNumber:number,
-        location:address   
+        location:locations   
     })
   })
   .then(res=>res.json())
@@ -186,8 +182,9 @@ export default function App({navigation}) {
 
             <Text style={styles.titleStyle}>Address</Text>
            {
-             address.map((loc)=>{ return <TextInputCard value={loc} onChange={value=> locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>})
+             address.map((loc)=>{ return <TextInputCard value={loc} onChange={value=>locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>})
            }
+          
            {/* <TextInputCard value={address[0]} onChange={value=> locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
            <TextInputCard value={address[1]} onChange={value=> locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/> */}
 
@@ -211,8 +208,18 @@ export default function App({navigation}) {
 
             <View style={styles.socailStyle}>
             {
-            links.map((links,index)=><TextInputCard value={links} onChange={value=>socailMediaLinksArray.push(value),indexLinksArray.push(index)}  allow_pass={false} allow_multi={true} allow_edit={true}/>)
-            }
+              links.map((link)=>{ return <TextInputCard value={link} onChange={value=>socailMediaLinksArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>})
+            }              
+            
+              {/* <Text style={styles.titleStyle}>Facebook</Text>
+              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
+
+              <Text style={styles.titleStyle}>Instagram</Text>
+              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
+
+              <Text style={styles.titleStyle}>Twitter</Text>
+              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/> */}
+
             <View style={styles.buttonstyle}>
                 <TouchableOpacity style={globalStyles.blueButtonStyle} onPress={saveChanged}> 
                   <Text style={globalStyles.textStyle} > Save </Text>

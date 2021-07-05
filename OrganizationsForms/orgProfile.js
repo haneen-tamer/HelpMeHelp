@@ -19,34 +19,30 @@ export default function App({navigation}) {
   const [data,setData]=useState(null);
   const [found,setFound]=useState(false);
   
-  async function getDetails() {
-    const configs = {
-        methods: 'GET',
-        // mode: 'cors',
-        // headers: {'Content-Type': 'application/json'},
-        // body: JSON.stringify({
-        //     'country': country
-        // })
-    };
-    const response = await fetch("http://10.0.2.2:8080/OrgProfile/"+username, configs)
-    const data = await response.json();
-    setData(data)
-    setFound(true);
-}
+//   async function getDetails() {
+//     const configs = {
+//         methods: 'GET',
+//     };
+//     const response = await fetch("http://10.0.2.2:8080/OrgProfile/"+username, configs)
+//     const data = await response.json();
+//     setData(data)
+//     setFound(true);
+// }
 
   useEffect(() => {
-    getDetails();
-    //   fetch("http://10.0.2.2:8080/OrgProfile/"+username, {
-    //     method: 'GET',
-    // })
-    // .then(res=>res.json())
-    // .then(json => {
-    //   setData(json)
-    //   setFound(true);
-    // })
-    // .catch((error) => {
-    //     console.error(error);
-    // });
+    //getDetails();
+   
+      fetch("http://10.0.2.2:8080/OrgProfile/"+username, {
+        method: 'GET',
+    })
+    .then(res=>res.json())
+    .then(json => {
+      setData(json)
+      setFound(true);
+    })
+    .catch((error) => {
+        console.error(error);
+    });
   }, []);
   return (
     <ScrollView>

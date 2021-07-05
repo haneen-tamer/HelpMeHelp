@@ -6,8 +6,45 @@ import { globalStyles } from './../shared/globalStyles';
 
 
 
-export default function ApplicantCard({item,navigation}){
-    
+export default function ApplicantCard({item,navigation,ID}){
+
+    const [hide,setHide]=useState(false);
+
+    const acceptApplicant=()=>
+    {
+        setHide(true);
+        fetch("http://10.0.2.2:8080/orgAcceptApplicants/"+ID+"/"+item.userName, {
+            method: 'GET',
+        })
+        .then(res=>res.json())
+        .then(json => {
+          if(json==true)
+          {
+           console.log("Accepted")
+          }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+    const rejectApplicant=()=>
+    {
+        setHide(true);
+        fetch("http://10.0.2.2:8080/orgRejectApplicants/"+ID+"/"+item.userName, {
+            method: 'GET',
+        })
+        .then(res=>res.json())
+        .then(json => {
+          if(json==true)
+          {
+           console.log("Rejected")
+          }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
     return(
        
 <View style={styles.container}>
@@ -17,7 +54,7 @@ export default function ApplicantCard({item,navigation}){
             <View style={styles.textAlign}>
                 <Text style={styles.nameTextStyle} >{item.name}</Text>
             </View>
-                <TouchableOpacity onPress={()=>navigation.navigate('orgUserProfile',item)}>
+                <TouchableOpacity onPress={()=>navigation.navigate('orgUserProfile',{data:item})}>
                     <Image 
                     style={styles.userImageStyle}
                     source={require("../images/user.png")}
@@ -27,21 +64,23 @@ export default function ApplicantCard({item,navigation}){
        
         </View>
         
-       
+       {!hide &&
         <View style={globalStyles.buttonstyle}>
 
-        <TouchableOpacity style={globalStyles.greenButtonStyle} > 
+        <TouchableOpacity style={globalStyles.greenButtonStyle} onPress={acceptApplicant} > 
             <Text style={globalStyles.textStyle} > Accept </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={globalStyles.blackButtonStyle} > 
-            <Text style={globalStyles.textStyle}> Decline </Text>
+        <TouchableOpacity style={globalStyles.blackButtonStyle} onPress={rejectApplicant} > 
+            <Text style={globalStyles.textStyle}> Reject </Text>
         </TouchableOpacity>
+      </View>
+
+       }
 
       
      
 
-      </View>
         </View>
 
         

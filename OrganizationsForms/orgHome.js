@@ -8,7 +8,7 @@ export default function App({navigation}) {
   const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('OrgUsername'));
   const [campgin, setCampagin] = useState(null)
   const [filters,setFilter]=useState(null)
- 
+
   const [found,setFound]=useState(false);
   var data = new Array();
 
@@ -21,12 +21,13 @@ useEffect(() => {
   .then(res=>res.json())
   .then(json => {
     setCampagin(json)
-    if(found)
-    {
-      setCampagin(json)
       setFilter(campgin)
-     // console.log(campgin)
-    }
+    // if(found)
+    // {
+    //   setCampagin(json)
+    //   setFilter(campgin)
+    //  // console.log(campgin)
+    // }
     
   })
   .catch((error) => {
@@ -87,9 +88,7 @@ useEffect(() => {
         keyExtractor={(item) => item.id} 
         data={filters} 
         renderItem={({ item }) => ( 
-          <TouchableOpacity onPress={()=>navigation.navigate('applicantRequests')}>
          <CampaignItem item={item} addUser={true} navigation={navigation}/>
-         </TouchableOpacity>
         )}
         />
         

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, FlatList} from 'react-native';
+import { StyleSheet, ScrollView, TextInput, View, Button, FlatList} from 'react-native';
 import ChatItem from '../shared/ChatItem';
-import {globalStyles} from '../shared/globalStyles';
+import Header from '../shared/header';
 
 export default function chat({navigation}) {
     let [chatInput, setChatInput] = useState("");
@@ -14,7 +14,6 @@ export default function chat({navigation}) {
     let username = navigation.getParam('username');
     return (
     <View style={Styles.container}>
-      
       <FlatList
       style={Styles.flatListStyle}
       inverted
@@ -55,15 +54,15 @@ const Styles = StyleSheet.create({
         flex: 1,
         flexDirection:'column',
         backgroundColor: '#fff',
-        // paddingTop:15,
+        paddingTop:25,
         // alignItems:'flex-start'
       },
+
       flatListStyle:{
         // justifyContent:'flex-start',
         // flex:7,
-        top:0,
-        padding:10,
-        margin:10
+        top:2,
+        padding:10
       },
     sendSection: {
         // flex:1,

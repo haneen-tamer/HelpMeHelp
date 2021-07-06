@@ -4,6 +4,7 @@ import userHome from '../forms/userHome';
 import seeAllCampaigns from '../forms/seeAllCampaigns'
 import userCampaignDetails from '../forms/userCampaignDetails'
 import chat from '../forms/chat';
+import AllChats from '../forms/AllChats';
 
 import Header from '../shared/header';
 import Title from '../shared/Title';
@@ -26,6 +27,9 @@ const screens = {
     },
     chat:{
         screen:chat,
+    },
+    AllChats:{
+        screen:AllChats,
     }
 };
 

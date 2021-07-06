@@ -6,29 +6,32 @@ import { StyleSheet, Text, View } from 'react-native';
 
 
 
-export default function Header(){
+export default function Header({navigation}){
 
     const drawMenu = () => {
-        // navigation.openDrawer();
+         navigation.openDrawer();
     }
 
     return (
         <View style={styles.header}>
             {/* <MaterialIcons name='menu' size={28} onPress={drawMenu} style={styles.icon}/> */}
-            <MaterialCommunityIcons name="menu" size={30} style={styles.icon} color="black" />
+            <MaterialCommunityIcons name="menu" size={30} style={styles.icon} color="black" onPress={drawMenu} />
+            {/* <Text style={styles.headerText} Text> {title}</Text> */}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     header: {
-        flexDirection: 'row',
         width: '100%',
         height: '100%',
-    },
-    icon: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      icon: {
         position: 'absolute',
-        left: 15,
-        bottom: 5,
-    },
+        left: 18,
+      }
+    
 });

@@ -21,9 +21,7 @@ export default function App({navigation}) {
     {name:'qqq',organizationName:'ggg',startDate:'8/4/2021',endDate:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:3,target:7,status:'completed',id:'3',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'NotSent'},
     {name:'qqq',organizationName:'ggg',startDate:'8/4/2021',endDate:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:4,target:7,status:'ongoing',id:'4',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'NotSent'},
     {name:'qqq',organizationName:'ggg',startDate:'8/4/2021',endDate:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:5,target:7,status:'completed',id:'5',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'NotSent'},
-  ]);
-
-  // const 
+  ])
 
   return (
     <ScrollView style={styles.container}>

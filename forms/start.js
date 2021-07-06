@@ -18,13 +18,14 @@ export default function Start({ navigation }) {
   const orgSignUp = () => {
     navigation.navigate('orgRegister');
   }
-  
+
   const [modal, setModal] = useState(false); 
   const [username,setUsername]=useState(null);
   const [password,setPassword]=useState(null);
   const [loginInfo,setLoginIfo]=useState([
     {username:"org",password:"hi",role:"org",id:'1'},
     {username:"user",password:"bye",role:"user",id:'2'},
+    {username:"Ad",password:"min",role:"admin",id:'3'},
   ]);
   const [loginError,setLoginError]=useState('');
   const [found,setFound]=useState(false);
@@ -43,7 +44,11 @@ export default function Start({ navigation }) {
         }
         else if(item.role==="org")
         {
-          navigation.navigate('orgDrawerNav',item);
+          return navigation.navigate('orgDrawerNav',item);
+        }
+        else if(item.role==="admin")
+        {
+          return navigation.navigate('AdminHome',item);
         }
         
        
@@ -87,7 +92,6 @@ export default function Start({ navigation }) {
 
         </Modal>
         
-        <ScrollView>
           <View style={styles.logoCenter}>
             <Image style={styles.logo} source={require('../assets/logo.png')} />
             <Text style={styles.title}>HELP ME HELP</Text>
@@ -140,7 +144,6 @@ export default function Start({ navigation }) {
               </View>
           
         
-        </ScrollView>
       </View>
       
     </TouchableWithoutFeedback>
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
   },
   logoCenter: {
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 20,
   },
   logo: {
     width: 100,

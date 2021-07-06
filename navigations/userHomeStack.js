@@ -9,7 +9,8 @@ const screens = {
         screen: userHome,
         navigationOptions: {
             title:"",
-            headerLeft: null
+            headerLeft: null,
+            headerStyle: { height: 0},
         }
     },
     seeAll:{

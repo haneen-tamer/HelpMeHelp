@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#333',
         letterSpacing: 1,
-        marginLeft:"30%"
+        marginLeft:"20%"
       },
 });

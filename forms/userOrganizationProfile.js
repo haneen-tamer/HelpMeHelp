@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React ,{ useState } from 'react';
+import React ,{ useState,useEffect } from 'react';
 import { StyleSheet, Text, View , Image, ScrollView,FlatList,TouchableOpacity} from 'react-native';
 import Header from '../shared/header';
 import {globalStyles} from '../shared/globalStyles'
@@ -7,16 +7,47 @@ import CampaignItem from '../shared/CampaignItem'
 
 
 export default function App({navigation}) {
-    const [campgin, setCampagin] = useState([
-        {name:'Ramdan Iftar',organizationName:'Resala',start:'8/4/2021',end:'10/4/2021',class:'A',subClass:['dd','dddd'],progress:7,target:7,status:'completed',id:'1',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
-        {name:'qqq',organizationName:'ggg',start:'8/4/2021',end:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:1,target:7,status:'ongoing',id:'2',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
-        {name:'qqq',organizationName:'ggg',start:'8/4/2021',end:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:3,target:7,status:'completed',id:'3',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
-        {name:'qqq',organizationName:'ggg',start:'8/4/2021',end:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:4,target:7,status:'ongoing',id:'4',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
-        {name:'qqq',organizationName:'ggg',start:'8/4/2021',end:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:5,target:7,status:'completed',id:'5',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
-      ])
+    const [campgin, setCampagin] = useState(null);
+    const [data,setData]=useState(null);
+    const [found,setFound]=useState(false);
+    const [found2,setFound2]=useState(false);
+    let username=navigation.getParam('orgOwner');
+
+    useEffect(() => {
+        //getDetails();
+       
+          fetch("http://10.0.2.2:8080/OrgProfile/"+username, {
+            method: 'GET',
+        })
+        .then(res=>res.json())
+        .then(json => {
+          setData(json)
+          setFound(true);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+      }, []);
+
+      useEffect(() => {
+        setFound2(true);
+        console.log("here")
+          fetch("http://10.0.2.2:8080/orgCamp/"+username, {
+            method: 'GET',
+        })
+        .then(res=>res.json())
+        .then(json => {
+          setCampagin(json)  
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+      }, []);
+
   return (
-      <ScrollView>
+<ScrollView>
    <View style={styles.container}>
+   {found &&
        <View style={globalStyles.columnAlginStyle}>
 
        <View style={globalStyles.imageAlginStyle}>
@@ -39,7 +70,8 @@ export default function App({navigation}) {
             style={globalStyles.headerImageStyle}
             source={require('../images/CampaignImage.png')}
         />
-        <Text style={globalStyles.headerStyle}>{navigation.getParam('Name')}</Text>
+        
+        <Text style={globalStyles.headerStyle}>{data.name}</Text>
         <View style={globalStyles.lineStyle}></View>
         
         <View style={globalStyles.columnAlginStyle}>
@@ -52,7 +84,7 @@ export default function App({navigation}) {
             <Text style={globalStyles.smalllHeaderStyle}>Organization Type</Text>
             
             </View>
-            <Text style={globalStyles.smallTextStyle}>{navigation.getParam('organizationType')}</Text>
+            <Text style={globalStyles.smallTextStyle}>{data.organizationType}</Text>
 
             <View style={globalStyles.iconTextStyle}>
                 <Image
@@ -62,7 +94,7 @@ export default function App({navigation}) {
             <Text style={globalStyles.smalllHeaderStyle}>Purpose</Text>
             
             </View>
-            <Text style={globalStyles.smallTextStyle}>{navigation.getParam('purpose')}</Text>
+            <Text style={globalStyles.smallTextStyle}>{data.purpose}</Text>
 
             <View style={globalStyles.iconTextStyle}>
                 <Image
@@ -72,7 +104,7 @@ export default function App({navigation}) {
             <Text style={globalStyles.smalllHeaderStyle}>Descreption</Text>
             
             </View>
-            <Text style={globalStyles.smallTextStyle}>{navigation.getParam('descreption')}</Text>
+            <Text style={globalStyles.smallTextStyle}>{data.description}</Text>
 
             <View style={globalStyles.iconTextStyle}>
                 <Image
@@ -82,7 +114,7 @@ export default function App({navigation}) {
             <Text style={globalStyles.smalllHeaderStyle}>Website</Text>
             
             </View>
-            <Text style={globalStyles.smallTextStyle}>{navigation.getParam('website')}</Text>
+            <Text style={globalStyles.smallTextStyle}>{data.website}</Text>
             <View style={globalStyles.iconTextStyle}>
                 <Image
                 style={globalStyles.bottomiconsStyle}
@@ -91,8 +123,12 @@ export default function App({navigation}) {
             <Text style={globalStyles.smalllHeaderStyle}>Socail Media</Text>
             
             </View>
-
-            <View style={styles.rowAlginStyle}>
+            {/* <View style={styles.socailStyle}>
+          {
+             data.socialMedia.map(links=><TextInputCard value={links} allow_pass={false} allow_multi={true} allow_edit={false}/>)
+           } */}
+             </View>
+            {/* <View style={styles.rowAlginStyle}>
 
                 <View style={globalStyles.iconTextStyle}>
                     <Image
@@ -127,8 +163,8 @@ export default function App({navigation}) {
                 />
             <Text style={globalStyles.smalllHeaderStyle}>Hotline</Text>
             
-            </View>
-            <Text style={globalStyles.smallTextStyle}>{navigation.getParam('hotline')}</Text>
+            </View> */}
+            <Text style={globalStyles.smallTextStyle}>{data.hotline.toString()}</Text>
 
             <View style={globalStyles.iconTextStyle}>
             <Image
@@ -140,26 +176,38 @@ export default function App({navigation}) {
         </View>
         
         <View style={globalStyles.rowAlginStyle}>
-            <Text style={globalStyles.campaignClassStyle}>{navigation.getParam('class')}</Text>
-            <Text style={globalStyles.campaignClassStyle}>{navigation.getParam('subClass')}</Text>
+            <Text style={globalStyles.campaignClassStyle}>{data.category}</Text>
+            <Text style={globalStyles.campaignClassStyle}>{data.Subcategory}</Text>
         </View>
 
-      
-            {
+
+            {found2 &&
+            // <FlatList
+            // // keyExtractor={(item) => item.id} 
+            // data={donationCampaigns} 
+            // horizontal={true}
+            // renderItem={({ item }) => ( 
+            //     <TouchableOpacity style={styles.container} 
+            //     onPress={()=>navigation.navigate('userCampaignDetails',item)}>
+            //     <CampaignItem item={item}/>
+            //     </TouchableOpacity>
+            // )}
+            // />
             <FlatList
                 keyExtractor={(item) => item.id} 
                 data={campgin} 
-                renderItem={({ item }) => ( 
-                    navigation.getParam('Name')===item.organizationName &&
+                renderItem={({ item }) => (
                 <TouchableOpacity  onPress={()=>navigation.navigate('userCampaignDetails',item)}>
-                <CampaignItem item={item}/>
+               <CampaignItem item={item} addUser={false} navigation={navigation}/>
                 </TouchableOpacity>
                 )}
             />
+            
                 }
         
         </View>
-   </View>
+//    </View>
+}
    </View>
    </ScrollView>
   );
@@ -177,5 +225,9 @@ const styles = StyleSheet.create({
     alignContent:"space-between",
     margin:10,
     paddingLeft:10
-  }
+  },
+  socailStyle:{
+    paddingLeft:22,
+    marginBottom:70
+  },
 });

@@ -171,4 +171,35 @@ errorStyle:{
   width:'85%',
   color:"red"
 },
+profileTextStyle:
+{
+  fontSize:25,
+  fontWeight:"bold",
+  alignSelf:"center",
+  paddingTop:'5%',
+  color:"#3CB371",
+  marginBottom:'2%'
+  
+},
+profileTitleStyle:{
+  fontSize:15,
+  color:'#000',
+  paddingBottom:6,
+  marginLeft:15,
+  fontWeight:"bold",
+  paddingTop:'2%'
+  
+  
+  },
+  profileImageborderStyle:
+  {
+    borderRadius:100,
+    borderWidth:3,
+    borderColor:'#AACCDD',
+    alignSelf:"center",
+    width:210,
+    height:200,
+    paddingBottom:10,
+     paddingTop:2
+  },
 });

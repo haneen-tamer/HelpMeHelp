@@ -13,9 +13,6 @@ import Header from '../shared/header';
 import AdminHeader from '../shared/adminHeader'
 import Username from '../shared/username';
 import AdminUsername from '../shared/adminUsername';
-import CampaignsIjoined from '../forms/CampaignsIjoined'
-import userCampaignDetails from '../forms/userCampaignDetails'
-import userOrganizationProfile from '../forms/userOrganizationProfile'
 import pendingPage from '../OrganizationsForms/pendingPage'
 import React from 'react';
 
@@ -64,28 +61,6 @@ const forms =
         screen: OrgReg,
         navigationOptions: {
             title:"Organization Registration"
-        }
-    },
-    CampaignsIjoined: {
-        screen: CampaignsIjoined,
-        navigationOptions: ({ navigation }) => {
-            return {
-                 headerLeft: () => <Header navigation={navigation}/>,
-                headerTitle:()=><Title title={"Campaigns You Joined"}/>,
-            }
-          },
-       
-    },
-    userCampaignDetails:{
-        screen: userCampaignDetails,
-        navigationOptions: {
-            title: "Campaign Details"
-        }
-    },
-    userOrganizationProfile:{
-        screen:userOrganizationProfile,
-        navigationOptions: {
-            title:"Organization Profile"
         }
     },
     pendingPage:{

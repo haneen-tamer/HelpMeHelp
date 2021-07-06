@@ -22,25 +22,48 @@ export default function Start({ navigation }) {
   const [modal, setModal] = useState(false); 
   const [username,setUsername]=useState(null);
   const [password,setPassword]=useState(null);
-  const [loginInfo,setLoginIfo]=useState([
-    {username:"org",password:"hi",role:"org",id:'1'},
-    {username:"user",password:"bye",role:"user",id:'2'},
-    {username:"Ad",password:"min",role:"admin",id:'3'},
-  ]);
+  const [role,setRole]=useState(null);
   const [loginError,setLoginError]=useState('');
   const [found,setFound]=useState(false);
   
 
     
     const loginBtn=()=>{
+
       setLoginError('')
-      if (username == "Ad" && password == "min")
+      // if (username == "Ad" && password == "min")
+      // {
+      //   return navigation.navigate('AdminHome',{username: "Ad", password: "min", role: "admin", id: '3'});
+      // }
+      if(username.substring(0,2)=="U_")
       {
-        return navigation.navigate('AdminHome',{username: "Ad", password: "min", role: "admin", id: '3'});
-      }
-      if(username=="user" && password=="bye" )
-      {
-        return navigation.navigate('DrawNav');
+        fetch("http://10.0.2.2:8080/UserLogin",{
+          method:"post",
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify({     
+            username,
+            password
+        })
+      })
+        .then(res=>res.json())
+        .then(json =>{
+          setRole(json.role)
+           if(role=="user")
+            {
+              
+              navigation.navigate('DrawNav',{User_Username:username});
+            }
+          else if (role=="admin")
+          {
+            navigation.navigate('AdminHome',{AdminUsername:username});
+          }
+          else if(role=="false")
+          {
+            setLoginError('Invalid Username or Password. Please try again')
+          }
+        })
       }
       else
       {

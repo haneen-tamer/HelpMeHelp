@@ -7,16 +7,61 @@ import { globalStyles } from './../shared/globalStyles';
 
 
 export default function App({navigation}) {
-    const [organization, setOrganization] = useState([
-         {Name:'Resala',class:'A',subClass:['dd','dddd'],purpose:'ffffff',id:'1',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',organizationType:'clothes',userStatus:'Approved',website:'ddd',hotline:'001221',facebook:'ss',instagram:'dd',twitter:'dddd'},
-         {Name:'ddddd',class:'A',subClass:['dd','dddd'],purpose:'ffffff',id:'2',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',organizationType:'clothes',userStatus:'Approved',website:'ddd',hotline:'001221',facebook:'ss',instagram:'dd',twitter:'dddd'},
-         {Name:'sssss',class:'A',subClass:['dd','dddd'],purpose:'ffffff',id:'1',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',organizationType:'clothes',userStatus:'Approved',website:'ddd',hotline:'001221',facebook:'ss',instagram:'dd',twitter:'dddd'},
-         {Name:'ddddd',class:'A',subClass:['dd','dddd'],purpose:'ffffff',id:'2',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',organizationType:'clothes',userStatus:'Approved',website:'ddd',hotline:'001221',facebook:'ss',instagram:'dd',twitter:'dddd'},
-         {Name:'Redddsala',class:'A',subClass:['dd','dddd'],purpose:'ffffff',id:'1',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',organizationType:'clothes',userStatus:'Approved',website:'ddd',hotline:'001221',facebook:'ss',instagram:'dd',twitter:'dddd'},
-         {Name:'ddddd',class:'A',subClass:['dd','dddd'],purpose:'ffffff',id:'2',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',organizationType:'clothes',userStatus:'Approved',website:'ddd',hotline:'001221',facebook:'ss',instagram:'dd',twitter:'dddd'},
-        
-   ])
-      
+   
+    const [orgOwner,setOrgOwner]=useState(navigation.getParam('orgUsername'));
+    const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('User_Username'));
+    const [userData,setUserData]=useState(null)
+    const [ownerProfile,setOwnerProfile]=useState("org");
+    let ID=navigation.getParam('ID');
+    const [userCampStatus,setUserCampStatus]=useState(null);
+    if(orgOwner==null)
+    {
+        setOrgOwner(navigation.getParam('U_username'));
+        setOwnerProfile("user");
+    }
+
+    
+        useEffect(() => {
+            if(ownerProfile=="user")
+            {
+            fetch("http://10.0.2.2:8080/userProfile/"+username, {
+              method: 'GET',
+          })
+          .then(res=>res.json())
+          .then(json => {
+            setUserData(json)
+          })
+          .catch((error) => {
+              console.error(error);
+          });
+        }
+        }, []);
+    console.log(userData)
+
+    useEffect(() => {
+        fetch("http://10.0.2.2:8080/userCheckCampaginStatus/"+username+"/"+ID, {
+          method: 'GET',
+      })
+      .then(res=>res.json())
+      .then(json => {
+        setUserCampStatus(json.status)
+      })
+      .catch((error) => {
+          console.error(error);
+      });
+    }, []);
+
+    const goToPage=()=>
+    {
+        if(ownerProfile=="org")
+        {
+           return navigation.navigate('userOrganizationProfile',{orgOwner})
+        }
+        else
+        {
+            return  navigation.navigate('orgUserProfile',{data:userData})
+        }
+    }
     return (
         
         <ScrollView>
@@ -54,25 +99,16 @@ export default function App({navigation}) {
 
            <View style={globalStyles.columnAlginStyle}>
             <Text style={globalStyles.headerStyle}>{navigation.getParam('name')}  </Text> 
-            {
-                <FlatList
-                    keyExtractor={(item) => item.id} 
-                    data={organization} 
-                    renderItem={({ item }) => ( 
-                     navigation.getParam('organizationName')===item.Name &&
-                    <TouchableOpacity  onPress={()=>{navigation.navigate('userOrganizationProfile',item);}}>
-                    <Text style={styles.OrganizationStyles}>{navigation.getParam('organizationName')}</Text>
-                    </TouchableOpacity >
-                        
-                    )}
-            />
-            }
-        
+
+            <TouchableOpacity  onPress={goToPage}>
+            <Text style={styles.OrganizationStyles}>{orgOwner}</Text>
+            </TouchableOpacity >
 
             <View style={globalStyles.lineStyle}></View>
             </View>
            
-            <Text style={styles.circuleStyle}>   {navigation.getParam('month')} {'\n'}    {navigation.getParam('start')}</Text>
+            {/* <Text style={styles.circuleStyle}>   {navigation.getParam('month')} {'\n'}    {navigation.getParam('start')}</Text> */}
+            <Text style={styles.circuleStyle}>   {navigation.getParam('startDate').substring(8,10)} {"/"}{navigation.getParam('startDate').substring(5,7)} {'\n'}     {navigation.getParam('startDate').substring(0,4)}</Text>
             
         </View>
      
@@ -86,7 +122,7 @@ export default function App({navigation}) {
           <Text style={globalStyles.smalllHeaderStyle}> Address </Text>
         
         </View>
-        <Text style={globalStyles.smallTextStyle}>{navigation.getParam('adress')}</Text>
+        <Text style={globalStyles.smallTextStyle}>{navigation.getParam('address')}</Text>
 
         <View style={globalStyles.iconTextStyle}>
             <Image
@@ -97,7 +133,7 @@ export default function App({navigation}) {
         
         </View>
         
-        <Text style={globalStyles.smallTextStyle}>{navigation.getParam('end')}</Text>
+        <Text style={globalStyles.smallTextStyle}>{navigation.getParam('endDate').substring(0,10)}</Text>
 
         <View style={globalStyles.iconTextStyle}>
             <Image
@@ -108,7 +144,7 @@ export default function App({navigation}) {
         
         </View>
         
-        <Text style={globalStyles.smallTextStyle}>{navigation.getParam('descreption')}</Text>
+        <Text style={globalStyles.smallTextStyle}>{navigation.getParam('description')}</Text>
 
         <View style={globalStyles.iconTextStyle}>
             <Image
@@ -128,26 +164,26 @@ export default function App({navigation}) {
             borderRadius={8}  />
         </View>
 
-        <View style={globalStyles.iconTextStyle}>
+        {/* <View style={globalStyles.iconTextStyle}>
             <Image
             style={globalStyles.bottomiconsStyle}
             source={require('../images/information.png')}
             />
            <Text style={globalStyles.smalllHeaderStyle}> Tags</Text>
         
-        </View>
+        </View> */}
         
-        <View style={globalStyles.rowAlginStyle}>
+        {/* <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.campaignClassStyle}>{navigation.getParam('class')}</Text>
             <Text style={globalStyles.campaignClassStyle}>{navigation.getParam('subClass')}</Text>
             <Text style={globalStyles.campaignClassStyle}>{navigation.getParam('donationType')}</Text>
-        </View>
+        </View> */}
 
         </View>
         
         
         {
-            navigation.getParam('userStatus')!=='Approved' &&
+            userCampStatus==='null' &&
             <View style={globalStyles.buttonAlignStyle}>
             <TouchableOpacity style={globalStyles.greenButtonStyle}> 
             <Text style={globalStyles.textStyle}>Join</Text>
@@ -156,6 +192,13 @@ export default function App({navigation}) {
             <TouchableOpacity style={globalStyles.blueButtonStyle}> 
             <Text style={globalStyles.textStyle}>Donate Now</Text>
             </TouchableOpacity>
+          
+        </View>
+        }
+         {
+            userCampStatus==='Pending' &&
+            <View style={globalStyles.buttonAlignStyle}>
+            <Text style={globalStyles.profileTextStyle}>Your request to join is pending</Text>
           
         </View>
         }

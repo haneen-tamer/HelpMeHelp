@@ -4,7 +4,7 @@ import { globalStyles } from './globalStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 
-export default function CategoryPicker({onChangeCatgory,onChangeSubCatgory}){
+export default function CategoryPicker({onChangeCatgory,onChangeSubCatgory,value}){
 
     
     return(
@@ -55,10 +55,11 @@ export default function CategoryPicker({onChangeCatgory,onChangeSubCatgory}){
                     labelStyle={{fontSize:20,color:"#000"}}
                     dropDownStyle={{backgroundColor: '#fafafa'}}
                     onChangeItem={item =>{ onChangeCatgory(item.parent.label),onChangeSubCatgory(item.label)}}
-                    placeholder="Category                       *"
+                    placeholder={value}
                     placeholderStyle={{fontWeight:"bold",fontSize:25,color:"lightslategrey"}}
                     selectedLabelStyle={{fontWeight:"bold",fontSize:25,color:"#000"}}
                     arrowSize={20}
+                    // "Category                       *"
                 />
     </View>
     )}

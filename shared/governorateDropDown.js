@@ -4,7 +4,7 @@ import { globalStyles } from './globalStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 
-export default function GovernoratePicker({onChange}){
+export default function GovernoratePicker({onChange,value}){
 
     
     return(
@@ -30,10 +30,11 @@ export default function GovernoratePicker({onChange}){
           labelStyle={{fontSize:20,color:"#000"}}
           dropDownStyle={{backgroundColor: '#fafafa'}}
           onChangeItem={item => onChange(item.label)}
-          placeholder="Choose Governorate    *"
+          placeholder={value}
           placeholderStyle={{fontWeight:"bold",fontSize:25,color:"lightslategrey"}}
           selectedLabelStyle={{fontWeight:"bold",fontSize:25,color:"#000"}}
           arrowSize={20}
+        //   "Choose Governorate    *"
       />
     </View>
     )}

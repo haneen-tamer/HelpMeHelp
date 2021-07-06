@@ -1,21 +1,45 @@
 import { StatusBar } from 'expo-status-bar';
-import React ,{ useState } from 'react';
+import React ,{ useState,useEffect } from 'react';
 import { StyleSheet, Text, View,Button,FlatList,TouchableOpacity,ScrollView,SafeAreaView} from 'react-native';
 import CampaignItem from '../shared/CampaignItem'
 import {globalStyles} from '../shared/globalStyles'
 import CreateCampaignBtn from '../shared/CreateCampaignBtn';
-
-
 export default function App({navigation}) {
-  const [campgin, setCampagin] = useState([
-    {name:'Ramdan Iftar',organizationName:'Resala',start:'8/4/2021',end:'10/4/2021',class:'A',subClass:['dd','dddd'],progress:7,target:7,status:'completed',id:'1',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
-    {name:'qqq',organizationName:'ggg',start:'8/4/2021',end:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:1,target:7,status:'ongoing',id:'2',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
-    {name:'qqq',organizationName:'ggg',start:'8/4/2021',end:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:3,target:7,status:'completed',id:'3',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
-    {name:'qqq',organizationName:'ggg',start:'8/4/2021',end:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:4,target:7,status:'ongoing',id:'4',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
-    {name:'qqq',organizationName:'ggg',start:'8/4/2021',end:'10/4/2021',class:'B',subClass:['dd','dddd'],progress:5,target:7,status:'completed',id:'5',month:'April',adress:'fhifhoiojfoije',descreption:'kskskskksks',donationType:'clothes',userStatus:'Approved'},
-  ])
-  //const [show,notShow]=useState(false);
-  const [filters,setFilter]=useState(campgin)
+  const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('OrgUsername'));
+  const [campgin, setCampagin] = useState(null)
+  const [filters,setFilter]=useState(null)
+
+  const [found,setFound]=useState(false);
+  var data = new Array();
+
+useEffect(() => {
+  setFound(true);
+  console.log("here")
+    fetch("http://10.0.2.2:8080/orgCamp/"+username, {
+      method: 'GET',
+  })
+  .then(res=>res.json())
+  .then(json => {
+    setCampagin(json)
+      setFilter(campgin)
+    // if(found)
+    // {
+    //   setCampagin(json)
+    //   setFilter(campgin)
+    //  // console.log(campgin)
+    // }
+    
+  })
+  .catch((error) => {
+      console.error(error);
+  });
+}, []);
+
+// console.log(campgin)
+
+// console.log("++")
+// console.log(filters)
+
   const ongoingFilter=()=>{
     setFilter(prevF=>
       {return campgin.filter(c => 
@@ -30,6 +54,7 @@ export default function App({navigation}) {
   const allFilter=()=>{
     setFilter(campgin)
   }
+
   
   return (
 
@@ -55,23 +80,20 @@ export default function App({navigation}) {
       </TouchableOpacity>
 
 
-     
-
       </View>
       
-
+{found &&
       <View style={styles.flatListStyle}>
         <FlatList
         keyExtractor={(item) => item.id} 
         data={filters} 
         renderItem={({ item }) => ( 
-          <TouchableOpacity style={styles.container} onPress={()=>navigation.navigate('userCampaignDetails',item)}>
          <CampaignItem item={item} addUser={true} navigation={navigation}/>
-         </TouchableOpacity>
         )}
         />
         
     </View>
+}
     </ScrollView>
     <CreateCampaignBtn navigation={navigation}/>
     
@@ -96,3 +118,26 @@ const styles = StyleSheet.create({
   },
  
 });
+
+
+  //console.log(username);
+//   async function getDetails() {
+//     const configs = {
+//         methods: 'GET',
+//     };
+//     const response = await fetch("http://10.0.2.2:8080/orgCamp/"+username, configs)
+//     const data = await response.json();
+//    console.log(data)
+//     setCampagin(data)
+//     console.log("+++++++++")
+//     console.log(campgin)
+//     setFound(true);
+// }
+
+//   useEffect(() => {
+//     getDetails();
+//   }, []);
+
+
+
+  //const [show,notShow]=useState(false);

@@ -18,13 +18,15 @@ export default function CampaignItem({navigation,item,addUser}){
     else{
         col=styles.blueStatus;
     }
+    //console.log(start)
+    
     
     return(
        
 <View style={styles.container}>
         
         { addUser &&
-         <TouchableOpacity onPress={()=>navigation.navigate('applicantRequests')}>
+         <TouchableOpacity onPress={()=>navigation.navigate('applicantRequests',{ID:item.ID})}>
             <Image
             style={styles.addImageStyle}
             source={require('../images/add-group.png')}
@@ -39,22 +41,21 @@ export default function CampaignItem({navigation,item,addUser}){
 
         <Text style={col} >{item.name}</Text>
         
-        <Text style={styles.item}>{item.organizationName}</Text>
+        <Text style={styles.item}>{item.ownerID}</Text>
        
 
         <View style={styles.startEndStyle}>
         <Text style={styles.item}>Start</Text>
-        <Text style={styles.item}>{item.start}</Text>
+        <Text style={styles.item}>{item.startDate.substring(0,10)}</Text>
         <Text style={styles.item}>End</Text>
-        <Text style={styles.item}>{item.end}</Text>
-
+        <Text style={styles.item}>{item.endDate.substring(0,10)}</Text>
         
         </View>
 
-        <View style={styles.classSubclassStyle}>
+        {/* <View style={styles.classSubclassStyle}>
         <Text style={globalStyles.campaignClassStyle}>{item.class}</Text>
         <Text style={globalStyles.campaignClassStyle}>{item.subClass}</Text>
-        </View>
+        </View> */}
 
         <View style={styles.progressBarStyle}>
         <Progress.Bar progress={item.progress/item.target}

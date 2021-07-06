@@ -1,16 +1,21 @@
-import { createStackNavigator } from 'react-navigation-stack';
+import { createStackNavigator, HeaderTitle } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import orgHome from '../OrganizationsForms/orgHome';
 import applicantRequests from '../OrganizationsForms/applicantRequests';
 import orgUserProfile from '../OrganizationsForms/orgUserProfile';
+import Header from '../shared/header';
+import Title from '../shared/Title';
+import React from 'react';
 
 const screens = {
     orgHome:{
         screen: orgHome,
-        navigationOptions: {
-            title: "Home Page",
-            headerLeft: null
-        }
+        navigationOptions: ({ navigation }) => {
+            return {
+                 headerLeft: () => <Header navigation={navigation}/>,
+                headerTitle:()=><Title title={"Home Page"}/>,
+            }
+          },
     },
     applicantRequests:{
         screen:applicantRequests,
@@ -23,7 +28,7 @@ const screens = {
     orgUserProfile:{
         screen:orgUserProfile,
         navigationOptions: {
-            title: " User Profile",
+            title: " Applicant Profile",
            
         }
         

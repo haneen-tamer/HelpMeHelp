@@ -31,12 +31,7 @@ const forms =
     DrawNav: {
         screen: DrawNav,
         navigationOptions: {
-            headerLeft: () => <Header />,
-            headerRight: () => <Username />,
-            gestureEnabled: true,
-            title: "",
-            // headerStyle: { height: 30},
-            // headerTitle: () => <Header />,
+            header: null
 
         }
     },
@@ -53,13 +48,11 @@ const forms =
     orgDrawerNav: {
         screen: orgDrawerNav,
         navigationOptions: {
-            headerLeft: () => <Header />,
-            headerRight: () => <Username />,
-            gestureEnabled: false,
-            title: "",
-           
+            header: null
+        },
+       headerMode: 'none'
 
-        }
+        
     },
     userRegister: {
         screen: UserReg,
@@ -75,6 +68,12 @@ const forms =
     },
     CampaignsIjoined: {
         screen: CampaignsIjoined,
+        navigationOptions: ({ navigation }) => {
+            return {
+                 headerLeft: () => <Header navigation={navigation}/>,
+                headerTitle:()=><Title title={"Campaigns You Joined"}/>,
+            }
+          },
        
     },
     userCampaignDetails:{

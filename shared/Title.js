@@ -2,15 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 
-export default function Username(){
-
-    const drawMenu = () => {
-        //nav.openDrawer();
-    }
-
+export default function Title({title}){
     return (
         <View /* style={styles.header} */>
-            <Text style={styles.name} Text> username</Text>
+            <Text style={styles.headerText} Text> {title}</Text>
         </View>
     );
 }
@@ -21,10 +16,11 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    name: {
-        position: 'absolute',
-        right: 16,
-        bottom: 10,
+    headerText: {
+        fontWeight: 'bold',
         fontSize: 20,
-    },
+        color: '#333',
+        letterSpacing: 1,
+        marginLeft:"30%"
+      },
 });

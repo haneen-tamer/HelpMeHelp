@@ -1,9 +1,49 @@
-import React from 'react';
+import React ,{ useState,useEffect }from 'react';
 import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity , ScrollView} from 'react-native';
 import ProfileCard from './../shared/profileCard';
 
 export default function App({navigation}) {
-
+  const [gov,setGov]=useState(null);
+  const [contributioNumber,setContributioNumber]=useState(0);
+  const [userData,setUserDat]=useState(navigation.getParam('data'))
+  const [found,setFound]=useState(false);
+  const [found2,setFound2]=useState(false);
+  let ID=userData.Governorate;
+  let user_username=userData.userName;
+  //console.log(ID)
+  useEffect(() => {
+    setFound(true);
+      fetch("http://10.0.2.2:8080/userGov/"+ID, {
+        method: 'GET',
+    })
+    .then(res=>res.json())
+    .then(json => {
+      //console.log(json.gov)   
+      setGov(json.gov)
+    
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+  }, []);
+  
+  useEffect(() => {
+    setFound2(true);
+      fetch("http://10.0.2.2:8080/userCampagins/"+user_username, {
+        method: 'GET',
+    })
+    .then(res=>res.json())
+    .then(json => {   
+      //console.log(json)
+      //console.log(json.length)
+      setContributioNumber(json.ids)
+      
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+  }, []);
+  //console.log(contributioNumber)
   return (
     <ScrollView>
     <View style={styles.container}>
@@ -13,21 +53,25 @@ export default function App({navigation}) {
         source={require('../images/user.png')}
         />
         </View>
+        { found && found2 &&
         <View style={styles.textAlignStyle}>
+        
 
-        <ProfileCard title={'Full Name'} value={navigation.getParam('name')}/>
+        <ProfileCard title={'Full Name'} value={userData.name}/>
 
-        <ProfileCard title={'Username'} value={navigation.getParam('username')}/>
+        <ProfileCard title={'Username'} value={userData.userName}/>
 
-        <ProfileCard title={'Email Address'} value={navigation.getParam('email')}/>
+        <ProfileCard title={'Email Address'} value={userData.email}/>
 
-        <ProfileCard title={'Age'} value={navigation.getParam('age')}/>
+        <ProfileCard title={'Age'} value={userData.age}/>
 
-        <ProfileCard title={'Governorate'} value={navigation.getParam('governorate')}/>
+        <ProfileCard title={'Governorate'} value={gov}/>
 
-        <ProfileCard title={'Contribution'} value={navigation.getParam('contribution')}/>
+        <ProfileCard title={'Contribution'} value={contributioNumber}/>
+          
         
         </View>
+}
     
     </View>
      

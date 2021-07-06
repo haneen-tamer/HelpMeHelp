@@ -2,7 +2,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import MyCampaigns from '../forms/MyCampaigns';
 import UserCreateCampaign from '../forms/UserCreateCampaign';
-import userCampaignDetails from '../forms/userCampaignDetails'
+import userCampaignDetails from '../forms/userCampaignDetails';
 
 const screens = {
     MyCampaigns:{

@@ -28,7 +28,8 @@ export default function App({navigation}) {
        
             <View style={globalStyles.imageAlginStyle}>
 
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress={()=>navigation.navigate('chat',{username:'haneen'})}>
                     <Image
                     style={globalStyles.topIconsStyle}
                     source={require('../images/chat.png')}/>

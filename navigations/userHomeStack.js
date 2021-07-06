@@ -3,6 +3,7 @@ import { createAppContainer } from 'react-navigation';
 import userHome from '../forms/userHome';
 import seeAllCampaigns from '../forms/seeAllCampaigns'
 import userCampaignDetails from '../forms/userCampaignDetails'
+import chat from '../forms/chat';
 
 const screens = {
     home:{
@@ -17,6 +18,9 @@ const screens = {
     },
     userCampaignDetails:{
         screen: userCampaignDetails,
+    },
+    chat:{
+        screen:chat,
     }
 };
 

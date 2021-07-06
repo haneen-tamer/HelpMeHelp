@@ -10,8 +10,18 @@ export default function App({navigation}) {
   const [found2,setFound2]=useState(false);
   let ID=userData.Governorate;
   let user_username=userData.userName;
-  //console.log(ID)
+  var userPage =userData.Governorate;
+  console.log(userPage)
+  
   useEffect(() => {
+    if(typeof userPage==='string')
+  {
+ 
+    setGov(userData.Governorate);
+    setFound(true);
+  }
+   else
+    {
     setFound(true);
       fetch("http://10.0.2.2:8080/userGov/"+ID, {
         method: 'GET',
@@ -25,6 +35,7 @@ export default function App({navigation}) {
     .catch((error) => {
         console.error(error);
     });
+    }
   }, []);
   
   useEffect(() => {
@@ -67,7 +78,7 @@ export default function App({navigation}) {
 
         <ProfileCard title={'Governorate'} value={gov}/>
 
-        <ProfileCard title={'Contribution'} value={contributioNumber}/>
+        <ProfileCard title={'Contribution'} value={contributioNumber.length}/>
           
         
         </View>

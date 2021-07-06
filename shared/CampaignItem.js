@@ -9,6 +9,11 @@ import {globalStyles} from './globalStyles'
 
 
 export default function CampaignItem({navigation,item,addUser}){
+    const [orgOwner,setOrgOwner]=useState(item.orgUsername);
+    if(orgOwner==null)
+    {
+        setOrgOwner(item.U_username);
+    }
 
     // const navigation = useNavigation(); 
     let col;
@@ -41,7 +46,7 @@ export default function CampaignItem({navigation,item,addUser}){
 
         <Text style={col} >{item.name}</Text>
         
-        <Text style={styles.item}>{item.ownerID}</Text>
+        <Text style={styles.item}>{orgOwner}</Text>
        
 
         <View style={styles.startEndStyle}>

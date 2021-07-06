@@ -1,11 +1,13 @@
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
 
-import UserProfile from '../forms/userProfile';
+
 import UserHome from '../forms/userHome';
 import CampaignsIjoined from '../forms/CampaignsIjoined';
 import myCampaignsStack from './myCampaignsStack';
 import userHomeStack from './userHomeStack';
+import userProfileStack from './userProfileStack'
+import userCampagineStack from './userCampaignsStack';
 import Start from '../forms/start';
 import Logout from '../forms/logout';
 import { Alert, TouchableOpacity } from 'react-native';
@@ -18,13 +20,13 @@ const DrawScreens = {
         }
     },
     userProfile: {
-        screen: UserProfile,
+        screen: userProfileStack,
         navigationOptions: {
             title: "My Profile"
         }
     },
     userCampaigns: {
-        screen: CampaignsIjoined,
+        screen: userCampagineStack,
         navigationOptions: {
             title: "Campaigns I joined"
         }

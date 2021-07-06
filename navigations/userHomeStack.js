@@ -18,9 +18,15 @@ const screens = {
     },
     seeAll:{
         screen: seeAllCampaigns,
+        navigationOptions: {
+            title: "All Campaigns"
+        }
     },
     userCampaignDetails:{
         screen: userCampaignDetails,
+        navigationOptions: {
+            title: ""
+        }
     }
 };
 

@@ -8,7 +8,6 @@ export default function App({navigation}) {
   const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('OrgUsername'));
   const [campgin, setCampagin] = useState(null)
   const [filters,setFilter]=useState(null)
-
   const [found,setFound]=useState(false);
   var data = new Array();
 
@@ -21,14 +20,7 @@ useEffect(() => {
   .then(res=>res.json())
   .then(json => {
     setCampagin(json)
-      setFilter(campgin)
-    // if(found)
-    // {
-    //   setCampagin(json)
-    //   setFilter(campgin)
-    //  // console.log(campgin)
-    // }
-    
+    setFilter(campgin)   
   })
   .catch((error) => {
       console.error(error);

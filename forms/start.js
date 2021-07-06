@@ -34,9 +34,9 @@ export default function Start({ navigation }) {
     
     const loginBtn=()=>{
       setLoginError('')
-      if (item.role==="admin")
+      if (username=="Ad" && password=="min")
       {
-        return navigation.navigate('AdminHome',item);
+        return navigation.navigate('AdminHome',{username:"Ad",password:"min",role:"admin",id:'3'});
       }
       if(username=="user" && password=="bye" )
       {

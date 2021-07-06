@@ -2,16 +2,16 @@ import React,{ useState }  from 'react';
 import {StyleSheet,TouchableOpacity,View,Text} from 'react-native';
 import {globalStyles} from './globalStyles';
 
-export default function hotlineSearchCard({hotline}){
+export default function HotlineSearchCard({hotline}){
 
     return(
         <View style={styles.container}>
         
-        <View style={styles.col}>
-        <Text style={globalStyles.textStyle}>{hotline.number}</Text>
-        <Text style={globalStyles.smallTextStyle}>{hotline.orgName}</Text>
+        <View style={styles.row}>
+        <Text style={globalStyles.smalllHeaderStyle}>{hotline.number}</Text>
+        {(hotline.orgName!=null)&&(<Text style={styles.descText}>{hotline.orgName}</Text>)}
         </View>
-        <Text style={styles.textStyle}>{hotline.description}</Text>
+        <Text style={styles.descText}>{hotline.description}</Text>
         
         </View>
     );
@@ -19,23 +19,23 @@ export default function hotlineSearchCard({hotline}){
 
 const styles = StyleSheet.create({
     container:{
-        flexDirection:'row',
+        // flexDirection:'column',
         padding:15,
         marginBottom:10,
+        marginTop:10,
         borderRadius:8,
         borderWidth:2,
         borderColor:'#AACCDD',
     },
-    col:{
-        // flexDirection:'column',
+    row:{
+        flexDirection:'row',
         paddingRight:5,
         justifyContent:'space-between'
     },
     descText:{
-        fontSize:10,
-        paddingBottom:20,
-        marginLeft:40,
-        color:'#000'
+        fontSize:18,
+        paddingBottom:5,
+        color:'#000',
     },
 
 });

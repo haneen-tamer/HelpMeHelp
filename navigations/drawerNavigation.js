@@ -10,6 +10,7 @@ import Start from '../forms/start';
 import Logout from '../forms/logout';
 import { Alert, TouchableOpacity } from 'react-native';
 import AllChats from '../forms/AllChats';
+import Search from '../forms/Search';
 
 const DrawScreens = {
     userHome: {
@@ -22,6 +23,12 @@ const DrawScreens = {
         screen: UserProfile,
         navigationOptions: {
             title: "My Profile"
+        }
+    },
+    Search:{
+        screen: Search,
+        navigationOptions: {
+            title: "Search"
         }
     },
     AllChats: {

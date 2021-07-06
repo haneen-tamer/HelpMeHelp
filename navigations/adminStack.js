@@ -2,7 +2,8 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
 import AdminHome from '../forms/adminHome';
 import AddAdmin from '../forms/addAdmin';
-import AdminHeader from '../shared/adminHeader'
+import NewHotline from '../forms/newHotline';
+import AdminHeader from '../shared/adminHeader';
 import AdminOrgProfile from '../forms/adminOrgProfile';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -29,6 +30,12 @@ const screens = {
         screen: AllOrgs,
         navigationOptions: {
             title: "All organizations",
+        }
+    },
+    NewHotline:{
+        screen: NewHotline,
+        navigationOptions: {
+            title: "Add hotline",
         }
     },
 

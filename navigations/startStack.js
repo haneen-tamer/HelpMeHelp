@@ -31,8 +31,8 @@ const forms =
     DrawNav: {
         screen: DrawNav,
         navigationOptions: {
-            header: null
-
+            header: null,
+            gestureEnabled: false,
         }
     },
     AdminStack: {

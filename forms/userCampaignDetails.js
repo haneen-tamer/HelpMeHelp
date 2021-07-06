@@ -4,6 +4,7 @@ import { StyleSheet, Text, View,Button,FlatList,TouchableOpacity,ScrollView,Safe
 import CampaignItem from '../shared/CampaignItem'
 import * as Progress from 'react-native-progress';
 import { globalStyles } from './../shared/globalStyles';
+import { set } from 'react-native-reanimated';
 
 
 export default function App({navigation}) {
@@ -17,6 +18,10 @@ export default function App({navigation}) {
     if(orgOwner==null)
     {
         setOrgOwner(navigation.getParam('U_username'));
+        // if(orgOwner==null)
+        // {
+        //     setOrgOwner(username);
+        // }
         setOwnerProfile("user");
     }
 
@@ -24,7 +29,7 @@ export default function App({navigation}) {
         useEffect(() => {
             if(ownerProfile=="user")
             {
-            fetch("http://10.0.2.2:8080/userProfile/"+username, {
+            fetch("http://10.0.2.2:8080/userProfile/"+orgOwner, {
               method: 'GET',
           })
           .then(res=>res.json())
@@ -39,7 +44,7 @@ export default function App({navigation}) {
     console.log(userData)
 
     useEffect(() => {
-        fetch("http://10.0.2.2:8080/userCheckCampaginStatus/"+username+"/"+ID, {
+        fetch("http://10.0.2.2:8080/userCheckCampaginStatus/"+orgOwner+"/"+ID, {
           method: 'GET',
       })
       .then(res=>res.json())

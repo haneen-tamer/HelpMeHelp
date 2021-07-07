@@ -35,11 +35,11 @@ export default function Start({ navigation }) {
     const loginBtn=()=>{
 
       setLoginError('')
-      if (username == "Ad" && password == "min")
-      {
-        return navigation.navigate('AdminDrawer',{username: "Ad", password: "min", role: "admin", id: '3'});
-      }
-      if(username.substring(0,2)=="U_")
+      // if (username == "Ad" && password == "min")
+      // {
+      //   return navigation.navigate('AdminHome',{username: "Ad", password: "min", role: "admin", id: '3'});
+      // }
+      if(username.substring(0,4)!="Org_")
       {
         fetch("http://10.0.2.2:8080/UserLogin",{
           method:"post",

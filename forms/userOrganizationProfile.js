@@ -11,6 +11,9 @@ export default function App({navigation}) {
     const [data,setData]=useState(null);
     const [found,setFound]=useState(false);
     const [found2,setFound2]=useState(false);
+    const [website,setWebsite]=useState(true)
+    const [hotline,setHotline]=useState(true)
+    const [links,setLinks]=useState(true)
     let username=navigation.getParam('orgOwner');
 
     useEffect(() => {
@@ -27,11 +30,12 @@ export default function App({navigation}) {
         .catch((error) => {
             console.error(error);
         });
+        
       }, []);
 
       useEffect(() => {
         setFound2(true);
-        console.log("here")
+       // console.log("here")
           fetch("http://10.0.2.2:8080/orgCamp/"+username, {
             method: 'GET',
         })
@@ -43,7 +47,6 @@ export default function App({navigation}) {
             console.error(error);
         });
       }, []);
-
   return (
 <ScrollView>
    <View style={styles.container}>
@@ -106,15 +109,20 @@ export default function App({navigation}) {
             </View>
             <Text style={globalStyles.smallTextStyle}>{data.description}</Text>
 
+            {website &&
+          
             <View style={globalStyles.iconTextStyle}>
                 <Image
                 style={globalStyles.bottomiconsStyle}
                 source={require('../images/website.png')}
                 />
             <Text style={globalStyles.smalllHeaderStyle}>Website</Text>
-            
             </View>
+}
+            {website &&
             <Text style={globalStyles.smallTextStyle}>{data.website}</Text>
+           }
+
             <View style={globalStyles.iconTextStyle}>
                 <Image
                 style={globalStyles.bottomiconsStyle}
@@ -156,16 +164,21 @@ export default function App({navigation}) {
             </View>
             <Text style={globalStyles.smalllHeaderStyle}>{navigation.getParam('twitter')}</Text>
             </View>
-            <View style={globalStyles.iconTextStyle}>
-                <Image
-                style={globalStyles.bottomiconsStyle2}
-                source={require('../images/idea.png')}
-                />
-            <Text style={globalStyles.smalllHeaderStyle}>Hotline</Text>
+           
             
             </View> */}
+            {hotline &&
+              <View style={globalStyles.iconTextStyle}>
+                  <Image
+                  style={globalStyles.bottomiconsStyle2}
+                  source={require('../images/idea.png')}
+                  />
+              <Text style={globalStyles.smalllHeaderStyle}>Hotline</Text>
+              </View>
+            }
+            {hotline &&
             <Text style={globalStyles.smallTextStyle}>{data.hotline.toString()}</Text>
-
+            }
             <View style={globalStyles.iconTextStyle}>
             <Image
             style={globalStyles.bottomiconsStyle}
@@ -177,7 +190,7 @@ export default function App({navigation}) {
         
         <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.campaignClassStyle}>{data.category}</Text>
-            <Text style={globalStyles.campaignClassStyle}>{data.Subcategory}</Text>
+            <Text style={globalStyles.campaignClassStyle}>{data.subCategory}</Text>
         </View>
 
 

@@ -12,7 +12,7 @@ import CategoryPicker from '../shared/categoryDropDown';
 
 export default function App({navigation}) {
   const [changeImage,setChangeImage]=useState(false);
-  const [image,setImage]=useState(null);
+  const [image,setImage]=useState('image');
   const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('User_Username'));
   const [usernameError,setUsernameError]=useState('');
   const [name,setName]=useState(navigation.getParam('name'));
@@ -20,10 +20,11 @@ export default function App({navigation}) {
   const [email,setEmail]=useState(navigation.getParam('email'));
   const [governorate,setGovernorate]=useState(navigation.getParam('Governorate'));
   const [address,setAddress]=useState(navigation.getParam('address'));
-  const [country,setCountry]=useState(navigation.getParam('country'));
+  //const [country,setCountry]=useState(navigation.getParam('country'));
   const [age,setAge]=useState(navigation.getParam('age'));
-  const [birthday,setBirthday]=useState(navigation.getParam('birthday'));
+  const [birthday,setBirthday]=useState(navigation.getParam('birthday').substring(0,10));
  
+  console.log(birthday)
   useEffect(()=>{async()=>{
     if(Platform.OS !=='web')
     {
@@ -62,12 +63,12 @@ export default function App({navigation}) {
       body:JSON.stringify({
         name,    
         password,
-        country,
         Governorate:governorate,
         email,
         age,
         address,
-        birthday  
+        birthday,
+        image 
     })
   })
   .then(res=>res.json())
@@ -110,32 +111,32 @@ export default function App({navigation}) {
          
          
             <Text style={styles.titleStyle}>Username</Text>
-             <TextInputCard value={username} onChange={value=> setUsername(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
+             <TextInputCard value={username} onChange={value=> setUsername(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={username}/>
 
            <Text style={styles.titleStyle}>Name</Text>
-           <TextInputCard value={name} onChange={value=> setName(value)} allow_pass={false} allow_multi={true} allow_edit={false}/>
+           <TextInputCard value={name} onChange={value=> setName(value)} allow_pass={false} allow_multi={true} allow_edit={false} text={name}/>
 
            <Text style={styles.titleStyle}>Password</Text> 
-           <TextInputCard value={"*****"} onChange={value=> setPassword(value)} allow_pass={true} allow_multi={false} allow_edit={true}/>
+           <TextInputCard value={"*****"} onChange={value=> setPassword(value)} allow_pass={true} allow_multi={false} allow_edit={true} text={"*****"}/>
 
            <Text style={styles.titleStyle}>Email Address</Text>
-           <TextInputCard value={email} onChange={value=> setEmail(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
+           <TextInputCard value={email} onChange={value=> setEmail(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={email}/>
 
            <Text style={styles.titleStyle}>Age</Text>
-           <TextInputCard value={age.toString()} onChange={value=> setAge(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
+           <TextInputCard value={age.toString()} onChange={value=> setAge(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={age.toString()}/>
 
            <Text style={globalStyles.profileTitleStyle}>Birthday</Text>
-           <TextInputCard value={birthday.toString().substring(0,10)} onChange={value=> setBirthday(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
+           <TextInputCard value={birthday.toString().substring(0,10)} onChange={value=> setBirthday(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={birthday.toString().substring(0,10)}/>
 
-           <Text style={styles.titleStyle}>Choose Governorate</Text> 
+
+          <Text style={styles.titleStyle}>Address</Text>
+          <TextInputCard value={address} onChange={value=>setAddress(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={address}/>
+           
+          <Text style={styles.titleStyle}>Choose Governorate</Text> 
            <GovernoratePicker 
             onChange={value=> setGovernorate(value)}
             value={governorate}
             />
-
-          <Text style={styles.titleStyle}>Address</Text>
-          <TextInputCard value={address} onChange={value=>setAddress(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
-           
             <View style={styles.buttonstyle}>
                 <TouchableOpacity style={globalStyles.blueButtonStyle} onPress={saveChanged}> 
                   <Text style={globalStyles.textStyle} > Save </Text>
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
     
     width:"150%",
     marginLeft:"25%",
-    marginTop:"5%"
+    marginTop:"8%"
   }
 
 });

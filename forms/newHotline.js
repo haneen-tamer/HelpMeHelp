@@ -18,9 +18,9 @@ export default function App() {
 
     <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss();}}>
       <View style={styles.container}>
-        <View style={styles.head} > 
+        {/* <View style={styles.head} > 
           <Text style={styles.headText}> Add new hotline </Text> 
-        </View>
+        </View> */}
         
         <View style={styles.sectoin1} >
             <Text style={styles.textStyle}> Hotline: </Text>

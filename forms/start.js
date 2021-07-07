@@ -25,16 +25,20 @@ export default function Start({ navigation }) {
   const [role,setRole]=useState(null);
   const [loginError,setLoginError]=useState('');
   const [found,setFound]=useState(false);
-  
+  const [loginInfo, setLoginInfo] = useState([
+    {username: "Ad", password: "min", role: "admin", id: "3"}, 
+  ]);
+
+
 
     
     const loginBtn=()=>{
 
       setLoginError('')
-      // if (username == "Ad" && password == "min")
-      // {
-      //   return navigation.navigate('AdminHome',{username: "Ad", password: "min", role: "admin", id: '3'});
-      // }
+      if (username == "Ad" && password == "min")
+      {
+        return navigation.navigate('AdminDrawer',{username: "Ad", password: "min", role: "admin", id: '3'});
+      }
       if(username.substring(0,2)=="U_")
       {
         fetch("http://10.0.2.2:8080/UserLogin",{

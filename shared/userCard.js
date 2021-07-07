@@ -26,7 +26,7 @@ export default function ApplicantCard({item,navigation}){
         
             <View style={globalStyles.buttonstyle}>
                 
-                <TouchableOpacity style={styles.blackButtonStyle} onPress={() => Alert.alert("Completed")} > 
+                <TouchableOpacity style={styles.blackButtonStyle} onPress={() => navigation.navigate('UserProfile')} > 
                     <Text style={globalStyles.textStyle} > Make admin </Text>
                 </TouchableOpacity>
 

@@ -13,11 +13,19 @@ export default function chat({navigation}) {
         {id:'4', text:'bye', timeStamp:new Date('July 6, 2021 01:13:00'), by:'hagar'}
     ]);//useState<chatItem[]>([]);
     let username = navigation.getParam('username');
-    
-    useEffect(() => {
-      const socket = io("http://192.168.1.13:8080");
-  
-     }, []);
+    let [state,setState]=useState({chatMessage: "",chatMessages: []});
+    const socket = io("http://192.168.100.98:8080");
+    const connect=()=>{
+      socket.on("chat message", msg => {
+        setState({ chatMessages: [...state.chatMessages, msg] });
+      });
+    }
+    connect();
+
+     const submitChatMessage=()=> {
+      socket.emit("chat message", state.chatMessage);
+      
+    }
     // componentDidMount() 
     // { 
     //   this.socket = io("http://192.168.1.13:3000");
@@ -36,8 +44,11 @@ export default function chat({navigation}) {
       <View style={Styles.sendSection}>
         <TextInput
           style={Styles.chatTextInput}
-          value={chatInput}
-          onChangeText={(text) => setChatInput(text)}
+          value={state.chatMessage}
+          onSubmitEditing={() => submitChatMessage()}
+          onChangeText={chatMessage => {
+            setState({ chatMessage });
+          }}
         ></TextInput>
         <Button
           title="Send"
@@ -46,12 +57,14 @@ export default function chat({navigation}) {
               ...chatItemList,
               {
                 id: Math.random().toString(36).substring(7),
-                text: chatInput,
+                text: state.chatMessage,
                 timeStamp: Date.now(),
                 by: username,
               },
             ]);
-            setChatInput("");
+            //setChatInput("");
+            setState({ chatMessage: "" });
+            //state.chatMessage="";
           }}
         ></Button>
       </View>

@@ -25,9 +25,9 @@ export default function App() {
 
       
       <View style={styles.container}>
-        <View style={styles.head} > 
+        {/* <View style={styles.head} > 
           <Text style={styles.headText}> Organizations </Text> 
-        </View>
+        </View> */}
         <View style={styles.searchArea}>
           <TextInput style={styles.searchEntry} 
           placeholder='Search organization'

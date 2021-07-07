@@ -20,25 +20,18 @@ export default function App({navigation}) {
 
 
   const [orgs, setOrgs] = useState([
-    { name: 'resala', key: '1' },
-    { name: 'efgh', key: '2' },
-    { name: 'ijkl', key: '3' },
-    { name: 'mnop', key: '4' },
-    { name: 'qrst', key: '5' },
-    { name: 'uvwxyz', key: '6' },
-    { name: 'uvwxyz', key: '7' },
-    { name: 'uvwxyz', key: '8' },
-    { name: 'uvwxyz', key: '9' },
-    { name: 'uvwxyz', key: '10' },
-    { name: 'uvwxyz', key: '11' },
-    { name: 'uvwxyz', key: '12' },
+    { name: 'resala1', key: '1' },
+    { name: 'resala2', key: '2' },
+    { name: 'resala3', key: '3' },
+    { name: 'resala4', key: '4' },
+    { name: 'resala5', key: '5' },
   ]);
 
   return (
     
     <View style={styles.container_temp} >
       <View style={styles.head} > 
-          <Text style={styles.headText}> Home </Text> 
+          <Text style={styles.headText}> Organizations requests </Text> 
       </View>
 
       <ScrollView style={styles.container}>
@@ -100,15 +93,18 @@ const styles = StyleSheet.create({
   },
   head:{
       width: '100%',
-      height: '5%',
+      height: '7%',
       fontSize:20,
-      backgroundColor: 'lightgrey',
-      alignItems: 'center',
-      justifyContent: 'center'
+      // backgroundColor: 'lightgrey',
+      justifyContent: 'center',
+      borderBottomWidth: 1,
+      borderBottomColor: 'lightgrey'
     },
     headText:{
       fontSize: 15,
       fontWeight: 'bold',
+      marginLeft: 14,
+      marginTop: 15,
     }
 });
 

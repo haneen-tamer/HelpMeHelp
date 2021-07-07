@@ -24,9 +24,9 @@ export default function App() {
 
       
       <View style={styles.container}>
-        <View style={styles.head} > 
+        {/* <View style={styles.head} > 
           <Text style={styles.headText}> Add new admin </Text> 
-        </View>
+        </View> */}
         <View style={styles.searchArea}>
           <TextInput style={styles.searchEntry} 
           placeholder='Search user'
@@ -41,7 +41,7 @@ export default function App() {
             <FlatList
             data={user} 
             renderItem={({ item }) => (   
-                <UserCard item={item}/>
+                <UserCard item={item} navigation={navigation}/>
               )}
             />
           </View>
@@ -50,7 +50,7 @@ export default function App() {
       </View>
   );
 }
-
+   
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -62,8 +62,6 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '10%',
     backgroundColor: 'lightgrey',
-    //fontSize: 15,
-    //fontWeight: 'bold',
     paddingLeft: 10,
     paddingRight: 10,
     borderRadius: 5,

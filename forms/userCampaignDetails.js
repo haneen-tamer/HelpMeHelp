@@ -8,7 +8,7 @@ import { set } from 'react-native-reanimated';
 
 
 export default function App({navigation}) {
-   
+   const [userOwner,setUserOwner]=useState(navigation.getParam('U_username'))
     const [orgOwner,setOrgOwner]=useState(navigation.getParam('orgUsername'));
     const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('User_Username'));
     const [userData,setUserData]=useState(null)
@@ -17,16 +17,16 @@ export default function App({navigation}) {
     const [userCampStatus,setUserCampStatus]=useState(null);
     if(orgOwner==null)
     {
-        setOrgOwner(navigation.getParam('U_username'));
-        console.log(orgOwner)
-        // if(orgOwner==null)
-        // {
-        //     setOrgOwner(username);
-        // }
-        setOwnerProfile("user");
+       if(userOwner!=null)
+       {
+        setOrgOwner(userOwner);  
+       }
+       else
+       {
+        setOrgOwner(username);
+       }
+       setOwnerProfile("user");
     }
-
-    
         useEffect(() => {
             if(ownerProfile=="user")
             {

@@ -11,7 +11,7 @@ export default function TextInputCard({value,onChange,allow_pass,allow_multi,all
 
         <View style={globalStyles.rowAlginStyle}>
 
-        <TextInput style={styles.dataStyle}
+        <TextInput style={globalStyles.RegitserdataStyle}
           placeholderTextColor="lightslategrey"
           placeholder={value}
           underlineColorAndroid="transparent"
@@ -25,19 +25,7 @@ export default function TextInputCard({value,onChange,allow_pass,allow_multi,all
     )}
 
 const styles = StyleSheet.create({
-    dataStyle:{
-        fontSize:25,
-        fontWeight:"bold",
-        color:'#000',
-        backgroundColor:'lightgrey',
-       // borderBottomWidth:1,
-        margin:15,
-        height:'65%',
-        width:'80%',
-        marginBottom:30,
-        borderColor:"#64CA80",
-        borderWidth:1
-      },
+  
    
     
   

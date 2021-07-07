@@ -54,7 +54,7 @@ const forms =
     userRegister: {
         screen: UserReg,
         navigationOptions: {
-           
+            title:"Registration Form"
         }
     },
     orgRegister: {

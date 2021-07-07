@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { StyleSheet, ScrollView, TextInput, View, Button, FlatList} from 'react-native';
+import io from "socket.io-client";
 import ChatItem from '../shared/ChatItem';
 import Header from '../shared/header';
 
@@ -12,6 +13,15 @@ export default function chat({navigation}) {
         {id:'4', text:'bye', timeStamp:new Date('July 6, 2021 01:13:00'), by:'hagar'}
     ]);//useState<chatItem[]>([]);
     let username = navigation.getParam('username');
+    
+    useEffect(() => {
+      const socket = io("http://192.168.1.13:8080");
+  
+     }, []);
+    // componentDidMount() 
+    // { 
+    //   this.socket = io("http://192.168.1.13:3000");
+    // }
     return (
     <View style={Styles.container}>
       <FlatList

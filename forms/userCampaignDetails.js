@@ -18,6 +18,7 @@ export default function App({navigation}) {
     if(orgOwner==null)
     {
         setOrgOwner(navigation.getParam('U_username'));
+        console.log(orgOwner)
         // if(orgOwner==null)
         // {
         //     setOrgOwner(username);
@@ -41,7 +42,7 @@ export default function App({navigation}) {
           });
         }
         }, []);
-    console.log(userData)
+    //console.log(userData)
 
     useEffect(() => {
         fetch("http://10.0.2.2:8080/userCheckCampaginStatus/"+orgOwner+"/"+ID, {

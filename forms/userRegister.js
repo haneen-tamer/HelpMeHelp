@@ -31,7 +31,7 @@ export default function App({navigation}) {
   const [governorate,setGovernorate]=useState('');
   const [govError,setGovError]=useState('');
   
-  const [age, setAge]=useState('');
+  const [age, setAge]=useState(0);
   const [ageError,setAgeError]=useState('');
   
   const [address,setAddress]=useState('');
@@ -41,6 +41,7 @@ export default function App({navigation}) {
   const [birthdayError,setbirthdayError]=useState('');
 
   const [registerError,setRegisterError]=useState('');
+
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [date, setDate] = useState(new Date(Date.now()));
   //const [d, setD] = useState('');
@@ -88,7 +89,8 @@ export default function App({navigation}) {
 
   const sumbit=()=>
   {
-    setRegisterError('')
+    setAgeError('')
+    setUsernameError('')
       if(name===""){
         setNameError("Name filed  can not be empty")
       } else{
@@ -115,8 +117,11 @@ export default function App({navigation}) {
         setGovError('')
       }
       if(age==="") {
-        setAgeError("Description filed  can not be empty")
-      }else  {
+        setAgeError("age filed  can not be empty")
+      }else if(typeof age !=='integer') {
+        setAgeError("Age must be a number!")
+      }
+      else{
         setAgeError('')
       }
       if(address===""){
@@ -131,42 +136,49 @@ export default function App({navigation}) {
         setbirthdayError('')
       }
      
+     
 
       if(name!=="" && password!=="" && username!=="" && email!=="" && governorate!=="" &&
       age!=="" && address!=="" && birthday!=="")
       {
-        console.log(name)
-      fetch("http://10.0.2.2:8080/userSignUp",{
-        method:"post",
-        headers:{
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify({     
-          name,
-          userName:username,
-          password,
-          Governorate:governorate,
-          email,
-          age,
-          address,
-          birthday,
-          image
-      })
-    })
-    .then(res=>res.json())
-    .then(json =>{
-       if(json==true)
-        {
-          navigation.navigate('userHome',{User_Username:username});
-        }
-        else
-        {
-          setRegisterError('Username is already taken. Please try again')
-        }
-       
-    })
+       if(username.substring(0,4)!="Org_")
+       {
+          fetch("http://10.0.2.2:8080/userSignUp",{
+            method:"post",
+            headers:{
+              'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({     
+              name,
+              userName:username,
+              password,
+              Governorate:governorate,
+              email,
+              age,
+              address,
+              birthday,
+              image
+             })
+            })
+          .then(res=>res.json())
+          .then(json =>{
+            if(json==true)
+              {
+                navigation.navigate('userHome',{User_Username:username});
+              }
+              else
+              {
+                setUsernameError("Username is already taken, Please try again")
+              }
+            
+          })
        
       }
+      else
+      {
+        setUsernameError("Username is already taken, Please try again")
+      }
+    }
     }
 
   return (
@@ -291,7 +303,7 @@ const styles = StyleSheet.create({
     borderColor:'#64CA80',
     justifyContent:"flex-start",
     paddingTop:20,
-    paddingBottom:"10%",
+    paddingBottom:"20%",
   },
   textStyle:{
     fontSize:20,
@@ -374,7 +386,7 @@ requiredStyle:{
   color:"lightslategrey",
   fontSize:20,
   marginLeft:20,
-  height:'90%',
+  height:'100%',
   width:'80%',
   fontWeight:"bold",
   paddingTop:20

@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React ,{ useState,useEffect } from 'react';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import React ,{ useState,useEffect,Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,Button,Image,Platform,ScrollView,TextInput,FlatList} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
@@ -13,7 +14,7 @@ import { onChange } from 'react-native-reanimated';
 
 export default function App({navigation}) {
   const [changeImage,setChangeImage]=useState(false);
-  const [image,setImage]=useState(null);
+  const [image,setImage]=useState("No Image");
   
   const [username,setUsername]=useState('');
   const [usernameError,setUsernameError]=useState('');
@@ -35,11 +36,28 @@ export default function App({navigation}) {
   
   const [address,setAddress]=useState('');
   const [addressError,setAddressError]=useState('');
+
+  const [birthday,setBirthday]=useState('');
+  const [birthdayError,setbirthdayError]=useState('');
+
+  const [registerError,setRegisterError]=useState('');
+  const [isPickerShow, setIsPickerShow] = useState(false);
+  const [date, setDate] = useState(new Date(Date.now()));
+  //const [d, setD] = useState('');
+  const showPicker = () => {
+    setIsPickerShow(true);
+  };
+
+  const onChange = (event, value) => {
+    setDate(value);
+    setBirthday(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate())
+    if (Platform.OS === 'android') {
+      setIsPickerShow(false);
+    }
+  };
+  console.log(birthday)
+
   
- 
-
-
-
   useEffect(()=>{async()=>{
     if(Platform.OS !=='web')
     {
@@ -70,6 +88,7 @@ export default function App({navigation}) {
 
   const sumbit=()=>
   {
+    setRegisterError('')
       if(name===""){
         setNameError("Name filed  can not be empty")
       } else{
@@ -96,25 +115,60 @@ export default function App({navigation}) {
         setGovError('')
       }
       if(age==="") {
-        setDescriptionError("Description filed  can not be empty")
+        setAgeError("Description filed  can not be empty")
       }else  {
         setAgeError('')
       }
       if(address===""){
         setAddressError("Address filed can not be empty")
+      }else  {
+        setAddressError('')
+      }
+
+      if(birthday===""){
+        setbirthdayError("Birthday filed can not be empty")
+      }else{
+        setbirthdayError('')
       }
      
 
       if(name!=="" && password!=="" && username!=="" && email!=="" && governorate!=="" &&
-      age!=="" && address!=="")
+      age!=="" && address!=="" && birthday!=="")
       {
-        navigation.navigate('pendingPage',{
-          Image: image, UserName: username, Name: name, Email:email, Password:password, Address:address,
-          Governorate:governorate, Age:age
-        })
+        console.log(name)
+      fetch("http://10.0.2.2:8080/userSignUp",{
+        method:"post",
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({     
+          name,
+          userName:username,
+          password,
+          Governorate:governorate,
+          email,
+          age,
+          address,
+          birthday,
+          image
+      })
+    })
+    .then(res=>res.json())
+    .then(json =>{
+       if(json==true)
+        {
+          navigation.navigate('userHome',{User_Username:username});
+        }
+        else
+        {
+          setRegisterError('Username is already taken. Please try again')
+        }
+       
+    })
+       
       }
-      
-  }
+    }
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -132,6 +186,7 @@ export default function App({navigation}) {
                   style={globalStyles.headerImageStyle}
                   source={require('../images/CampaignImage.png')}
                 />
+                
               }
               <Text style={styles.textStyle}>Change Profile Picutre</Text>
 
@@ -142,44 +197,73 @@ export default function App({navigation}) {
                 <Text style={styles.requiredStyle}>* Required</Text>
             </View>
 
-            <TextInputCard value={" Username                          *" } onChange={value=> setUsername(value)} allow_pass={false} allow_multi={false}/>
+            <TextInputCard value={" Username                          *" } onChange={value=> setUsername(value)} allow_pass={false} allow_multi={false} allow_edit={true}/>
            
             <View style={globalStyles.rowAlginStyle}>
               <Text style={globalStyles.errorStyle}>{usernameError}</Text>
             </View>
             
-            <TextInputCard value={" Name                                 *"} onChange={value=> setName(value) } allow_pass={false} allow_multi={true}/>
+            <TextInputCard value={" Name                                 *"} onChange={value=> setName(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
 
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{nameError}</Text>
             </View>
 
-            <TextInputCard value={" Password                          *"} onChange={value=> setPassword(value)} allow_pass={true} allow_multi={false}/>
+            <TextInputCard value={" Password                          *"} onChange={value=> setPassword(value)} allow_pass={true} allow_multi={false} allow_edit={true}/>
       
             <View style={globalStyles.rowAlginStyle}>
                <Text style={globalStyles.errorStyle}>{passwordError}</Text>
             </View>
 
-            <TextInputCard value={"  Email Address                 *"} onChange={value=> setEmail(value)} allow_pass={false} allow_multi={true}/>
+            <TextInputCard value={"  Email Address                 *"} onChange={value=> setEmail(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
 
             <View style={globalStyles.rowAlginStyle}>
               <Text style={globalStyles.errorStyle}>{emailError}</Text>
             </View>
 
-           <GovernoratePicker onChange={value=> setGovernorate(value)}/>
+           <GovernoratePicker onChange={value=> setGovernorate(value)} value={"Select Governorate     *"}/>
 
             <View style={globalStyles.rowAlginStyle}>
                <Text style={globalStyles.errorStyle}>{govError}</Text>
             </View>
             
-            <TextInputCard value={" Age                                        *"} onChange={value=> setAge(value)} allow_pass={false} allow_multi={true}/>
+            <TextInputCard value={" Age                                      *"} onChange={value=> setAge(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
 
             <View style={globalStyles.rowAlginStyle}>
               <Text style={globalStyles.errorStyle}>{ageError}</Text>
             </View>
-        
-           
-            <TextInputCard value={" Address                            *"} onChange={value=> setAddress(value)} allow_pass={false} allow_multi={true}/>
+
+            {/* <TextInputCard value={" Birthday                                   *"} onChange={value=> setBirthday(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
+
+            
+
+                {/* <View style={styles.container}> */}
+                <View style={styles.pickedDateContainer}>
+                  <Text style={styles.pickedDate}>{date.toUTCString()}  </Text>
+                </View>
+
+                {!isPickerShow && (
+                  <View style={styles.buttonAlignStyle}>
+                     <TouchableOpacity style={styles.bluebuttonStyle} onPress={showPicker}> 
+                    <Text style={globalStyles.textStyle}>Select Birthday Date</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+
+                {isPickerShow && (
+                  <DateTimePicker
+                    value={date}
+                    mode={'date'}
+                    display={Platform.OS === 'ios' ? 'spinner' : 'spinner'}
+                    onChange={onChange}
+                    style={globalStyles.RegitserdataStyle}
+                  />
+                )}
+                <View style={globalStyles.rowAlginStyle}>
+              <Text style={globalStyles.errorStyle}>{birthdayError}</Text>
+            </View> 
+             
+            <TextInputCard value={" Address                            *"} onChange={value=> setAddress(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
 
             <View style={globalStyles.rowAlginStyle}>
               <Text style={globalStyles.errorStyle}>{addressError}</Text>
@@ -206,7 +290,8 @@ const styles = StyleSheet.create({
     borderWidth:2,
     borderColor:'#64CA80',
     justifyContent:"flex-start",
-    paddingTop:20
+    paddingTop:20,
+    paddingBottom:"10%",
   },
   textStyle:{
     fontSize:20,
@@ -275,8 +360,8 @@ const styles = StyleSheet.create({
    backgroundColor: "#64CA80",
    borderRadius: 10,
    paddingVertical: 10,
-  marginBottom:30,
-  marginLeft:80,
+  marginBottom:50,
+  marginLeft:70,
   marginTop:20
     
   },
@@ -293,5 +378,41 @@ requiredStyle:{
   width:'80%',
   fontWeight:"bold",
   paddingTop:20
+},
+pickedDateContainer:{
+    fontSize:25,
+    fontWeight:"bold",
+    color:'#000',
+    backgroundColor:'lightgrey',
+   // borderBottomWidth:1,
+    margin:15,
+    height:'4%',
+    width:'80%',
+    marginBottom:30,
+    borderColor:"#64CA80",
+    borderWidth:1
+},
+bluebuttonStyle:{
+  width: '60%',
+  height: 50,
+  elevation: 8,
+  backgroundColor: "#AACCDD",
+  borderRadius: 10,
+  paddingVertical: 10,
+ marginBottom:1,
+ marginLeft:70,
+ marginTop:2
+},
+pickedDate:
+{
+  fontSize:25,
+  fontWeight:"bold",
+  color:'lightslategrey',
+  backgroundColor:'lightgrey',
+ // borderBottomWidth:1,
+  margin:15,
+  height:'65%',
+  width:'80%',
+  //marginBottom:30,
 }
 });

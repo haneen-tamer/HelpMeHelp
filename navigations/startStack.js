@@ -4,6 +4,7 @@ import { BackHandler, Alert } from 'react-native';
 import Start from '../forms/start';
 import Trial from '../forms/trial';
 import AdminStack from './adminStack';
+import AdminDrawer from './adminDrawer';
 import UserHome from '../forms/userHome';
 import UserReg from '../forms/userRegister';
 import OrgReg from '../OrganizationsForms/orgResgister';
@@ -32,14 +33,15 @@ const forms =
             gestureEnabled: false,
         }
     },
-    AdminStack: {
-        screen: AdminStack,
+    AdminDrawer: {
+        screen: AdminDrawer,
         navigationOptions: {
-            headerLeft: () => <AdminHeader onPress={() => Alert.alert("hii")} />,
-            headerRight: () => <AdminUsername />,
-            gestureEnabled: true,
-            title: "",
-
+            // headerLeft: () => <AdminHeader />,
+            // headerRight: () => <AdminUsername />,
+            // gestureEnabled: true,
+            // title: "",
+            header: null,
+            gestureEnabled: false,
         }
     },
     orgDrawerNav: {

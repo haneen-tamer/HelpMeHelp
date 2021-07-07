@@ -25,7 +25,11 @@ export default function Start({ navigation }) {
   const [role,setRole]=useState(null);
   const [loginError,setLoginError]=useState('');
   const [found,setFound]=useState(false);
-  
+  const [loginInfo, setLoginInfo] = useState([
+    {username: "Ad", password: "min", role: "admin", id: "3"}, 
+  ]);
+
+
 
     
     const loginBtn=()=>{

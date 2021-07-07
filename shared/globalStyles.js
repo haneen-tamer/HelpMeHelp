@@ -202,4 +202,17 @@ profileTitleStyle:{
     paddingBottom:10,
      paddingTop:2
   },
+  RegitserdataStyle:{
+    fontSize:25,
+    fontWeight:"bold",
+    color:'#000',
+    backgroundColor:'lightgrey',
+   // borderBottomWidth:1,
+    margin:15,
+    height:'65%',
+    width:'80%',
+    marginBottom:30,
+    borderColor:"#64CA80",
+    borderWidth:1
+  },
 });

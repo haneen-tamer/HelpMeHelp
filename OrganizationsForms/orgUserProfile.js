@@ -11,7 +11,7 @@ export default function App({navigation}) {
   let ID=userData.Governorate;
   let user_username=userData.userName;
   var userPage =userData.Governorate;
-  console.log(userPage)
+  //console.log(userPage)
   
   useEffect(() => {
     if(typeof userPage==='string')
@@ -45,9 +45,19 @@ export default function App({navigation}) {
     })
     .then(res=>res.json())
     .then(json => {   
-      //console.log(json)
-      //console.log(json.length)
-      setContributioNumber(json.ids)
+      //console.log(json.ids[0])
+      //console.log(json.ids.length)
+      if(json.ids[0]==0)
+      {
+        console.log("jere")
+        setContributioNumber(0)
+      }
+      else
+      {
+        setContributioNumber(json.ids.length)
+      }
+      
+      
       
     })
     .catch((error) => {
@@ -78,7 +88,7 @@ export default function App({navigation}) {
 
         <ProfileCard title={'Governorate'} value={gov}/>
 
-        <ProfileCard title={'Contribution'} value={contributioNumber.length}/>
+        <ProfileCard title={'Contribution'} value={contributioNumber}/>
           
         
         </View>

@@ -49,7 +49,7 @@ export default function App({navigation}) {
     });
   }, []);
   //console.log(donationCampaigns);
-  console.log(volunteerCampaigns);
+ // console.log(volunteerCampaigns);
   return (
     <ScrollView style={styles.container}>
     

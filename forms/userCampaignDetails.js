@@ -4,10 +4,11 @@ import { StyleSheet, Text, View,Button,FlatList,TouchableOpacity,ScrollView,Safe
 import CampaignItem from '../shared/CampaignItem'
 import * as Progress from 'react-native-progress';
 import { globalStyles } from './../shared/globalStyles';
+import { set } from 'react-native-reanimated';
 
 
 export default function App({navigation}) {
-   
+   const [userOwner,setUserOwner]=useState(navigation.getParam('U_username'))
     const [orgOwner,setOrgOwner]=useState(navigation.getParam('orgUsername'));
     const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('User_Username'));
     const [userData,setUserData]=useState(null)
@@ -16,15 +17,20 @@ export default function App({navigation}) {
     const [userCampStatus,setUserCampStatus]=useState(null);
     if(orgOwner==null)
     {
-        setOrgOwner(navigation.getParam('U_username'));
-        setOwnerProfile("user");
+       if(userOwner!=null)
+       {
+        setOrgOwner(userOwner);  
+       }
+       else
+       {
+        setOrgOwner(username);
+       }
+       setOwnerProfile("user");
     }
-
-    
         useEffect(() => {
             if(ownerProfile=="user")
             {
-            fetch("http://10.0.2.2:8080/userProfile/"+username, {
+            fetch("http://10.0.2.2:8080/userProfile/"+orgOwner, {
               method: 'GET',
           })
           .then(res=>res.json())
@@ -36,10 +42,10 @@ export default function App({navigation}) {
           });
         }
         }, []);
-    console.log(userData)
+    //console.log(userData)
 
     useEffect(() => {
-        fetch("http://10.0.2.2:8080/userCheckCampaginStatus/"+username+"/"+ID, {
+        fetch("http://10.0.2.2:8080/userCheckCampaginStatus/"+orgOwner+"/"+ID, {
           method: 'GET',
       })
       .then(res=>res.json())

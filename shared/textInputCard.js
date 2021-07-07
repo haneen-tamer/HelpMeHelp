@@ -4,14 +4,14 @@ import { globalStyles } from './globalStyles';
 import { onChange } from 'react-native-reanimated';
 
 
-export default function TextInputCard({value,onChange,allow_pass,allow_multi,allow_edit}){
+export default function TextInputCard({value,onChange,allow_pass,allow_multi,allow_edit,text}){
 
     
     return(
 
         <View style={globalStyles.rowAlginStyle}>
 
-        <TextInput style={styles.dataStyle}
+        <TextInput style={globalStyles.RegitserdataStyle}
           placeholderTextColor="lightslategrey"
           placeholder={value}
           underlineColorAndroid="transparent"
@@ -19,25 +19,14 @@ export default function TextInputCard({value,onChange,allow_pass,allow_multi,all
           paddingLeft='3%'
           secureTextEntry={allow_pass}
           editable={allow_edit}
+          value={text}
           onChangeText={text=>onChange(text)}
           />
       </View>
     )}
 
 const styles = StyleSheet.create({
-    dataStyle:{
-        fontSize:25,
-        fontWeight:"bold",
-        color:'#000',
-        backgroundColor:'lightgrey',
-       // borderBottomWidth:1,
-        margin:15,
-        height:'65%',
-        width:'80%',
-        marginBottom:30,
-        borderColor:"#64CA80",
-        borderWidth:1
-      },
+  
    
     
   

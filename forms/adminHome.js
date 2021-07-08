@@ -13,19 +13,28 @@ import OrgRequestCard from '../OrganizationsForms/orgRequestCard';
 export default function App({navigation}) {
 
   const [entry, setEntry] = useState("");
+  const [orgs, setOrgs] = useState(null);
+  const [found,setFound]=useState(false);
   
+  // useEffect(() => {
+  //   BackHandler.addEventListener('hardwareBackPress', () => true);
+  // }, []);
+
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => true);
-  }, []);
+    fetch("http://10.0.2.2:8080/admin/AllPendingOrganizations", {
+      method: 'GET',
+  })
+  .then(res=>res.json())
+  .then(json => {
+    setOrgs(json)
+    setFound(true);
+  })
+  .catch((error) => {
+      console.error(error);
+  });
+}, []);
 
-
-  const [orgs, setOrgs] = useState([
-    { name: 'resala1', key: '1' },
-    { name: 'resala2', key: '2' },
-    { name: 'resala3', key: '3' },
-    { name: 'resala4', key: '4' },
-    { name: 'resala5', key: '5' },
-  ]);
+ 
 
   return (
     
@@ -36,15 +45,17 @@ export default function App({navigation}) {
 
       <ScrollView style={styles.container}>
         
+        {found &&
         <View style={styles.flatListStyle}>
           <FlatList
           keyExtractor={(item) => item.id} 
           data={orgs} 
           renderItem={({ item }) => (   
-              <OrgRequestCard item={item}/>
+              <OrgRequestCard navigation={navigation} item={item}/>
             )}
           />
-        </View>        
+        </View>   
+}     
       </ScrollView>
     </View>
     

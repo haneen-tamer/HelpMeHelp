@@ -3,14 +3,35 @@ import {StyleSheet,TouchableOpacity,View,Text,Image, Alert} from 'react-native';
 import { globalStyles } from './../shared/globalStyles';
 
 
-
-
-
 export default function ApplicantCard({item,navigation}){
+    const [orgOwner,setOrgOwner]=useState(item.userName);
+    const [hide,setHide]=useState(false);
+    const goToPage=()=>
+{  
+
+    return navigation.navigate('userOrganizationProfile',{orgOwner})
+}
+const rejectApplicant=()=>
+    {
+        setHide(true);
+        fetch("http://10.0.2.2:8080/admin/removeOrganization/"+orgOwner, {
+            method: 'DELETE',
+        })
+        .then(res=>res.json())
+        .then(json => {
+          if(json==true)
+          {
+           console.log("Rejected")
+          }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
     
     return(
        
-        <TouchableOpacity style={styles.container}  onPress={() => Alert.alert("All")}>
+        <TouchableOpacity style={styles.container}  onPress={goToPage}>
             
         
             <View style={styles.horizontalSection}>
@@ -23,14 +44,15 @@ export default function ApplicantCard({item,navigation}){
                         />
             </View>
             
-        
+        {!hide &&
             <View style={globalStyles.buttonstyle}>
                 
-                <TouchableOpacity style={styles.blackButtonStyle} onPress={() => Alert.alert("Removed")} > 
+                <TouchableOpacity style={styles.blackButtonStyle} onPress={rejectApplicant} > 
                     <Text style={globalStyles.textStyle} > Remove </Text>
                 </TouchableOpacity>
 
             </View>
+}
         </TouchableOpacity>
 
         

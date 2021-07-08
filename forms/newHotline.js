@@ -10,9 +10,37 @@ import { globalStyles } from './../shared/globalStyles';
 
 export default function App() {
 
-  const [hotline, setHotline] = useState();
-  const [description, setDescription] = useState();
+  const [hotline, setHotline] = useState(0);
+  const [description, setDescription] = useState('');
 
+  const add=()=>
+  {
+    
+    fetch("http://10.0.2.2:8080/admin/addHotline",{
+      method:"post",
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({     
+        number:hotline,
+        description
+    })
+  })
+  .then(res=>res.json())
+  .then(json => {
+   if(json==true)
+   {
+    Alert.alert("Hotline Added")
+   } 
+   else
+   {
+    Alert.alert("Hotline already exsits")
+   } 
+  })
+  .catch((error) => {
+      console.error(error);
+  });
+  }
 
   return (
 
@@ -44,12 +72,11 @@ export default function App() {
 
         <View style={{right: '15%'}} >
             <View style={globalStyles.buttonstyle}>
-                <TouchableOpacity style={styles.blackButtonStyle} > 
+                <TouchableOpacity style={styles.blackButtonStyle} onPress={add} > 
                     <Text style={globalStyles.textStyle} > Add hotline </Text>
                 </TouchableOpacity>
             </View>
         </View>
-
 
       </View>
     </TouchableWithoutFeedback>
@@ -60,6 +87,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    justifyContent: 'space-around',
     paddingBottom: 20,
   },
   sectoin1:{
@@ -91,6 +119,8 @@ const styles = StyleSheet.create({
     height: '30%',
     padding: '3%',
     fontSize: 17,
+    paddingBottom:'5%',
+    paddingTop:'5%'
   },
   descriptionArea:{
     flexDirection: 'row',

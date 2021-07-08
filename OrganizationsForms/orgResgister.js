@@ -8,12 +8,14 @@ import { globalStyles } from '../shared/globalStyles';
 import GovernoratePicker from '../shared/governorateDropDown';
 import OrgTypePicker from '../shared/orgTypeDropDown';
 import CategoryPicker from '../shared/categoryDropDown';
+import SubCategoryPicker from '../shared/subCategoryDropDown'
 import TextInputCard from './../shared/textInputCard';
 import { onChange } from 'react-native-reanimated';
+import { Facebook } from 'expo';
 
 export default function App({navigation}) {
   const [changeImage,setChangeImage]=useState(false);
-  const [image,setImage]=useState(null);
+  const [image,setImage]=useState("No Image");
   const [username,setUsername]=useState('');
   const [usernameError,setUsernameError]=useState('');
   const [name,setName]=useState('');
@@ -28,7 +30,9 @@ export default function App({navigation}) {
   const [descriptionError,setDescriptionError]=useState('');
   const [purpose,setPurpose]=useState('');
   const [purposeError,setPurposeError]=useState('');
-  const [address,setAddress]=useState('');
+  const [firstAddress,setFirstAddress]=useState('');
+  const [secondAddress,setSecondAddress]=useState('');
+  const [thirdAddress,setThirdAddress]=useState('');
   const [addressError,setAddressError]=useState('');
   const [orgType,setOrgType]=useState('');
   const [orgTypeError,setOrgTypeError]=useState('');
@@ -36,10 +40,13 @@ export default function App({navigation}) {
   const [subcategory,setSubcategory]=useState('');
   const [categoryError,setCategoryError]=useState('');
   const [website,setWebsite]=useState('');
-  const [hotline,setHotline]=useState('');
+  const [hotlineNumber,setHotlineNumber]=useState(0);
+  const [hotlineDesc,setHotlineDesc]=useState('');
   const [facebook,setFacebook]=useState('');
   const [instagram,setInstagram]=useState('');
   const [twitter,setTwitter]=useState('');
+  const [phoneNumber,setPhoneNumber]=useState(0);
+  var addressArr = new Array(); var linksArr = new Array();
 
 
   useEffect(()=>{async()=>{
@@ -78,7 +85,7 @@ export default function App({navigation}) {
         setNameError('')
       }
       if(password==="") {
-        setPassword("Password filed can not be empty")
+        setPasswordError("Password filed can not be empty")
       }else {
         setPassword('')
       }
@@ -112,7 +119,7 @@ export default function App({navigation}) {
       }else {
         setOrgTypeError('')
       }
-      if(address===""){
+      if(firstAddress===""){
         setAddressError("Address filed can not be empty")
       }
       if(subcategory===""){
@@ -120,14 +127,70 @@ export default function App({navigation}) {
       }
 
       if(name!=="" && password!=="" && username!=="" && email!=="" && governorate!=="" &&
-      description!=="" && purpose!=="" && orgType!=="" && address!=="")
+      description!=="" && purpose!=="" && orgType!=="" && firstAddress!=="")
       {
-        navigation.navigate('pendingPage',{
-          Image: image, UserName: username, Name: name, Email:email, Password:password, Address:address,
-          Governorate:governorate, Description:description, Purpose:purpose, OrganizationType:orgType,
-          Category:category, Subcategory:subcategory, Website:website,hotline:hotline
+        if(facebook!='')
+        {
+          linksArr.push(facebook)
+        }
+        if(twitter!='')
+        {
+          linksArr.push(twitter)
+        }
+        if(instagram!='')
+        {
+          linksArr.push(instagram)
+        }
+        addressArr.push(firstAddress)
+        if(secondAddress!='')
+        {
+          addressArr.push(secondAddress)
+        }
+        if(thirdAddress!='')
+        {
+          addressArr.push(thirdAddress)
+        }
+        console.log(linksArr)
+        console.log(addressArr)
 
+        fetch("http://10.0.2.2:8080/OrgSignUp",{
+          method:"post",
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify({     
+            name,
+            userName:username,
+            password,
+            governorate,
+            email,
+            category,
+            subCategory:subcategory,
+            organizationType:orgType,
+            description,
+            purpose,
+            website,
+            socialMedia:linksArr,
+            hotlineNumber,
+            hotlineDesc,
+            logo:image,
+            location:addressArr,
+            phoneNumber
+           })
+          })
+        .then(res=>res.json())
+        .then(json =>{
+          if(json==true)
+            {
+              navigation.navigate('pendingPage',{OrgUsername:username});
+            }
+            else
+            {
+              setUsernameError("Username is already taken, Please try again")
+            }
+          
         })
+        //navigation.navigate('pendingPage',{})
       }
       
   }
@@ -149,20 +212,25 @@ export default function App({navigation}) {
                   source={require('../images/CampaignImage.png')}
                 />
               }
-              <Text style={styles.textStyle}>Change Profile Picutre</Text>
+              <Text style={styles.textStyle}>Change Profile Picture</Text>
 
             </TouchableOpacity>
             </View>
 
-            <View style={globalStyles.rowAlginStyle}> 
+          
+                <View style={globalStyles.rowAlginStyle}> 
                 <Text style={styles.requiredStyle}>* Required</Text>
             </View>
-
             <TextInputCard value={" Username                          *" } onChange={value=> setUsername(value)} allow_pass={false} allow_multi={false}/>
            
             <View style={globalStyles.rowAlginStyle}>
               <Text style={globalStyles.errorStyle}>{usernameError}</Text>
             </View>
+              { usernameError==='' &&
+            <View style={globalStyles.rowAlginStyle}> 
+                <Text style={styles.usernameRequiredStyle}>Note*  You must put "Org_" at the beginning of your Username</Text>
+            </View>
+            }
             
             <TextInputCard value={" Name                                 *"} onChange={value=> setName(value) } allow_pass={false} allow_multi={true}/>
 
@@ -182,7 +250,7 @@ export default function App({navigation}) {
               <Text style={globalStyles.errorStyle}>{emailError}</Text>
             </View>
 
-           <GovernoratePicker onChange={value=> setGovernorate(value)}/>
+           <GovernoratePicker onChange={value=> setGovernorate(value)} value={" Governorate                *"}/>
 
             <View style={globalStyles.rowAlginStyle}>
                <Text style={globalStyles.errorStyle}>{govError}</Text>
@@ -200,28 +268,46 @@ export default function App({navigation}) {
               <Text style={globalStyles.errorStyle}>{purposeError}</Text>
              </View>
 
-            <TextInputCard value={" Address                            *"} onChange={value=> setAddress(value)} allow_pass={false} allow_multi={true}/>
+            {/* <TextInputCard value={" Address                            *"} onChange={value=> setAddress(value)} allow_pass={false} allow_multi={true}/> */}
 
-            <View style={globalStyles.rowAlginStyle}>
-              <Text style={globalStyles.errorStyle}>{addressError}</Text>
-            </View>
-
-             <OrgTypePicker onChange={value=> setOrgType(value)} />
+             <OrgTypePicker onChange={value=> setOrgType(value)} value={"Organization Type       *"} />
 
             <View style={globalStyles.rowAlginStyle}>
                <Text style={globalStyles.errorStyle}>{orgTypeError}</Text>
              </View>
 
-            <CategoryPicker onChangeCatgory={value=> setCategory(value)} onChangeSubCatgory={value=> setSubcategory(value)}/>
+           
+            <CategoryPicker onChangeCatgory={value=> setCategory(value)} value={"Category                       *"}/>
+            <SubCategoryPicker onChangeSubCatgory={value=> setSubcategory(value)} value={"SubCategory                 *"}/>
 
             <View style={globalStyles.rowAlginStyle}>
               <Text style={globalStyles.errorStyle}>{categoryError}</Text>
             </View>
 
             <TextInputCard value={" Website"} onChange={value=> setWebsite(value)} allow_pass={false} allow_multi={true}/>
-            <TextInputCard value={" Enter Hotline Number"} onChange={value=> setHotline(value)} allow_pass={false} allow_multi={true}/>
+            <TextInputCard value={" Enter Phone Number"} onChange={value=> setPhoneNumber(value)} allow_pass={false} allow_multi={true}/>
+            {/* <TextInputCard value={" Enter Hotline Number"} onChange={value=> setHotline(value)} allow_pass={false} allow_multi={true}/> */}
         
-            <Text style={styles.headerStyle}>  Socail Media: </Text>
+
+            <Text style={styles.headerStyle}>  Address: </Text>
+
+            <View style={styles.socailStyle}>
+              <TextInputCard value={" First Address                *"} onChange={value=> setFirstAddress(value)} allow_pass={false} allow_multi={true}/>
+              <TextInputCard value={" Second Address"} onChange={value=> setSecondAddress(value)} allow_pass={false} allow_multi={true}/>
+              <TextInputCard value={" Third Address "} onChange={value=> setThirdAddress(value)} allow_pass={false} allow_multi={true}/>
+            </View>
+
+            <View style={globalStyles.rowAlginStyle}>
+            <Text style={globalStyles.errorStyle}>{addressError}</Text>
+            </View>
+
+            <Text style={styles.headerStyle}>  Hotline Details: </Text>
+            <View style={styles.socailStyle}>
+              <TextInputCard value={" Hotline Number"} onChange={value=> setHotlineNumber(value)} allow_pass={false} allow_multi={true}/>
+              <TextInputCard value={" Hotline Description"} onChange={value=> setHotlineDesc(value)} allow_pass={false} allow_multi={true}/>
+            </View>
+
+            <Text style={styles.headerStyle}>  Social Media: </Text>
 
               <View style={styles.socailStyle}>
                 <TextInputCard value={" Facebook"} onChange={value=> setFacebook(value)} allow_pass={false} allow_multi={true}/>
@@ -249,7 +335,8 @@ const styles = StyleSheet.create({
     borderWidth:2,
     borderColor:'#64CA80',
     justifyContent:"flex-start",
-    paddingTop:20
+    paddingTop:20,
+    marginBottom:'35%'
   },
   textStyle:{
     fontSize:20,
@@ -335,6 +422,51 @@ requiredStyle:{
   height:'90%',
   width:'80%',
   fontWeight:"bold",
-  paddingTop:20
-}
+  marginBottom:'3%',
+  paddingTop:10
+  
+},
+usernameRequiredStyle:
+{
+  color:"#000",
+  fontSize:17,
+  marginLeft:20,
+  height:'80%',
+  width:'70%',
+  fontWeight:"bold",
+  paddingTop:15,
+  marginBottom:'5%',
+  paddingTop:1,
+},
+usernamekeyword:
+{
+  color:"#06A9F0",
+  fontSize:20,
+  height:'70%',
+  width:'40%',
+  fontWeight:"bold",
+  marginBottom:'2%',
+  paddingTop:15,
+},
+usernameRequiredStyle2:
+{
+  color:"#000",
+  fontSize:18,
+  marginLeft:20,
+  height:'80%',
+  width:'50%',
+  fontWeight:"bold",
+  marginBottom:'10%',
+  //paddingTop:15,
+},
+usernamekeyword2:
+{
+  color:"#06A9F0",
+  fontSize:20,
+  height:'70%',
+  width:'40%',
+  fontWeight:"bold",
+  marginBottom:'2%',
+  //paddingTop:15,
+},
 });

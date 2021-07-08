@@ -34,8 +34,8 @@ export const globalStyles = StyleSheet.create({
         color: "#fff",
         fontWeight: "bold",
         alignSelf: "center",
-        textTransform: "uppercase"
-    
+        textTransform: "uppercase",
+        paddingTop: 5,
       },
       campaignClassStyle: {
         // elevation: 8,
@@ -131,7 +131,7 @@ smallTextStyle:{
 rowAlginStyle:{
   flexDirection:'row',
   alignContent:"space-between",
-  
+  //padding: 2,
 },
 bottomiconsStyle2:{
   width:37,

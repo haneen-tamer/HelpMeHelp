@@ -50,7 +50,7 @@ console.log(user)
             <FlatList
             data={user} 
             renderItem={({ item }) => (   
-                <UserCard item={item} navigation={navigation}/>
+                <UserCard item={item} />
               )}
             />
           </View>

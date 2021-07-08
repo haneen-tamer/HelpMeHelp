@@ -14,7 +14,8 @@ import Header from '../shared/header';
 import AdminHeader from '../shared/adminHeader'
 import Username from '../shared/username';
 import AdminUsername from '../shared/adminUsername';
-import pendingPage from '../OrganizationsForms/pendingPage'
+import pendingPage from '../OrganizationsForms/pendingPage';
+import CreateDonationCampaign from '../OrganizationsForms/CreateDonationCampaign';
 import React from 'react';
 
 const forms = 
@@ -26,6 +27,13 @@ const forms =
             headerStyle: { height: 0}
         }
     },
+    CreateDonationCampaign: {
+        screen: CreateDonationCampaign,
+        navigationOptions: {
+            title: "",
+        }
+    },
+
     DrawNav: {
         screen: DrawNav,
         navigationOptions: {
@@ -41,7 +49,7 @@ const forms =
             // gestureEnabled: true,
             // title: "",
             header: null,
-            gestureEnabled: false,
+            gestureEnabled: true,
         }
     },
     orgDrawerNav: {

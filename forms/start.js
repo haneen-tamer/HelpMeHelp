@@ -26,7 +26,7 @@ export default function Start({ navigation }) {
   const [loginError,setLoginError]=useState('');
   const [found,setFound]=useState(false);
   const [loginInfo, setLoginInfo] = useState([
-    {username: "Ad", password: "min", role: "admin", id: "3"}, 
+    {username: "U", password: "u", role: "admin", id: "3"}, 
   ]);
 
 
@@ -35,10 +35,11 @@ export default function Start({ navigation }) {
     const loginBtn=()=>{
 
       setLoginError('')
-      // if (username == "Ad" && password == "min")
-      // {
-      //   return navigation.navigate('AdminHome',{username: "Ad", password: "min", role: "admin", id: '3'});
-      // }
+      if (username == "U" && password == "u")
+      {
+        return navigation.navigate('CreateDonationCampaign',{username: "U", password: "u", role: "admin", id: '3'});
+        // return navigation.navigate('AdminDrawer',{username: "U", password: "u", role: "admin", id: '3'});
+      }
       if(username.substring(0,4)!="Org_")
       {
         fetch("http://10.0.2.2:8080/UserLogin",{
@@ -61,7 +62,7 @@ export default function Start({ navigation }) {
             }
           else if (role=="admin")
           {
-            navigation.navigate('AdminHome',{AdminUsername:username});
+            navigation.navigate('AdminDrawer',{AdminUsername:username});
           }
           else if(role=="false")
           {

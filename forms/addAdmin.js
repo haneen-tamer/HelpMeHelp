@@ -41,7 +41,7 @@ export default function App() {
             <FlatList
             data={user} 
             renderItem={({ item }) => (   
-                <UserCard item={item} navigation={navigation}/>
+                <UserCard item={item} />
               )}
             />
           </View>

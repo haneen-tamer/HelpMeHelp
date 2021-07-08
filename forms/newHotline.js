@@ -50,7 +50,6 @@ export default function App() {
             </View>
         </View>
 
-
       </View>
     </TouchableWithoutFeedback>
   );
@@ -60,6 +59,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    justifyContent: 'space-around',
     paddingBottom: 20,
   },
   sectoin1:{

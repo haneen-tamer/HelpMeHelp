@@ -8,7 +8,7 @@ export default function App({navigation}) {
   const [userData,setUserDat]=useState(navigation.getParam('data'))
   const [found,setFound]=useState(false);
   const [found2,setFound2]=useState(false);
-  let ID=userData.Governorate;
+  const [govID,setGovID]=useState(userData.Governorate)
   let user_username=userData.userName;
   var userPage =userData.Governorate;
   //console.log(userPage)
@@ -23,7 +23,7 @@ export default function App({navigation}) {
    else
     {
     setFound(true);
-      fetch("http://10.0.2.2:8080/userGov/"+ID, {
+      fetch("http://10.0.2.2:8080/userGov/"+govID, {
         method: 'GET',
     })
     .then(res=>res.json())

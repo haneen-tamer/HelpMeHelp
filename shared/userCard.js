@@ -1,4 +1,4 @@
-import React,{ useState }  from 'react';
+import React,{ useState,useEffect }  from 'react';
 import {StyleSheet,TouchableOpacity,View,Text,Image, Alert} from 'react-native';
 import { globalStyles } from './../shared/globalStyles';
 
@@ -7,10 +7,36 @@ import { globalStyles } from './../shared/globalStyles';
 
 
 export default function ApplicantCard({item,navigation}){
-    
+    const [hide,setHide]=useState(false);
+
+const makeAdmin=()=>
+    {
+        console.log(item.userName)
+        setHide(true)
+        fetch("http://10.0.2.2:8080/admin/addAdmin", {
+      method: 'Post',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({     
+          username:item.userName,
+    })
+  })
+  .then(res=>res.json())
+  .then(json => {
+    if(json==true)
+    {
+     console.log("Added")
+    }
+  })
+  .catch((error) => {
+      console.error(error);
+  });
+    }
+  
     return(
        
-        <TouchableOpacity style={styles.container}  onPress={() => Alert.alert("All")}>
+        <TouchableOpacity style={styles.container}  onPress={() => navigation.navigate('orgUserProfile',{data:item})}>
             
         
             <View style={styles.horizontalSection}>
@@ -23,14 +49,15 @@ export default function ApplicantCard({item,navigation}){
                         />
             </View>
             
-        
+        {!hide &&
             <View style={globalStyles.buttonstyle}>
                 
-                <TouchableOpacity style={styles.blackButtonStyle} onPress={() => navigation.navigate('UserProfile')} > 
+                <TouchableOpacity style={styles.blackButtonStyle} onPress={makeAdmin} > 
                     <Text style={globalStyles.textStyle} > Make admin </Text>
                 </TouchableOpacity>
 
             </View>
+}
         </TouchableOpacity>
 
         

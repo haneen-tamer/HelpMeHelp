@@ -14,11 +14,8 @@ export default function ApplicantCard({item,navigation}){
 const rejectApplicant=()=>
     {
         setHide(true);
-        fetch("http://10.0.2.2:8080/admin/removeOrganization", {
+        fetch("http://10.0.2.2:8080/admin/removeOrganization/"+orgOwner, {
             method: 'DELETE',
-              body:JSON.stringify({     
-                username:orgOwner,
-            })
         })
         .then(res=>res.json())
         .then(json => {

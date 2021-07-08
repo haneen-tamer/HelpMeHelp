@@ -19,8 +19,10 @@ export default function App({navigation}) {
   })
   .then(res=>res.json())
   .then(json => {
+    console.log(json)
     setUser(json)
     setFound(true);
+    console.log(user)
   })
   .catch((error) => {
       console.error(error);

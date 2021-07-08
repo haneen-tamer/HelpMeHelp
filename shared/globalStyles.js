@@ -131,7 +131,7 @@ smallTextStyle:{
 rowAlginStyle:{
   flexDirection:'row',
   alignContent:"space-between",
-  
+  //padding: 2,
 },
 bottomiconsStyle2:{
   width:37,

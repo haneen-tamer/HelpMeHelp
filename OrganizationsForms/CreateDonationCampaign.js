@@ -1,6 +1,6 @@
 import React ,{ useState,useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,Button,Image,Platform, Keyboard, KeyboardAvoidingView,
- ScrollView,TextInput, CheckBox, FlatList} from 'react-native';
+ ScrollView,TextInput, CheckBox, Alert, FlatList} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { globalStyles } from '../shared/globalStyles';
 import TextInputCard from './../shared/textInputCard';
@@ -29,6 +29,12 @@ export default function App(){
     
     const [address,setAddress]=useState('');
     const [addressError,setAddressError]=useState('');
+    
+    const [processDesc,setProcessDesc]=useState('');
+    const [processDescError,setProcessDescError]=useState('');
+    
+    const [description,setDescription]=useState('');
+    const [descriptionError,setDescriptionError]=useState('');
 
 
 
@@ -113,13 +119,32 @@ export default function App(){
             <Text style={globalStyles.errorStyle}>{endDateError}</Text>
             </View>
 
-            <View style={{flexDirection: 'row',  }}>
+            <View style={{flexDirection: 'row',  marginBottom: 20}}>
             <CheckBox style={styles.checkbox} value= {false} onPress={() => checkboxClicked()} />
             <Text style={styles.textStyle}>On going campaign</Text>
 
             </View>
 
             {/*Essay Section */}
+
+            <TextInputCard value={"Description \t\t\t\t*"} onChange={value=> setDescription(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+
+            <View style={globalStyles.rowAlginStyle}>
+            <Text style={globalStyles.errorStyle}>{descriptionError}</Text>
+            </View>
+
+
+            <Text style={{fontSize: 20, fontWeight: 'bold', 
+              marginLeft: 15, marginTop: 25}}>
+                Donation Process
+            </Text>
+
+            <TextInputCard value={"Description \t\t\t\t*"} onChange={value=> setProcessDesc(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+
+            <View style={globalStyles.rowAlginStyle}>
+            <Text style={globalStyles.errorStyle}>{processDescError}</Text>
+            </View>
+
             {/*Target Section */}
 
             <Text style={{fontSize: 20, fontWeight: 'bold', 
@@ -133,7 +158,20 @@ export default function App(){
             <Text style={globalStyles.errorStyle}>{targetError}</Text>
             </View>
 
+            <TextInputCard value={"Address"} onChange={value=> setAddress(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+
+            <View style={globalStyles.rowAlginStyle}>
+            <Text style={globalStyles.errorStyle}>{addressError}</Text>
+            </View>
+
             {/*Buttons Section */}
+
+            <View style={globalStyles.buttonAlignStyle}>
+              <TouchableOpacity style={globalStyles.greenButtonStyle} onPress={() => Alert.alert('Launched!')}> 
+              <Text style={globalStyles.textStyle}>Launch</Text>
+              </TouchableOpacity>
+            </View>
+
           </View>
         </ScrollView>
 

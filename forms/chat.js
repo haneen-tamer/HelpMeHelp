@@ -6,65 +6,156 @@ import Header from '../shared/header';
 
 export default function chat({navigation}) {
     let [chatInput, setChatInput] = useState("");
-    let [chatItemList, setChatItemList] = useState([
-        {id:'1', text:'hi', timeStamp:new Date('July 6, 2021 01:10:00'), by:'haneen'},
+    let [chatItemList, setChatItemList] = useState([]);
+        /*{id:'1', text:'hi', timeStamp:new Date('July 6, 2021 01:10:00'), by:'haneen'},
         {id:'2', text:'lay lay', timeStamp:new Date('July 6, 2021 01:11:00'), by:'hagar'},
         {id:'3', text:'bye', timeStamp:new Date('July 6, 2021 01:12:00'), by:'haneen'},
-        {id:'4', text:'bye', timeStamp:new Date('July 6, 2021 01:13:00'), by:'hagar'}
-    ]);//useState<chatItem[]>([]);
-    let username = navigation.getParam('username');
-    let [state,setState]=useState({chatMessage: "",chatMessages: []});
-    const socket = io("http://192.168.100.98:8080");
+        {id:'4', text:'bye', timeStamp:new Date('July 6, 2021 01:13:00'), by:'hagar'}*/
+    //useState<chatItem[]>([]);
+    //let username = navigation.getParam('username');
+    const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('User_Username'));
+    const [orgOwner,setOrgOwner]=useState(navigation.getParam('orgOwner'));
+    let [refresh1, setRefresh1] = useState(false);
+    let [refresh2, setRefresh2] = useState(false);
+    let [refresh3, setRefresh3] = useState(false);
+    let [global_socket,set_global_Socket]=useState(null);
+    //const socket = io("http://192.168.100.98:8080");
+    let [chatID, setchatID] = useState(0);
+    let [chatType, setchatType] = useState("OU");
+
     const connect=()=>{
+      let socket= io("http://192.168.100.98:8080");
+      set_global_Socket(socket);
       socket.on("chat message", msg => {
-        setState({ chatMessages: [...state.chatMessages, msg] });
+        
+        chatItemList.push(
+          {
+            id: Math.random().toString(36).substring(7),
+            text: msg,
+            timeStamp: Date.now(),
+            by: 'yoyo',
+          }
+        );
+        //setRefresh(true);
+        console.log(chatItemList);
+        console.log(msg+"recieve");
       });
     }
-    connect();
 
-     const submitChatMessage=()=> {
-      socket.emit("chat message", state.chatMessage);
+    const get_chatID=()=>{
+      fetch("http://10.0.2.2:8080/getChatID/"+username+"/"+orgOwner+"/"+chatType,{
+          method:"get"
+      })
+        .then(res=>res.json())
+        .then(json =>{
+          //console.log(json);
+          setchatID(json);
+          setRefresh1(true);
+        })
+    }
+    const set_chatType=()=>{
+      if(orgOwner.substring(0,4)=="Org_")
+      {
+        setchatType("OU");
+      }
+      else{
+        setchatType("UU");
+      }
+    }
+    const submitChatMessage=()=> {
+      //console.log(socket);
+      //console.log(chatInput);
+      global_socket.emit("chat message", chatInput);
+      setChatInput("");
+    }
+
+    const get_messages=()=>{
+      fetch("http://10.0.2.2:8080/oldChat/"+chatID+"/"+chatType,{
+          method:"get"
+      })
+        .then(res=>res.json())
+        .then(json =>{
+          for(let i=0;i<json.length;i++)
+          {
+            chatItemList.push(
+              {
+                id: Math.random().toString(36).substring(7),
+                text: json[i].Text,
+                timeStamp: json[i].Timestamp,
+                by: json[i].Sender_username,
+              });
+          }
+          setRefresh2(true);
+        })
+    }
+    
+    const runall=()=>{
+      //set_chatType();
+      get_chatID();
+      //get_messages();
       
     }
-    // componentDidMount() 
-    // { 
-    //   this.socket = io("http://192.168.1.13:3000");
-    // }
+    /*useEffect(()=>{
+      set_chatType().then(()=>{
+        get_chatID().then(()=>{
+          get_chatID();
+        })
+      })
+      connect();
+    },[]);*/
+    useEffect(()=>{
+      //runall();
+      get_chatID();
+      connect();
+    },[]);
+    /*function handleSubmit(event) {
+      event.preventDefault();
+    }*/
+
+
+
+    
+    
     return (
     <View style={Styles.container}>
+      {
+        refresh1 && //refresh2 &&
+      //console.log(chatItemList),
+      //console.log(chatType),
+      console.log(chatID),
       <FlatList
       style={Styles.flatListStyle}
       inverted
       keyExtractor={(item) => item.id} 
-      data={chatItemList.sort((a, b) => b.timeStamp - a.timeStamp)} 
+      data={chatItemList}//.sort((a, b) => b.timeStamp - a.timeStamp)} 
       renderItem={({ item }) => ( 
         <ChatItem item= {item} username={username}/>
       )}
-      />
+      />}
       <View style={Styles.sendSection}>
         <TextInput
           style={Styles.chatTextInput}
-          value={state.chatMessage}
-          onSubmitEditing={() => submitChatMessage()}
-          onChangeText={chatMessage => {
-            setState({ chatMessage });
-          }}
+          value={chatInput}
+          onChangeText={text => {setChatInput(text);
+        }}
         ></TextInput>
         <Button
           title="Send"
           onPress={() => {
-            setChatItemList([
-              ...chatItemList,
+            chatItemList.push(
               {
                 id: Math.random().toString(36).substring(7),
-                text: state.chatMessage,
+                text: chatInput,
                 timeStamp: Date.now(),
                 by: username,
               },
-            ]);
-            //setChatInput("");
-            setState({ chatMessage: "" });
-            //state.chatMessage="";
+            );
+            //setRefresh(true);
+            //console.log(chatItemList);
+            //console.log(chatInput+"sent");
+            
+            submitChatMessage();
+            
           }}
         ></Button>
       </View>

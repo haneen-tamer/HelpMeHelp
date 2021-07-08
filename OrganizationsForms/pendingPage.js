@@ -3,14 +3,14 @@ import { StyleSheet, Text, View , Image,BackHandler} from 'react-native';
 import {globalStyles} from '../shared/globalStyles'
 
 export default function App({navigation}) {
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => true);
-  }, []);
+  // useEffect(() => {
+  //   BackHandler.addEventListener('hardwareBackPress', () => true);
+  // }, []);
    
   return (
 
         <View style={styles.container}>
-             <Text style={styles.textStyle}>Please wait for admain approval. </Text>
+             <Text style={styles.textStyle}>Please wait for admin approval. </Text>
              
             
              <Image

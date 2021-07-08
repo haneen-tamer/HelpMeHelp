@@ -191,9 +191,9 @@ export default function App({navigation}) {
         {
             userCampStatus==='null' &&
             <View style={globalStyles.buttonAlignStyle}>
-            <TouchableOpacity style={globalStyles.greenButtonStyle}> 
+            {/* <TouchableOpacity style={globalStyles.greenButtonStyle}> 
             <Text style={globalStyles.textStyle}>Join</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity style={globalStyles.blueButtonStyle}> 
             <Text style={globalStyles.textStyle}>Donate Now</Text>

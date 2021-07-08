@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity,Button,Image,Platform, Keyboar
 import * as ImagePicker from 'expo-image-picker';
 import { globalStyles } from '../shared/globalStyles';
 import TextInputCard from './../shared/textInputCard';
+import NumberInputCard from './../shared/numberInputCard';
 import DonationTypeDropdown from '../shared/DonationTypeDropdown';
 
 
@@ -22,6 +23,12 @@ export default function App(){
     
     const [endDate,setEndDate]=useState('');
     const [endDateError,setEndDateError]=useState('');
+    
+    const [target,setTarget]=useState('');
+    const [targetError,setTargetError]=useState('');
+    
+    const [address,setAddress]=useState('');
+    const [addressError,setAddressError]=useState('');
 
 
 
@@ -114,6 +121,18 @@ export default function App(){
 
             {/*Essay Section */}
             {/*Target Section */}
+
+            <Text style={{fontSize: 20, fontWeight: 'bold', 
+              marginLeft: 15, marginTop: 25}}>
+                Goal (in number) your are trying to reach
+            </Text>
+
+            <NumberInputCard value={"Target \t\t\t\t*"} onChange={value=> setTarget(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+
+            <View style={globalStyles.rowAlginStyle}>
+            <Text style={globalStyles.errorStyle}>{targetError}</Text>
+            </View>
+
             {/*Buttons Section */}
           </View>
         </ScrollView>
@@ -155,7 +174,7 @@ const styles = StyleSheet.create({
   textStyle:{
     fontSize:20,
     fontWeight:"bold",
-    paddingBottom:20,
+    paddingBottom:4,
     paddingLeft:5,
     paddingRight:20,
     paddingTop:10,

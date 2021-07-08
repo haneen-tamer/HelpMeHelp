@@ -35,11 +35,11 @@ export default function Start({ navigation }) {
     const loginBtn=()=>{
 
       setLoginError('')
-      if (username == "U" && password == "u")
-      {
-        return navigation.navigate('CreateDonationCampaign',{username: "U", password: "u", role: "admin", id: '3'});
-        // return navigation.navigate('AdminDrawer',{username: "U", password: "u", role: "admin", id: '3'});
-      }
+      // if (username == "U" && password == "u")
+      // {
+      //   return navigation.navigate('CreateDonationCampaign',{username: "U", password: "u", role: "admin", id: '3'});
+      //   // return navigation.navigate('AdminDrawer',{username: "U", password: "u", role: "admin", id: '3'});
+      // }
       if(username.substring(0,4)!="Org_")
       {
         fetch("http://10.0.2.2:8080/UserLogin",{

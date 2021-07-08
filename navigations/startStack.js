@@ -27,12 +27,12 @@ const forms =
             headerStyle: { height: 0}
         }
     },
-    CreateDonationCampaign: {
-        screen: CreateDonationCampaign,
-        navigationOptions: {
-            title: "",
-        }
-    },
+    // CreateDonationCampaign: {
+    //     screen: CreateDonationCampaign,
+    //     navigationOptions: {
+    //         title: "",
+    //     }
+    // },
 
     DrawNav: {
         screen: DrawNav,

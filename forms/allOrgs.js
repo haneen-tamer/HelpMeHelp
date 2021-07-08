@@ -1,24 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Alert, ScrollView, FlatList, Modal,
  TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import { AntDesign } from '@expo/vector-icons';
-import UserCard from '../shared/orgCard';
+import OrgCard from '../shared/orgCard';
 
 
-export default function App() {
+export default function App({navigation}) {
 
   const [name, setName] = useState();
-  const [users, setUsers] = useState([
-    {name: 'Resala 1', key: '1'}, 
-    {name: 'Resala 2', key: '2'}, 
-    {name: 'Resala 3', key: '3'}, 
-    {name: 'Resala 4', key: '4'}, 
-    {name: 'Resala 5', key: '5'}, 
-    {name: 'Resala 6', key: '6'}, 
-    
-  ]);
+  const [users, setUsers] = useState();
+  const [orgs, setOrgs] = useState(null);
+  const [found,setFound]=useState(false);
+  useEffect(() => {
+    fetch("http://10.0.2.2:8080/admin/AllAcceptedOrganizations", {
+      method: 'GET',
+  })
+  .then(res=>res.json())
+  .then(json => {
+    setOrgs(json)
+    setFound(true);
+  })
+  .catch((error) => {
+      console.error(error);
+  });
+}, []);
 
 
   return (
@@ -37,15 +44,16 @@ export default function App() {
         </View>
 
         <ScrollView style={styles.container}>
-    
+    {found &&
           <View style={styles.flatListStyle}>
             <FlatList
-            data={users} 
+            data={orgs} 
             renderItem={({ item }) => (   
-                <UserCard item={item}/>
+                <OrgCard item={item} navigation={navigation}/>
               )}
             />
           </View>
+}
         </ScrollView>
 
       </View>

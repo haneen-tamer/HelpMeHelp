@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Alert, ScrollView, FlatList, Modal,
  TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
 
@@ -7,19 +7,26 @@ import { AntDesign } from '@expo/vector-icons';
 import UserCard from '../shared/userCard';
 
 
-export default function App() {
+export default function App({navigation}) {
 
   const [name, setName] = useState();
-   const [user, setUser] = useState([
-    {name:'Yomna Yasser',age:'22',userStatus:'Pending',id:'1',email:'yomna@gmail.com', governorate:'Cairo',contribution:'1',username:'YY'},
-    {name:'Haneen',age:'21',userStatus:'Pending',id:'2',email:'sssss', governorate:'ddd',username:'HT'},
-    {name:'Assem',age:'23',userStatus:'Pending',id:'3',email:'sssss', governorate:'ddd',username:'AM'},
-    {name:'Sara',age:'21',userStatus:'Pending',id:'4',email:'sssss', governorate:'ddd',username:'SF'},
-    {name:'Raghda',age:'22',userStatus:'Pending',id:'5',email:'sssss', governorate:'ddd',username:'RM'},
-    {name:'Hager',age:'21',userStatus:'Pending',id:'6',email:'sssss', governorate:'ddd',username:'HM'},
-    ]);
+   const [user, setUser] = useState(null);
+   const [found,setFound]=useState(false);
 
-
+   useEffect(() => {
+    fetch("http://10.0.2.2:8080/admin/AllUsers", {
+      method: 'GET',
+  })
+  .then(res=>res.json())
+  .then(json => {
+    setUser(json)
+    setFound(true);
+  })
+  .catch((error) => {
+      console.error(error);
+  });
+}, []);
+console.log(user)
   return (
 
       
@@ -36,7 +43,7 @@ export default function App() {
         </View>
 
         <ScrollView style={styles.container}>
-    
+    {found &&
           <View style={styles.flatListStyle}>
             <FlatList
             data={user} 
@@ -45,6 +52,7 @@ export default function App() {
               )}
             />
           </View>
+}
         </ScrollView>
 
       </View>

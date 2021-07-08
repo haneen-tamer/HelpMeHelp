@@ -2,31 +2,82 @@ import React,{ useState }  from 'react';
 import {StyleSheet,TouchableOpacity,View,Text,Image, Alert} from 'react-native';
 import { globalStyles } from './../shared/globalStyles';
 
+export default function ApplicantCard({navigation,item}){
+    const [orgOwner,setOrgOwner]=useState(item.userName);
+    const [hide,setHide]=useState(false);
+   
+    const goToPage=()=>
+    {  
 
+        return navigation.navigate('userOrganizationProfile',{orgOwner})
+    }
 
-
-
-export default function ApplicantCard({item,navigation}){
+    const acceptApplicant=()=>
+    {
+        //console.log(orgOwner)
+        setHide(true);
+        fetch("http://10.0.2.2:8080/admin/handleRequest", {
+            method:"post",
+            headers:{
+              'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({     
+                username:orgOwner,
+          })
+        })
+        .then(res=>res.json())
+        .then(json => {
+            console.log(json)
+          if(json==true)
+          {
+           console.log("Accepted")
+          }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+    const rejectApplicant=()=>
+    {
+        setHide(true);
+        fetch("http://10.0.2.2:8080/admin/removeOrganization", {
+            method: 'DELETE',
+              body:JSON.stringify({     
+                username:orgOwner,
+            })
+        })
+        .then(res=>res.json())
+        .then(json => {
+          if(json==true)
+          {
+           console.log("Rejected")
+          }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
     
     return(
         
         
-        <TouchableOpacity style={styles.container} onPress={() => Alert.alert("All")}>
+        <TouchableOpacity style={styles.container} onPress={goToPage}>
 
             <View style={styles.horizontalSection}>
                     <Text style={styles.item} >{item.name}</Text>
                 
             </View>
-            
+            {!hide &&
             <View style={globalStyles.buttonstyle}>
-                <TouchableOpacity style={globalStyles.greenButtonStyle} onPress={() => Alert.alert("Accepetd")}> 
+                <TouchableOpacity style={globalStyles.greenButtonStyle} onPress={acceptApplicant}> 
                     <Text style={globalStyles.textStyle} > Accept </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={globalStyles.blackButtonStyle} onPress={() => Alert.alert("Rejected")} > 
+                <TouchableOpacity style={globalStyles.blackButtonStyle} onPress={rejectApplicant} > 
                     <Text style={globalStyles.textStyle}> Reject </Text>
                 </TouchableOpacity>
             </View>
+            }
         </TouchableOpacity>  
     );}
 

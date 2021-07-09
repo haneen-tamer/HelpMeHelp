@@ -7,7 +7,7 @@ import TextInputCard from './../shared/textInputCard';
 import GovernoratePicker from '../shared/governorateDropDown';
 import OrgTypePicker from '../shared/orgTypeDropDown';
 import CategoryPicker from '../shared/categoryDropDown';
-
+import SubCategoryPicker from '../shared/subCategoryDropDown';
 
 
 export default function App({navigation}) {
@@ -35,6 +35,15 @@ export default function App({navigation}) {
   const [rating,setRating]=useState(navigation.getParam('rating'));
   const [status,setStatus]=useState(navigation.getParam('requestStatus'));
   const[updatedAddress,setUpdatedAddress]=useState('');
+  const [firstAddress,setFirstAddress]=useState('');
+  const [secondAddress,setSecondAddress]=useState('');
+  const [thirdAddress,setThirdAddress]=useState('');
+  const [facebook,setFacebook]=useState('');
+  const [instagram,setInstagram]=useState('');
+  const [twitter,setTwitter]=useState('');
+  const [phoneNumber,setPhoneNumber]=useState(0);
+  const [hotlineNumber,setHotlineNumber]=useState(0);
+  const [hotlineDesc,setHotlineDesc]=useState('');
   var socailMediaLinksArray = new Array(); var locationArray = new Array();
   var socailMedia = new Array();var locations = new Array();
   // locationArray.push(value)
@@ -107,6 +116,7 @@ export default function App({navigation}) {
         website,
         socialMedia:socailMedia,
         hotline,
+        hotlineDesc,
         logo:image,
         requestStatus:status,
         phoneNumber:number,
@@ -152,7 +162,7 @@ export default function App({navigation}) {
          <View style={styles.textAlignStyle}> 
          
          
-            <Text style={styles.titleStyle}>Username</Text>
+         <Text style={styles.titleStyle}>Username</Text>
              <TextInputCard value={username} onChange={value=> setUsername(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={username}/>
 
            <Text style={styles.titleStyle}>Name</Text>
@@ -164,61 +174,55 @@ export default function App({navigation}) {
            <Text style={styles.titleStyle}>Email Address</Text>
            <TextInputCard value={email} onChange={value=> setEmail(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={email}/>
 
-           <Text style={styles.titleStyle}>Phone Number</Text>
-           <TextInputCard value={number.toString()} onChange={value=> setNumber(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={number.toString()}/>
-
            <Text style={styles.titleStyle}>Choose Governorate</Text> 
 
-           <GovernoratePicker 
+            <GovernoratePicker 
             onChange={value=> setGovernorate(value)}
             value={governorate}
             />
-           
+
            <Text style={styles.titleStyle}>Description</Text>
            <TextInputCard value={description} onChange={value=> setDescription(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={description}/>
 
            <Text style={styles.titleStyle}>Purpose</Text>
            <TextInputCard value={purpose} onChange={value=> setPurpose(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={purpose}/>
 
-            <Text style={styles.titleStyle}>Address</Text>
-           {
-             address.map((loc)=>{ return <TextInputCard value={loc} onChange={value=>locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={loc}/>})
-           }
-          
-           {/* <TextInputCard value={address[0]} onChange={value=> locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
-           <TextInputCard value={address[1]} onChange={value=> locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/> */}
 
            <Text style={styles.titleStyle}>Organization Type</Text>
            <OrgTypePicker
            onChange={value=> setOrgType(value)}
            value={orgType}
            />
-
-           <CategoryPicker onChangeCatgory={value=> setCategory(value)} onChangeSubCatgory={value=> setSubcategory(value)} 
-           value={category+","+subcategory}
-           />
-
+          
+           <CategoryPicker onChangeCatgory={value=> setCategory(value)} value={category}/>
+          <SubCategoryPicker onChangeSubCatgory={value=> setSubcategory(value)} value={subcategory}/>
+         
            <Text style={styles.titleStyle}>Website</Text>
            <TextInputCard value={website} onChange={value=> setWebsite(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={website}/>
+           
+           <Text style={styles.titleStyle}>Phone Number</Text>
+           <TextInputCard value={number.toString()} onChange={value=> setNumber(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={number.toString()}/>
+           
+           <Text style={styles.headerStyle}>  Address: </Text>
+           <View style={styles.socailStyle}>
+              <TextInputCard value={"First Address"} onChange={value=> setFirstAddress(value)} allow_pass={false} allow_multi={true} text={address[0]}/>
+              <TextInputCard value={" Second Address"} onChange={value=> setSecondAddress(value)} allow_pass={false} allow_multi={true} text={address[1]}/>
+              <TextInputCard value={" Third Address "} onChange={value=> setThirdAddress(value)} allow_pass={false} allow_multi={true} text={address[2]}/>
+            </View>
 
-           <Text style={styles.titleStyle}>Hotline</Text>
-           <TextInputCard value={hotline.toString()} onChange={value=> setHotline(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={hotline.toString()}/>
-
-           <Text style={styles.headerStyle}>  Socail Media: </Text>
-
+            <Text style={styles.headerStyle}>  Hotline Details: </Text>
             <View style={styles.socailStyle}>
-            {
-              links.map((link)=>{ return <TextInputCard value={link} onChange={value=>socailMediaLinksArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={link}/>})
-            }              
+              <TextInputCard value={" Hotline Number"} onChange={value=> setHotlineNumber(value)} allow_pass={false} allow_multi={true}/>
+              <TextInputCard value={" Hotline Description"} onChange={value=> setHotlineDesc(value)} allow_pass={false} allow_multi={true}/>
+            </View>
+
+            <Text style={styles.headerStyle}>  Social Media: </Text>
+            <View style={styles.socailStyle}>
+              <TextInputCard value={"Facebook"} onChange={value=> setFacebook(value)} allow_pass={false} allow_multi={true} text={links[0]}/>
+              <TextInputCard value={" Instagram"} onChange={value=> setInstagram(value)} allow_pass={false} allow_multi={true} text={links[1]}/>
+              <TextInputCard value={" Twitter"} onChange={value=> setTwitter(value)} allow_pass={false} allow_multi={true} text={links[2]}/>
+            </View>
             
-              {/* <Text style={styles.titleStyle}>Facebook</Text>
-              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
-
-              <Text style={styles.titleStyle}>Instagram</Text>
-              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
-
-              <Text style={styles.titleStyle}>Twitter</Text>
-              <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/> */}
 
             <View style={styles.buttonstyle}>
                 <TouchableOpacity style={globalStyles.blueButtonStyle} onPress={saveChanged}> 
@@ -226,11 +230,7 @@ export default function App({navigation}) {
               </TouchableOpacity>
             </View>
             </View>
-
-            
-          
-         </View>
-         
+       
       </View>
       </ScrollView>
     
@@ -239,11 +239,18 @@ export default function App({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
+    // borderRadius:8,
+    // borderWidth:2,
+    // borderColor:'#64CA80',
+    // justifyContent:"flex-start",
+    // padding:20,
+    // marginBottom:'220%'
     borderRadius:8,
     borderWidth:2,
     borderColor:'#64CA80',
     justifyContent:"flex-start",
-    padding:20,
+    paddingTop:20,
+    marginBottom:'100%'
   },
   profileImageStyle:
   {
@@ -292,7 +299,7 @@ const styles = StyleSheet.create({
     },
     socailStyle:{
       paddingLeft:22,
-      marginBottom:"30%"
+      marginBottom:"5%"
     },
     textAlignStyle:
   {
@@ -312,7 +319,13 @@ const styles = StyleSheet.create({
     
     width:"150%",
     marginLeft:"25%",
-    marginTop:"5%"
+    //marginTop:"5%"
+    //width: '60%',
+    //height: 50,
+    
+  
+   marginBottom:'80%',
+   
   }
 
 });

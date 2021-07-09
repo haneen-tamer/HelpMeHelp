@@ -15,13 +15,12 @@ export default function chat({navigation}) {
     //let username = navigation.getParam('username');
     const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('User_Username'));
     const [orgOwner,setOrgOwner]=useState(navigation.getParam('orgOwner'));
+    let [refresh, setRefresh] = useState(false);
     let [refresh1, setRefresh1] = useState(false);
-    let [refresh2, setRefresh2] = useState(false);
-    let [refresh3, setRefresh3] = useState(false);
     let [global_socket,set_global_Socket]=useState(null);
     //const socket = io("http://192.168.100.98:8080");
-    let [chatID, setchatID] = useState(0);
-    let [chatType, setchatType] = useState("OU");
+    let [chatID, setchatID] = useState(null);
+    let [chatType, setchatType] = useState(null);
 
     const connect=()=>{
       let socket= io("http://192.168.100.98:8080");
@@ -36,47 +35,52 @@ export default function chat({navigation}) {
             by: 'yoyo',
           }
         );
-        //setRefresh(true);
-        console.log(chatItemList);
-        console.log(msg+"recieve");
+        //console.log(chatItemList);
+        //console.log(msg+"recieve");
       });
     }
-
-    const get_chatID=()=>{
-      fetch("http://10.0.2.2:8080/getChatID/"+username+"/"+orgOwner+"/"+chatType,{
-          method:"get"
-      })
-        .then(res=>res.json())
-        .then(json =>{
-          //console.log(json);
-          setchatID(json);
-          setRefresh1(true);
-        })
-    }
-    const set_chatType=()=>{
-      if(orgOwner.substring(0,4)=="Org_")
-      {
-        setchatType("OU");
-      }
-      else{
-        setchatType("UU");
-      }
-    }
     const submitChatMessage=()=> {
-      //console.log(socket);
-      //console.log(chatInput);
       global_socket.emit("chat message", chatInput);
       setChatInput("");
     }
 
-    const get_messages=()=>{
-      fetch("http://10.0.2.2:8080/oldChat/"+chatID+"/"+chatType,{
+    const set_chatType=()=>{
+      if(orgOwner.substring(0,4)=="Org_")
+      {
+        setchatType("OU");
+        //setRefresh1(true);
+      }
+      else{
+        setchatType("UU");
+        //setRefresh1(true);
+      }
+      
+    }
+    const get_chatID=()=>{
+      return fetch("http://10.0.2.2:8080/getChatID/"+username+"/"+orgOwner+"/"+chatType,{
           method:"get"
       })
-        .then(res=>res.json())
+        /*.then(res=>res.json())
         .then(json =>{
+          setchatID(json.Chat_ID);
+          //setRefresh(true);  
+        })*/
+          
+    }
+    const get_messages=()=>{
+      console.log("mm"+chatID);
+      console.log("kkkk"+chatType);
+      return fetch("http://10.0.2.2:8080/oldChat/"+chatID+"/"+chatType,{
+          method:"get"
+      })
+        /*.then(res=>res.json())
+        .then(json =>{
+          //console.log("da5l1"+json.length);
+          console.log("mm"+chatID);
+          console.log("kkkk"+chatType);
           for(let i=0;i<json.length;i++)
           {
+            console.log("da5l");
             chatItemList.push(
               {
                 id: Math.random().toString(36).substring(7),
@@ -85,44 +89,74 @@ export default function chat({navigation}) {
                 by: json[i].Sender_username,
               });
           }
-          setRefresh2(true);
-        })
+          //setRefresh1(true);
+        })*/
     }
+    async function order() {
+      const res=await get_chatID();
+      const json=await res.json();
+      //console.log(json);
+      setchatID(json.Chat_ID);
+      const messages= await get_messages();
+      //console.log(messages);
+      const json2= await messages.json();
+      //console.log(json2);
+      for(let i=0;i<json2.length;i++)
+      {
+        console.log("da5l");
+        chatItemList.push(
+          {
+            id: Math.random().toString(36).substring(7),
+            text: json2[i].Text,
+            timeStamp: json2[i].Timestamp,
+            by: json2[i].Sender_username,
+          });
+       // if(i==json2.length)
+       // {
+         // setRefresh(true);
+       // }
+      }
+      setRefresh1(true);
+    }
+    /*async function call_all(){
+      let first= await set_chatType();
+      console.log(chatType);
+      let second= await get_chatID();
+      console.log(chatID);
+      let third=await get_messages();
+      console.log(chatItemList);
+    }*/
     
-    const runall=()=>{
-      //set_chatType();
-      get_chatID();
-      //get_messages();
-      
-    }
+    
     /*useEffect(()=>{
-      set_chatType().then(()=>{
-        get_chatID().then(()=>{
-          get_chatID();
-        })
-      })
       connect();
+      //call_all().then(console.log);
+      set_chatType();
+      console.log(chatType);
+      if(refresh1){get_chatID()};
+      console.log(chatID);
+      if(refresh){get_messages();}
+      console.log(chatItemList);
+      //get_messages();
     },[]);*/
-    useEffect(()=>{
-      //runall();
-      get_chatID();
-      connect();
-    },[]);
     /*function handleSubmit(event) {
       event.preventDefault();
     }*/
 
+    useEffect(()=>{
+      connect();
+      set_chatType();
+      order();
+    },[]);
 
-
-    
-    
     return (
     <View style={Styles.container}>
       {
-        refresh1 && //refresh2 &&
-      //console.log(chatItemList),
+        refresh1 && //refresh && //refresh2 &&
+      console.log(chatItemList),
       //console.log(chatType),
-      console.log(chatID),
+      //console.log(chatID),
+      //console.log(chatType),
       <FlatList
       style={Styles.flatListStyle}
       inverted

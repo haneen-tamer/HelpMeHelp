@@ -18,6 +18,9 @@ export default function App({navigation}) {
   const [usernameEdit,setUsernameEdit]=useState(null);
   const [data,setData]=useState(null);
   const [found,setFound]=useState(false);
+  const [showHotline,setShowHotline]=useState(true);
+  const [showWebsite,setShowWebsite]=useState(true);
+  const [showLinks,setShowLinks]=useState(true);
   
 //   async function getDetails() {
 //     const configs = {
@@ -39,6 +42,22 @@ export default function App({navigation}) {
     .then(json => {
       setData(json)
       setFound(true);
+      console.log(data.hotline)
+      if(data.hotline=="NA")
+        {
+          setShowHotline(false)
+        }
+        if(data.website=="NA")
+        {
+          setShowWebsite(false)
+        }
+        if(data.socialMedia.length==0)
+        {
+          console.log(data.socialMedia.length)
+          setShowLinks(false)
+        }
+        
+      
     })
     .catch((error) => {
         console.error(error);
@@ -69,24 +88,15 @@ export default function App({navigation}) {
            <Text style={globalStyles.profileTitleStyle}>Email Address</Text>
            <TextInputCard value={data.email} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
-           <Text style={globalStyles.profileTitleStyle}>Phone Number</Text>
-           <TextInputCard value={data.phoneNumber.toString()} allow_pass={false} allow_multi={true} allow_edit={false}/>
-
-
            <Text style={globalStyles.profileTitleStyle}> Governorate</Text>
            <TextInputCard value={data.Governorate} allow_pass={false} allow_multi={true} allow_edit={false}/>
-           
+
            <Text style={globalStyles.profileTitleStyle}>Description</Text>
            <TextInputCard value={data.description} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={globalStyles.profileTitleStyle}>Purpose</Text>
            <TextInputCard value={data.purpose} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
-           <Text style={globalStyles.profileTitleStyle}>Address</Text>
-           {
-             data.location.map(address=><TextInputCard value={address} allow_pass={false} allow_multi={true} allow_edit={false}/>)
-           } 
-           
 
            <Text style={globalStyles.profileTitleStyle}>Organization Type</Text>
            <TextInputCard value={data.organizationType} allow_pass={false} allow_multi={true} allow_edit={false}/>
@@ -96,19 +106,42 @@ export default function App({navigation}) {
            <TextInputCard value={data.category} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
            <Text style={globalStyles.profileTitleStyle}>SubCategory</Text>
-           <TextInputCard value={data.Subcategory} allow_pass={false} allow_multi={true} allow_edit={false}/>
-           {/* <CategoryPicker /> */}
+           <TextInputCard value={data.subCategory} allow_pass={false} allow_multi={true} allow_edit={false}/>
+            {showWebsite &&
            <Text style={globalStyles.profileTitleStyle}>Website</Text>
+            }
+            {showWebsite &&
            <TextInputCard value={data.website} allow_pass={false} allow_multi={true} allow_edit={false}/>
+            }
+           <Text style={globalStyles.profileTitleStyle}>Phone Number</Text>
+           <TextInputCard value={data.phoneNumber.toString()} allow_pass={false} allow_multi={true} allow_edit={false}/>
 
-           <Text style={globalStyles.profileTitleStyle}>Hotline</Text>
-           <TextInputCard value={data.hotline.toString()} allow_pass={false} allow_multi={true} allow_edit={false}/>
+           <Text style={globalStyles.profileTitleStyle}>Address</Text>
+           {
+             data.location.map(address=><TextInputCard value={address} allow_pass={false} allow_multi={true} allow_edit={false}/>)
+           } 
+
+           {showHotline &&
+           <Text style={globalStyles.profileTitleStyle}>Hotline Number</Text>
+            }
+            {showHotline &&
+           <TextInputCard value={data.hotline[0].toString()} allow_pass={false} allow_multi={true} allow_edit={false}/>
+            }
+            {showHotline &&
+           <Text style={globalStyles.profileTitleStyle}>Hotline Description</Text>
+            }
+            {showHotline &&
+           <TextInputCard value={data.hotline[1].toString()} allow_pass={false} allow_multi={true} allow_edit={false}/>
+            }
+            {showLinks &&
            <Text style={styles.headerStyle}>  Socail Media: </Text>
-
+            }
+          {showLinks &&
           <View style={styles.socailStyle}>
           {
              data.socialMedia.map(links=><TextInputCard value={links} allow_pass={false} allow_multi={true} allow_edit={false}/>)
            }
+
             
               {/* <Text style={styles.titleStyle}>Facebook</Text>
               <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/>
@@ -119,6 +152,7 @@ export default function App({navigation}) {
               <Text style={styles.titleStyle}>Twitter</Text>
               <TextInputCard value={"bla bla"} allow_pass={false} allow_multi={true} allow_edit={false}/> */}
            </View>
+}
 
             
          

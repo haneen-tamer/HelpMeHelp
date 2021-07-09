@@ -8,7 +8,7 @@ import { globalStyles } from '../shared/globalStyles';
 import GovernoratePicker from '../shared/governorateDropDown';
 import OrgTypePicker from '../shared/orgTypeDropDown';
 import CategoryPicker from '../shared/categoryDropDown';
-import SubCategoryPicker from '../shared/subCategoryDropDown'
+import SubCategoryPicker from '../shared/subCategoryDropDown';
 import TextInputCard from './../shared/textInputCard';
 import { onChange } from 'react-native-reanimated';
 import { Facebook } from 'expo';

@@ -38,7 +38,7 @@ export default function App(){
     
     const [description,setDescription]=useState('');
     const [descriptionError,setDescriptionError]=useState('');
-
+    const [checkBoxSelection,setCheckBoxSelection]=useState(false)
 
 
     useEffect(()=>{async()=>{
@@ -69,10 +69,6 @@ export default function App(){
         }
       }
 
-      checkboxClicked = (key) => {
-        this.setState({ [key]: !this.state[key] })
-      }
-
 
       return(
         <ScrollView>
@@ -101,7 +97,7 @@ export default function App(){
                 <Text style={styles.requiredStyle}>* Required</Text>
             </View>
             {/*Basic Data Section */}
-            <TextInputCard value={"Campaign Title\t\t*" } onChange={value=> setCampName(value)} allow_pass={false} allow_multi={false}/>
+            <TextInputCard value={"campaign Title                  *" } onChange={value=> setCampName(value)} allow_pass={false} allow_multi={false}/>
             
             
             
@@ -109,80 +105,76 @@ export default function App(){
               <Text style={globalStyles.errorStyle}>{campNameError}</Text>
             </View>
 
-            {/*Time Section */}
-            <TextInputCard value={"Start date \t\t\t\t*"} onChange={value=> setStartDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
-
+            {!checkBoxSelection &&
+            <TextInputCard value={"Start date                          *"} onChange={value=> setStartDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+            }
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{startDateError}</Text>
             </View>
-
-            <TextInputCard value={"End date \t\t\t\t*"} onChange={value=> setEndDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
-
+            {!checkBoxSelection &&
+            <TextInputCard value={"End date                             *"} onChange={value=> setEndDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+            }
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{endDateError}</Text>
             </View>
 
             <View style={{flexDirection: 'row',  marginBottom: 20}}>
-            <CheckBox style={styles.checkbox} value= {false} onPress={() => checkboxClicked()} />
+            <CheckBox style={styles.checkbox} value= {checkBoxSelection} onValueChange={setCheckBoxSelection} />
+          
             <Text style={styles.textStyle}>On going campaign</Text>
 
             </View>
 
             {/*Essay Section */}
 
-            <TextInputCard value={"Description \t\t\t\t*"} onChange={value=> setDescription(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+            <TextInputCard value={"Description                        *"} onChange={value=> setDescription(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
 
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{descriptionError}</Text>
             </View>
 
-
-            <Text style={{fontSize: 20, fontWeight: 'bold', 
-              marginLeft: 15, marginTop: 25}}>
-                Volunteer Process{'\n'}
-                Describe how a person can apply to {'\n'}volunteer
-                in this campaign
+            <TextInputCard value={"Donation Process             *"} onChange={value=> setProcessDesc(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+            <Text style={{fontSize: 17, fontWeight: 'bold', 
+              marginLeft: 20, marginTop: 10,color:"#000"}}>
+                Describe all the ways a person can {'\n'}donate
+                to this campaign
             </Text>
-
-            <TextInputCard value={"Process \t\t\t\t*"} onChange={value=> setProcessDesc(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
-
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{processDescError}</Text>
             </View>
 
             {/*Target Section */}
 
-            <Text style={{fontSize: 20, fontWeight: 'bold', 
-              marginLeft: 15, marginTop: 25}}>
-                Goal {'\n'}Number of people you hope to reach
+            <NumberInputCard value={"Goal                                     *"} onChange={value=> setTarget(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+
+            <Text style={{fontSize: 17, fontWeight: 'bold', 
+              marginLeft: 20, marginTop: 10,color:"#000"}}>
+              Goal (in number) you are trying to reach
             </Text>
-
-            <NumberInputCard value={"Goal \t\t\t\t*"} onChange={value=> setTarget(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
-
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{targetError}</Text>
             </View>
 
-            <Text style={{fontSize: 20, fontWeight: 'bold', 
-              marginLeft: 15, marginTop: 25}}>
-                Form Link{'\t\t\t'}(Optional){'\n'}
-                Add a link for candidates to fill out
-            </Text>
 
-            <NumberInputCard value={"Form Link \t\t\t\t*"} onChange={value=> setQuizLink(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+            <NumberInputCard value={"Form Link                          "} onChange={value=> setQuizLink(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+
+            <Text style={{fontSize: 17, fontWeight: 'bold', 
+              marginLeft: 20, marginTop: 10,color:"#000"}}>
+                Add a Quiz link for candidates to fill out
+            </Text>
 
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{quizLinkError}</Text>
             </View>
 
-            <Text style={{fontSize: 20, fontWeight: 'bold', 
-            marginLeft: 15, marginTop: 25}}>
-              Address{'\t\t\t'}(Optional){'\n'}
-              Add address where candidates will volunteer
-          </Text>
+           
 
             <TextInputCard value={"Address"} onChange={value=> setAddress(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
 
+            <Text style={{fontSize: 17, fontWeight: 'bold', 
+              marginLeft: 20, marginTop: 10,color:"#000"}}>
+              Add an address relevant to this campaign
+            </Text>
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{addressError}</Text>
             </View>
@@ -194,8 +186,8 @@ export default function App(){
               <Text style={globalStyles.textStyle}>Launch</Text>
               </TouchableOpacity>
             </View>
-
-          </View>
+            </View>
+          
         </ScrollView>
 
       );
@@ -241,5 +233,16 @@ const styles = StyleSheet.create({
     paddingTop:10,
     alignSelf:'center',
     marginLeft: 10,
+  },
+  requiredStyle:{
+    color:"lightslategrey",
+    fontSize:20,
+    marginLeft:20,
+    height:'90%',
+    width:'80%',
+    fontWeight:"bold",
+    marginBottom:'3%',
+    paddingTop:10
+    
   },
 })

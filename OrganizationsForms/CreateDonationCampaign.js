@@ -36,6 +36,8 @@ export default function App(){
     const [description,setDescription]=useState('');
     const [descriptionError,setDescriptionError]=useState('');
 
+    const [checkBoxSelection,setCheckBoxSelection]=useState(false)
+
 
 
     useEffect(()=>{async()=>{
@@ -108,20 +110,23 @@ export default function App(){
             
 
             {/*Time Section */}
+            {!checkBoxSelection &&
             <TextInputCard value={"Start date                          *"} onChange={value=> setStartDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
-
+            }
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{startDateError}</Text>
             </View>
-
+            {!checkBoxSelection &&
             <TextInputCard value={"End date                             *"} onChange={value=> setEndDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
-
+            }
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{endDateError}</Text>
             </View>
+          
 
             <View style={{flexDirection: 'row',  marginBottom: 20}}>
-            <CheckBox style={styles.checkbox} value= {false} onPress={() => checkboxClicked()} />
+            <CheckBox style={styles.checkbox} value= {checkBoxSelection} onValueChange={setCheckBoxSelection} />
+          
             <Text style={styles.textStyle}>On going campaign</Text>
 
             </View>
@@ -135,40 +140,36 @@ export default function App(){
             </View>
 
 
-            <Text style={{fontSize: 20, fontWeight: 'bold', 
-              marginLeft: 15, marginTop: 25}}>
-                Donation Process{'\n'}
-                Describe all the ways a person can donate{'\n'}
+            
+
+            <TextInputCard value={"Donation Process             *"} onChange={value=> setProcessDesc(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+
+            <Text style={{fontSize: 17, fontWeight: 'bold', 
+              marginLeft: 20, marginTop: 10,color:"#000"}}>
+                Describe all the ways a person can {'\n'}donate
                 to this campaign
             </Text>
-
-            <TextInputCard value={"Process                              *"} onChange={value=> setProcessDesc(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
-
-            <View style={globalStyles.rowAlginStyle}>
+            <View style={globalStyles.rowAlginStyle}> 
             <Text style={globalStyles.errorStyle}>{processDescError}</Text>
             </View>
 
             {/*Target Section */}
 
-            <Text style={{fontSize: 20, fontWeight: 'bold', 
-              marginLeft: 15, marginTop: 25}}>
-                Goal (in number) you are trying to reach
-            </Text>
 
             <NumberInputCard value={"Goal                                     *"} onChange={value=> setTarget(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
-
+            <Text style={{fontSize: 17, fontWeight: 'bold', 
+              marginLeft: 20, marginTop: 10,color:"#000"}}>
+              Goal (in number) you are trying to reach
+            </Text>
+            
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{targetError}</Text>
             </View>
-
-            <Text style={{fontSize: 20, fontWeight: 'bold', 
-            marginLeft: 15, marginTop: 25}}>
-              Address{'\t\t\t'}(Optional){'\n'}
-              Add an address relevant to this campaign
-          </Text>
-
             <TextInputCard value={"Address"} onChange={value=> setAddress(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
-
+            <Text style={{fontSize: 17, fontWeight: 'bold', 
+              marginLeft: 20, marginTop: 10,color:"#000"}}>
+              Add an address relevant to this campaign
+            </Text>
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{addressError}</Text>
             </View>
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
         borderWidth:2,
         borderColor:'#64CA80',
         justifyContent:"flex-start",
-        padding:10
+        padding:10,
     },
     checkbox:{
       width: 25,

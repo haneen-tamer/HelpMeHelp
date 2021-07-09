@@ -2,9 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState,useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput,FlatList, TouchableOpacity, ScrollView, ActivityIndicator} from 'react-native';
 import { globalStyles } from '../shared/globalStyles';
-import HotlineSearchCard from '../shared/hotlineSearchCard';
-import CampSearchCard from '../shared/campSearchCard';
-import OrgSearchCard from '../shared/orgSearchCard';
+import HotlineSearchCard from '../shared/HotlineSearchCard';
+import CampSearchCard from '../shared/CampSearchCard';
+import OrgSearchCard from '../shared/OrgSearchCard';
 import { AntDesign } from '@expo/vector-icons';
 
 const hotlineData = [

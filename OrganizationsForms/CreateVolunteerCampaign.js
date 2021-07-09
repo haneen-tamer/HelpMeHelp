@@ -16,7 +16,7 @@ export default function App(){
     const [campName,setCampName]=useState('');
     const [campNameError,setCampNameError]=useState('');
     
-    const [donationType,setDonationType]=useState('');
+    
 
     const [startDate,setStartDate]=useState('');
     const [startDateError,setStartDateError]=useState('');
@@ -32,12 +32,13 @@ export default function App(){
     
     const [processDesc,setProcessDesc]=useState('');
     const [processDescError,setProcessDescError]=useState('');
+
+    const [quizLinkDesc,setQuizLink]=useState('');
+    const [quizLinkError,setQuizLinkError]=useState('');
     
     const [description,setDescription]=useState('');
     const [descriptionError,setDescriptionError]=useState('');
-
     const [checkBoxSelection,setCheckBoxSelection]=useState(false)
-
 
 
     useEffect(()=>{async()=>{
@@ -68,10 +69,6 @@ export default function App(){
         }
       }
 
-      checkboxClicked = (key) => {
-        this.setState({ [key]: !this.state[key] })
-      }
-
 
       return(
         <ScrollView>
@@ -91,7 +88,7 @@ export default function App(){
                     source={require('../images/CampaignImage.png')}
                     />
                 }
-                <Text style={styles.textStyle}>Upload Campagin Picutre</Text>
+                <Text style={styles.textStyle}>Change Profile Picutre</Text>
 
                 </TouchableOpacity>
             </View>
@@ -101,15 +98,13 @@ export default function App(){
             </View>
             {/*Basic Data Section */}
             <TextInputCard value={"campaign Title                  *" } onChange={value=> setCampName(value)} allow_pass={false} allow_multi={false}/>
+            
+            
+            
             <View style={globalStyles.rowAlginStyle}>
-            <Text style={globalStyles.errorStyle}>{campNameError}</Text>
+              <Text style={globalStyles.errorStyle}>{campNameError}</Text>
             </View>
-            
-            
-            <DonationTypeDropdown onChange={id=> setDonationType(id)} value={"Donation Type               *"}/>
-            
 
-            {/*Time Section */}
             {!checkBoxSelection &&
             <TextInputCard value={"Start date                          *"} onChange={value=> setStartDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
             }
@@ -122,7 +117,6 @@ export default function App(){
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{endDateError}</Text>
             </View>
-          
 
             <View style={{flexDirection: 'row',  marginBottom: 20}}>
             <CheckBox style={styles.checkbox} value= {checkBoxSelection} onValueChange={setCheckBoxSelection} />
@@ -139,33 +133,44 @@ export default function App(){
             <Text style={globalStyles.errorStyle}>{descriptionError}</Text>
             </View>
 
-
-            
-
             <TextInputCard value={"Donation Process             *"} onChange={value=> setProcessDesc(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
-
             <Text style={{fontSize: 17, fontWeight: 'bold', 
               marginLeft: 20, marginTop: 10,color:"#000"}}>
                 Describe all the ways a person can {'\n'}donate
                 to this campaign
             </Text>
-            <View style={globalStyles.rowAlginStyle}> 
+            <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{processDescError}</Text>
             </View>
 
             {/*Target Section */}
 
-
             <NumberInputCard value={"Goal                                     *"} onChange={value=> setTarget(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+
             <Text style={{fontSize: 17, fontWeight: 'bold', 
               marginLeft: 20, marginTop: 10,color:"#000"}}>
               Goal (in number) you are trying to reach
             </Text>
-            
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{targetError}</Text>
             </View>
+
+
+            <NumberInputCard value={"Form Link                          "} onChange={value=> setQuizLink(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+
+            <Text style={{fontSize: 17, fontWeight: 'bold', 
+              marginLeft: 20, marginTop: 10,color:"#000"}}>
+                Add a Quiz link for candidates to fill out
+            </Text>
+
+            <View style={globalStyles.rowAlginStyle}>
+            <Text style={globalStyles.errorStyle}>{quizLinkError}</Text>
+            </View>
+
+           
+
             <TextInputCard value={"Address"} onChange={value=> setAddress(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+
             <Text style={{fontSize: 17, fontWeight: 'bold', 
               marginLeft: 20, marginTop: 10,color:"#000"}}>
               Add an address relevant to this campaign
@@ -181,8 +186,8 @@ export default function App(){
               <Text style={globalStyles.textStyle}>Launch</Text>
               </TouchableOpacity>
             </View>
-
-          </View>
+            </View>
+          
         </ScrollView>
 
       );
@@ -194,7 +199,7 @@ const styles = StyleSheet.create({
         borderWidth:2,
         borderColor:'#64CA80',
         justifyContent:"flex-start",
-        padding:10,
+        padding:10
     },
     checkbox:{
       width: 25,

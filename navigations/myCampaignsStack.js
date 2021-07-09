@@ -1,7 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import MyCampaigns from '../forms/MyCampaigns';
-import UserCreateCampaign from '../forms/UserCreateCampaign';
+import UserCreateCampaign from '../forms/CreateUserDonationCampaign';
 import userCampaignDetails from '../forms/userCampaignDetails'
 import Header from '../shared/header';
 import Title from '../shared/Title';
@@ -13,15 +13,21 @@ const screens = {
         navigationOptions: ({ navigation }) => {
             return {
                  headerLeft: () => <Header navigation={navigation}/>,
-                headerTitle:()=><Title title={"Campagins I Created"}/>,
+                headerTitle:()=><Title title={"Campagins You Created"}/>,
             }
           },
     },
     UserCreateCampaign:{
         screen: UserCreateCampaign,
+        navigationOptions: {
+            headerTitle: "Create Campaign"
+        }
     },
     userCampaignDetails:{
         screen: userCampaignDetails,
+        navigationOptions: {
+            headerTitle: "Campaign Details"
+        }
     }
 };
 

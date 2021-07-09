@@ -86,7 +86,21 @@ export default function Start({ navigation }) {
     .then(json =>{
        if(json==true)
         {
-          navigation.navigate('orgDrawerNav',{OrgUsername:username});
+            fetch("http://10.0.2.2:8080/orgStatus/"+username, {
+              method: 'GET',
+          })
+          .then(res=>res.json())
+          .then(json => {
+            if(json=="pending")
+            {
+              navigation.navigate('pendingPage',{OrgUsername:username});
+            }
+            else
+            {
+              navigation.navigate('orgDrawerNav',{OrgUsername:username});
+            }
+            
+          })
         }
         else
         {

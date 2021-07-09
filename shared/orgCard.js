@@ -11,7 +11,7 @@ export default function ApplicantCard({item,navigation}){
 
     return navigation.navigate('userOrganizationProfile',{orgOwner})
 }
-const rejectApplicant=()=>
+const deleteOrg=()=>
     {
         setHide(true);
         fetch("http://10.0.2.2:8080/admin/removeOrganization/"+orgOwner, {
@@ -47,7 +47,7 @@ const rejectApplicant=()=>
         {!hide &&
             <View style={globalStyles.buttonstyle}>
                 
-                <TouchableOpacity style={styles.blackButtonStyle} onPress={rejectApplicant} > 
+                <TouchableOpacity style={styles.blackButtonStyle} onPress={deleteOrg} > 
                     <Text style={globalStyles.textStyle} > Remove </Text>
                 </TouchableOpacity>
 

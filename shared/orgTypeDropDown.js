@@ -12,11 +12,8 @@ export default function OrgTypePicker({onChange,value}){
         <View style={styles.DDstyle}>
         <DropDownPicker
                     items={[
-                        {label: 'Company(Other)', value: 'Company'}, {label: 'Company Limitied by Guaran', value: 'CLBG'}, {label: 'Friendly Society', value: 'FS'},
-                        {label: 'Political Party', value: 'PP'}, {label: 'Primay School', value: 'PS'}, {label: 'Private Charitable Trust', value: 'PCT'},
-                        {label: 'Secondary School', value: 'SS'}, {label: 'Sport Body', value: 'SB'}, {label: 'Statutory or Charter Body', value: 'SORB'},
-                        {label: 'Third-level Education Institution', value: 'TLEI'}, {label: 'Trade Union', value: 'TU'}, {label: 'Trust', value: 'Trust'},
-                        {label: 'Unincorporated Association', value: 'UA'}
+                        {label: 'local association', value: 'local association'}, {label: 'local institution', value: 'local institution'},
+                         {label: 'central institution', value: 'central institution'},{label: 'branch', value: 'branch'} 
                     ]}
                     containerStyle={{height: '4.5%',width:'84%',paddingLeft:15,paddingTop:10}}
                     style={{backgroundColor: 'lightgrey', borderColor:"#64CA80",

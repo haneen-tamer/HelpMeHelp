@@ -5,6 +5,8 @@ import applicantRequests from '../OrganizationsForms/applicantRequests';
 import orgUserProfile from '../OrganizationsForms/orgUserProfile';
 import Header from '../shared/header';
 import Title from '../shared/Title';
+import CreateVolunteerCampaign from '../OrganizationsForms/CreateVolunteerCampaign'
+import CreateDonationCampaign from '../OrganizationsForms/CreateDonationCampaign';
 import React from 'react';
 
 const screens = {
@@ -16,6 +18,18 @@ const screens = {
                 headerTitle:()=><Title title={"Home Page"}/>,
             }
           },
+    },
+    CreateDonationCampaign: {
+        screen: CreateDonationCampaign,
+        navigationOptions: {
+            title: "Donation Campagin Launching",
+        }
+    },
+    CreateVolunteerCampaign: {
+        screen: CreateVolunteerCampaign,
+        navigationOptions: {
+            title: "Volunteering Campagin Launching",
+        }
     },
     applicantRequests:{
         screen:applicantRequests,

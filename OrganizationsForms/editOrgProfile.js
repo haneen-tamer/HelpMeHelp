@@ -153,19 +153,19 @@ export default function App({navigation}) {
          
          
             <Text style={styles.titleStyle}>Username</Text>
-             <TextInputCard value={username} onChange={value=> setUsername(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
+             <TextInputCard value={username} onChange={value=> setUsername(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={username}/>
 
            <Text style={styles.titleStyle}>Name</Text>
-           <TextInputCard value={name} onChange={value=> setName(value)} allow_pass={false} allow_multi={true} allow_edit={false}/>
+           <TextInputCard value={name} onChange={value=> setName(value)} allow_pass={false} allow_multi={true} allow_edit={false} text={name}/>
 
            <Text style={styles.titleStyle}>Password</Text> 
-           <TextInputCard value={"*****"} onChange={value=> setPassword(value)} allow_pass={true} allow_multi={false} allow_edit={true}/>
+           <TextInputCard value={"*****"} onChange={value=> setPassword(value)} allow_pass={true} allow_multi={false} allow_edit={true} text={"*****"}/>
 
            <Text style={styles.titleStyle}>Email Address</Text>
-           <TextInputCard value={email} onChange={value=> setEmail(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
+           <TextInputCard value={email} onChange={value=> setEmail(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={email}/>
 
            <Text style={styles.titleStyle}>Phone Number</Text>
-           <TextInputCard value={number.toString()} onChange={value=> setNumber(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
+           <TextInputCard value={number.toString()} onChange={value=> setNumber(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={number.toString()}/>
 
            <Text style={styles.titleStyle}>Choose Governorate</Text> 
 
@@ -175,14 +175,14 @@ export default function App({navigation}) {
             />
            
            <Text style={styles.titleStyle}>Description</Text>
-           <TextInputCard value={description} onChange={value=> setDescription(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
+           <TextInputCard value={description} onChange={value=> setDescription(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={description}/>
 
            <Text style={styles.titleStyle}>Purpose</Text>
-           <TextInputCard value={purpose} onChange={value=> setPurpose(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
+           <TextInputCard value={purpose} onChange={value=> setPurpose(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={purpose}/>
 
             <Text style={styles.titleStyle}>Address</Text>
            {
-             address.map((loc)=>{ return <TextInputCard value={loc} onChange={value=>locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>})
+             address.map((loc)=>{ return <TextInputCard value={loc} onChange={value=>locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={loc}/>})
            }
           
            {/* <TextInputCard value={address[0]} onChange={value=> locationArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
@@ -199,16 +199,16 @@ export default function App({navigation}) {
            />
 
            <Text style={styles.titleStyle}>Website</Text>
-           <TextInputCard value={website} onChange={value=> setWebsite(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
+           <TextInputCard value={website} onChange={value=> setWebsite(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={website}/>
 
            <Text style={styles.titleStyle}>Hotline</Text>
-           <TextInputCard value={hotline.toString()} onChange={value=> setHotline(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>
+           <TextInputCard value={hotline.toString()} onChange={value=> setHotline(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={hotline.toString()}/>
 
            <Text style={styles.headerStyle}>  Socail Media: </Text>
 
             <View style={styles.socailStyle}>
             {
-              links.map((link)=>{ return <TextInputCard value={link} onChange={value=>socailMediaLinksArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true}/>})
+              links.map((link)=>{ return <TextInputCard value={link} onChange={value=>socailMediaLinksArray.push(value)} allow_pass={false} allow_multi={true} allow_edit={true} text={link}/>})
             }              
             
               {/* <Text style={styles.titleStyle}>Facebook</Text>

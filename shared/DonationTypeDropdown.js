@@ -3,7 +3,7 @@ import { StyleSheet, View} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 
-export default function DonationTypeDropdown({onChange}){
+export default function DonationTypeDropdown({onChange,value}){
 
     
     return(
@@ -23,7 +23,7 @@ export default function DonationTypeDropdown({onChange}){
           labelStyle={{fontSize:20,color:"#000"}}
           dropDownStyle={{backgroundColor: '#fafafa'}}
           onChangeItem={item => onChange(item.label)}
-          placeholder="Money"
+          placeholder={value}
           placeholderStyle={{fontWeight:"bold",fontSize:25,color:"lightslategrey"}}
           selectedLabelStyle={{fontWeight:"bold",fontSize:25,color:"#000"}}
           arrowSize={20}

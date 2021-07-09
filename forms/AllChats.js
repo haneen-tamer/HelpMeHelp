@@ -1,34 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import ChatItem from '../shared/ChatItem';
 import Header from '../shared/header';
 
 export default function chat({navigation}) {
     let [chatInput, setChatInput] = useState("");
-    let [chatItemList, setChatItemList] = useState([
-        {id:'1', text:'hi', with:'raghda'},
-        {id:'2', text:'lay lay', with:'hagar'},
-        {id:'3', text:'bye', with:'yomna'},
-        {id:'4', text:'bye', with:'sara'}
-    ]);//useState<chatItem[]>([]);
-    let username = navigation.getParam('username');
+    const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('User_Username'));
+    let [chatItemList, setChatItemList] = useState([]);//useState<chatItem[]>([]);
+    let[refresh,setRefresh]=useState(false);
+    //let username = navigation.getParam('username');
+    const get_allchats=()=>{
+      console.log(username);
+      fetch("http://10.0.2.2:8080/allchats/"+username,{
+          method:"get"
+      })
+        .then(res=>res.json())
+        .then(json =>{
+          for(let i=0;i<json.length;i++)
+          {
+            chatItemList.push(
+            {
+              id: Math.random().toString(36).substring(7),
+              with: json[i].Username1,
+              text: "haha"
+            });
+          }
+          //console.log(chatItemList);
+          setRefresh(true);
+        })
+    }
+
+    useEffect(()=>{
+      get_allchats();
+    }, []);
     return (
     <View style={Styles.container}>
-      
+      {
+        refresh &&
       <FlatList
       style={Styles.flatListStyle}
       keyExtractor={(item) => item.id} 
-      data={chatItemList.sort((a, b) => b.timeStamp - a.timeStamp)} 
+      data={chatItemList}//.sort((a, b) => b.timeStamp - a.timeStamp)} 
       renderItem={({ item }) => (
           <TouchableOpacity 
-          onPress={()=>navigation.navigate('chat',{username:{username}})}>
+          onPress={()=>navigation.navigate('chat',{username:{username},orgOwner:item.with})}>
           <View style={Styles.chatContainer}>
           <Text style={Styles.boldText}>{item.with}</Text>
           <Text style={Styles.smallItalicText}>{item.text}</Text>
           </View>
           </TouchableOpacity> 
       )}
-      />
+      />}
     </View>
     );
 }

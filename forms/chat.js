@@ -17,6 +17,7 @@ export default function chat({navigation}) {
     const [orgOwner,setOrgOwner]=useState(navigation.getParam('orgOwner'));
     let [refresh, setRefresh] = useState(false);
     let [refresh1, setRefresh1] = useState(false);
+    let [senderType, setSenderType] = useState(null);
     let [global_socket,set_global_Socket]=useState(null);
     //const socket = io("http://192.168.100.98:8080");
     let [chatID, setchatID] = useState(null);
@@ -56,31 +57,27 @@ export default function chat({navigation}) {
       }
       
     }
+    
     const get_chatID=()=>{
-      return fetch("http://10.0.2.2:8080/getChatID/"+username+"/"+orgOwner+"/"+chatType,{
+       fetch("http://10.0.2.2:8080/getChatID/"+username+"/"+orgOwner+"/"+chatType,{
           method:"get"
       })
-        /*.then(res=>res.json())
+        .then(res=>res.json())
         .then(json =>{
           setchatID(json.Chat_ID);
           //setRefresh(true);  
-        })*/
+        })
           
     }
     const get_messages=()=>{
-      console.log("mm"+chatID);
-      console.log("kkkk"+chatType);
-      return fetch("http://10.0.2.2:8080/oldChat/"+chatID+"/"+chatType,{
+      fetch("http://10.0.2.2:8080/oldChat/"+username+"/"+orgOwner,{
           method:"get"
       })
-        /*.then(res=>res.json())
+        .then(res=>res.json())
         .then(json =>{
-          //console.log("da5l1"+json.length);
-          console.log("mm"+chatID);
-          console.log("kkkk"+chatType);
           for(let i=0;i<json.length;i++)
           {
-            console.log("da5l");
+            //console.log("da5l");
             chatItemList.push(
               {
                 id: Math.random().toString(36).substring(7),
@@ -89,8 +86,38 @@ export default function chat({navigation}) {
                 by: json[i].Sender_username,
               });
           }
-          //setRefresh1(true);
-        })*/
+          setRefresh1(true);
+        })
+    }
+
+    const save_message=(message,sender)=>{
+      console.log(chatID);
+      console.log(chatType);
+      console.log(sender);
+      console.log(message);
+      fetch("http://10.0.2.2:8080/saveMessage",{
+        method:"post",
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+          message,    
+          sender,
+          chatID,
+          chatType
+      })
+      })
+      .then(res=>res.json())
+      .then(json => {
+        console.log(json);
+        if(json==true)
+        {
+          console.log("saved");
+        }
+      })
+      .catch((error) => {
+          console.error(error);
+      });
     }
     async function order() {
       const res=await get_chatID();
@@ -146,22 +173,24 @@ export default function chat({navigation}) {
     useEffect(()=>{
       connect();
       set_chatType();
-      order();
+      get_messages();
+      get_chatID();
+      //order();
     },[]);
 
     return (
     <View style={Styles.container}>
       {
-        refresh1 && //refresh && //refresh2 &&
-      console.log(chatItemList),
+       // refresh1 && //refresh && //refresh2 &&
+      //console.log(chatItemList),
       //console.log(chatType),
       //console.log(chatID),
       //console.log(chatType),
       <FlatList
       style={Styles.flatListStyle}
-      inverted
+      //inverted
       keyExtractor={(item) => item.id} 
-      data={chatItemList}//.sort((a, b) => b.timeStamp - a.timeStamp)} 
+      data={chatItemList}//.sort((a, b) => a.timeStamp - b.timeStamp)} 
       renderItem={({ item }) => ( 
         <ChatItem item= {item} username={username}/>
       )}
@@ -189,7 +218,7 @@ export default function chat({navigation}) {
             //console.log(chatInput+"sent");
             
             submitChatMessage();
-            
+            save_message(chatInput,username);
           }}
         ></Button>
       </View>

@@ -45,6 +45,7 @@ export default function App() {
   return (
 
     <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss();}}>
+    
       <View style={styles.container}>
         {/* <View style={styles.head} > 
           <Text style={styles.headText}> Add new hotline </Text> 
@@ -73,12 +74,13 @@ export default function App() {
         <View style={{right: '15%'}} >
             <View style={globalStyles.buttonstyle}>
                 <TouchableOpacity style={styles.blackButtonStyle} onPress={add} > 
-                    <Text style={globalStyles.textStyle} > Add hotline </Text>
+                    <Text style={styles.BtntextStyle} > Add hotline </Text>
                 </TouchableOpacity>
             </View>
         </View>
 
       </View>
+    
     </TouchableWithoutFeedback>
   );
 }
@@ -87,20 +89,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'space-around',
+    // justifyContent: 'space-around',
     paddingBottom: 20,
   },
   sectoin1:{
     marginTop: 20,
     marginLeft: 20,
     marginRight: 20,
-    height: '20%',
-    // alignItems: 'center',
+    height: '25%',
+    // backgroundColor: 'red',
   },
   sectoin2:{
-    margin: 20,
+    marginBottom: 20,
+    marginLeft: 20,
+    marginRight: 20,
     height: '35%',
-    // alignItems: 'center',
+    // backgroundColor: 'red',
   },
   textStyle:
   {
@@ -108,9 +112,18 @@ const styles = StyleSheet.create({
     fontWeight:"bold",
     color:"#000",
     flexDirection: 'row',
-    
     marginBottom:'2%',
   },
+  
+  BtntextStyle:{
+    fontSize: 18,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase",
+    paddingTop: 3,
+  },
+  
   numberArea:{
     flexDirection: 'row',
     borderRadius: 5,
@@ -118,9 +131,9 @@ const styles = StyleSheet.create({
     width: '70%',
     height: '30%',
     padding: '3%',
-    fontSize: 17,
-    paddingBottom:'5%',
-    paddingTop:'5%'
+    fontSize: 20,
+    paddingBottom:'3%',
+    paddingTop:'3%'
   },
   descriptionArea:{
     flexDirection: 'row',
@@ -129,7 +142,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '80%',
     padding: '3%',
-    fontSize: 17,
+    fontSize: 18,
   },
   blackButtonStyle:{
     width: '50%',

@@ -6,6 +6,7 @@ import CampaignItem from '../shared/CampaignItem'
 import * as Progress from 'react-native-progress';
 import { globalStyles } from './../shared/globalStyles';
 import { set } from 'react-native-reanimated';
+import NumberInputCard from './../shared/numberInputCard';
 
 
 export default function App({navigation}) {
@@ -18,6 +19,7 @@ export default function App({navigation}) {
     const [userCampStatus,setUserCampStatus]=useState(null);
     const [donationType,setDonationType]=useState(navigation.getParam('dontationTypeID'))
     const [showPoPup,setShowPoPUP]=useState(false)
+    const [showVolPoPup,setShowVolPoPUP]=useState(false)
     if(orgOwner==null)
     {
        if(userOwner!=null)
@@ -195,7 +197,7 @@ export default function App({navigation}) {
         {
             userCampStatus==='null' && donationType==1 &&
             <View style={globalStyles.buttonAlignStyle}>
-            <TouchableOpacity style={globalStyles.greenButtonStyle}> 
+            <TouchableOpacity style={globalStyles.greenButtonStyle} onPress={ ()=>setShowVolPoPUP(!showVolPoPup)}> 
             <Text style={globalStyles.textStyle}>Join</Text>
             </TouchableOpacity>
           
@@ -217,7 +219,7 @@ export default function App({navigation}) {
           
         </View>
         }
-         <Modal
+         {/*<Modal
         animationType="slide"
         transparent={true}
         visible={showPoPup}
@@ -225,10 +227,70 @@ export default function App({navigation}) {
           //Alert.alert("Modal has been closed.");
           setShowPoPUP(!showPoPup);
         }}
-      ></Modal>
-    
+    ></Modal>*/}
+      <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showPoPup}
+        onRequestClose={() => {
+          setShowPoPUP(!showPoPup);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.OrganizationStyles}>Donation Process</Text>
+            <Text style={styles.modalText}>{navigation.getParam('process')}</Text>
+            <Text style={styles.modalText}>
+            Save an amount to your history?
+            </Text>
+            <NumberInputCard value={`Amount `} onChange={value=> setTarget(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+            <View style={globalStyles.buttonAlignStyle}>
+            <TouchableOpacity style={globalStyles.blueButtonStyle} onPress={ ()=>setShowPoPUP(!showPoPup)}> 
+            <Text style={globalStyles.textStyle}>Save</Text>
+            </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
         
-           
+      
+    <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showVolPoPup}
+        onRequestClose={() => {
+          
+          setShowVolPoPUP(!showVolPoPup);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.OrganizationStyles}>Volunteer Process</Text>
+            <Text style={styles.modalText}>{navigation.getParam('process')}</Text>
+            <Text style={styles.modalText}>
+            Organization wants to know a few things. Please fill out the form.
+            </Text>
+            
+            <View style={globalStyles.buttonAlignStyle}>
+            <TouchableOpacity style={globalStyles.blueButtonStyle} 
+            > 
+            <Text style={globalStyles.textStyle}>Visit form</Text>
+            </TouchableOpacity>
+            </View>
+            <View style={globalStyles.buttonAlignStyle}>
+            <TouchableOpacity style={globalStyles.greenButtonStyle} 
+            onPress={ ()=>setShowVolPoPUP(!showVolPoPup)}> 
+            <Text style={globalStyles.textStyle}>Apply</Text>
+            </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
+       
         </View>
         </ScrollView>
     )};
@@ -284,6 +346,32 @@ export default function App({navigation}) {
         padding:20
     
       },
+      centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
+      modalText: {
+        marginBottom: 15,
+        fontSize:18,
+        textAlign: "center"
+      }
      
    
 });

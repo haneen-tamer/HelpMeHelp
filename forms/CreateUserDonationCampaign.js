@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity,Button,Image,Platform, Keyboar
  ScrollView,TextInput, CheckBox, Alert, FlatList} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { globalStyles } from '../shared/globalStyles';
-import TextInputCard from './../shared/textInputCard';
-import NumberInputCard from './../shared/numberInputCard';
+import TextInputCard from '../shared/textInputCard';
+import NumberInputCard from '../shared/numberInputCard';
 import DonationTypeDropdown from '../shared/DonationTypeDropdown';
 
 
@@ -98,14 +98,14 @@ export default function App(){
                 <Text style={styles.requiredStyle}>* Required</Text>
             </View>
             {/*Basic Data Section */}
-            <TextInputCard value={"Campaign Title\t\t*" } onChange={value=> setCampName(value)} allow_pass={false} allow_multi={false}/>
+            <TextInputCard value={"Campain Title\t\t*" } onChange={value=> setCampName(value)} allow_pass={false} allow_multi={false}/>
+            
+            
+            
             <View style={globalStyles.rowAlginStyle}>
-            <Text style={globalStyles.errorStyle}>{campNameError}</Text>
+              <Text style={globalStyles.errorStyle}>{campNameError}</Text>
             </View>
-            <Text style={{fontSize: 20, fontWeight: 'bold', 
-              marginLeft: 15, marginTop: 25}}>
-                Donation Type
-              </Text>
+
             
             <DonationTypeDropdown onChange={id=> setDonationType(id)}/>
             
@@ -140,9 +140,7 @@ export default function App(){
 
             <Text style={{fontSize: 20, fontWeight: 'bold', 
               marginLeft: 15, marginTop: 25}}>
-                Donation Process{'\n'}
-                Describe all the ways a person can donate{'\n'}
-                to this campaign
+                Donation Process{'\n'}Describe all the ways a person can donate to in this campaign
             </Text>
 
             <TextInputCard value={"Process \t\t\t\t*"} onChange={value=> setProcessDesc(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
@@ -155,7 +153,7 @@ export default function App(){
 
             <Text style={{fontSize: 20, fontWeight: 'bold', 
               marginLeft: 15, marginTop: 25}}>
-                Goal (in number) you are trying to reach
+                Goal (in number) your are trying to reach
             </Text>
 
             <NumberInputCard value={"Goal \t\t\t\t*"} onChange={value=> setTarget(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
@@ -167,7 +165,7 @@ export default function App(){
             <Text style={{fontSize: 20, fontWeight: 'bold', 
             marginLeft: 15, marginTop: 25}}>
               Address{'\t\t\t'}(Optional){'\n'}
-              Add an address relevant to this campaign
+              Add an address relevant to the campaign
           </Text>
 
             <TextInputCard value={"Address"} onChange={value=> setAddress(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>

@@ -101,7 +101,7 @@ export default function App(){
                 <Text style={styles.requiredStyle}>* Required</Text>
             </View>
             {/*Basic Data Section */}
-            <TextInputCard value={"Campain Title\t\t*" } onChange={value=> setCampName(value)} allow_pass={false} allow_multi={false}/>
+            <TextInputCard value={"Campaign Title\t\t*" } onChange={value=> setCampName(value)} allow_pass={false} allow_multi={false}/>
             
             
             

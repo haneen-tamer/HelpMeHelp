@@ -98,7 +98,7 @@ export default function App(){
                 <Text style={styles.requiredStyle}>* Required</Text>
             </View>
             {/*Basic Data Section */}
-            <TextInputCard value={"Campaign Title                  *" } onChange={value=> setCampName(value)} allow_pass={false} allow_multi={false}/>
+            <TextInputCard value={"campaign Title                  *" } onChange={value=> setCampName(value)} allow_pass={false} allow_multi={false}/>
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{campNameError}</Text>
             </View>

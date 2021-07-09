@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React ,{ useState,useEffect } from 'react';
-import { StyleSheet, Text, View,Button,FlatList,TouchableOpacity,ScrollView,SafeAreaView,Image} from 'react-native';
+import { StyleSheet, Text, View,Button,FlatList,TouchableOpacity,ScrollView,Modal,Image} from 'react-native';
+import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
 import CampaignItem from '../shared/CampaignItem'
 import * as Progress from 'react-native-progress';
 import { globalStyles } from './../shared/globalStyles';
@@ -16,6 +17,7 @@ export default function App({navigation}) {
     let ID=navigation.getParam('ID');
     const [userCampStatus,setUserCampStatus]=useState(null);
     const [donationType,setDonationType]=useState(navigation.getParam('dontationTypeID'))
+    const [showPoPup,setShowPoPUP]=useState(false)
     if(orgOwner==null)
     {
        if(userOwner!=null)
@@ -69,6 +71,7 @@ export default function App({navigation}) {
             return  navigation.navigate('orgUserProfile',{data:userData})
         }
     }
+
     return (
         
         <ScrollView>
@@ -200,10 +203,11 @@ export default function App({navigation}) {
         }
         {userCampStatus==='null' && donationType!=1 &&
             <View style={globalStyles.buttonAlignStyle}>
-            <TouchableOpacity style={globalStyles.blueButtonStyle}> 
+            <TouchableOpacity style={globalStyles.blueButtonStyle} onPress={ ()=>setShowPoPUP(!showPoPup)}> 
             <Text style={globalStyles.textStyle}>Donate Now</Text>
             </TouchableOpacity>
             </View>
+
         }
             
          {
@@ -213,6 +217,15 @@ export default function App({navigation}) {
           
         </View>
         }
+         <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showPoPup}
+        onRequestClose={() => {
+          //Alert.alert("Modal has been closed.");
+          setShowPoPUP(!showPoPup);
+        }}
+      ></Modal>
     
         
            

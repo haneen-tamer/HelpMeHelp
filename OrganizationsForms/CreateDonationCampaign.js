@@ -89,7 +89,7 @@ export default function App(){
                     source={require('../images/CampaignImage.png')}
                     />
                 }
-                <Text style={styles.textStyle}>Change Profile Picutre</Text>
+                <Text style={styles.textStyle}>Upload Campagin Picutre</Text>
 
                 </TouchableOpacity>
             </View>
@@ -98,26 +98,23 @@ export default function App(){
                 <Text style={styles.requiredStyle}>* Required</Text>
             </View>
             {/*Basic Data Section */}
-            <TextInputCard value={"Campaign Title\t\t*" } onChange={value=> setCampName(value)} allow_pass={false} allow_multi={false}/>
+            <TextInputCard value={"Campaign Title                  *" } onChange={value=> setCampName(value)} allow_pass={false} allow_multi={false}/>
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{campNameError}</Text>
             </View>
-            <Text style={{fontSize: 20, fontWeight: 'bold', 
-              marginLeft: 15, marginTop: 25}}>
-                Donation Type
-              </Text>
             
-            <DonationTypeDropdown onChange={id=> setDonationType(id)}/>
+            
+            <DonationTypeDropdown onChange={id=> setDonationType(id)} value={"Donation Type               *"}/>
             
 
             {/*Time Section */}
-            <TextInputCard value={"Start date \t\t\t\t*"} onChange={value=> setStartDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+            <TextInputCard value={"Start date                          *"} onChange={value=> setStartDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
 
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{startDateError}</Text>
             </View>
 
-            <TextInputCard value={"End date \t\t\t\t*"} onChange={value=> setEndDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+            <TextInputCard value={"End date                             *"} onChange={value=> setEndDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
 
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{endDateError}</Text>
@@ -131,7 +128,7 @@ export default function App(){
 
             {/*Essay Section */}
 
-            <TextInputCard value={"Description \t\t\t\t*"} onChange={value=> setDescription(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+            <TextInputCard value={"Description                        *"} onChange={value=> setDescription(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
 
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{descriptionError}</Text>
@@ -145,7 +142,7 @@ export default function App(){
                 to this campaign
             </Text>
 
-            <TextInputCard value={"Process \t\t\t\t*"} onChange={value=> setProcessDesc(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+            <TextInputCard value={"Process                              *"} onChange={value=> setProcessDesc(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
 
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{processDescError}</Text>
@@ -158,7 +155,7 @@ export default function App(){
                 Goal (in number) you are trying to reach
             </Text>
 
-            <NumberInputCard value={"Goal \t\t\t\t*"} onChange={value=> setTarget(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+            <NumberInputCard value={"Goal                                     *"} onChange={value=> setTarget(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
 
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{targetError}</Text>
@@ -230,5 +227,16 @@ const styles = StyleSheet.create({
     paddingTop:10,
     alignSelf:'center',
     marginLeft: 10,
+  },
+  requiredStyle:{
+    color:"lightslategrey",
+    fontSize:20,
+    marginLeft:20,
+    height:'90%',
+    width:'80%',
+    fontWeight:"bold",
+    marginBottom:'3%',
+    paddingTop:10
+    
   },
 })

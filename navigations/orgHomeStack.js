@@ -22,13 +22,13 @@ const screens = {
     CreateDonationCampaign: {
         screen: CreateDonationCampaign,
         navigationOptions: {
-            title: "",
+            title: "Donation Campagin Launching",
         }
     },
     CreateVolunteerCampaign: {
         screen: CreateVolunteerCampaign,
         navigationOptions: {
-            title: "",
+            title: "Volunteering Campagin Launching",
         }
     },
     applicantRequests:{

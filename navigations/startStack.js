@@ -16,6 +16,8 @@ import Username from '../shared/username';
 import AdminUsername from '../shared/adminUsername';
 import pendingPage from '../OrganizationsForms/pendingPage';
 import CreateDonationCampaign from '../OrganizationsForms/CreateDonationCampaign';
+import CreateVolunteerCampaign from '../OrganizationsForms/CreateVolunteerCampaign'
+import CreateUserDonationCampaign from '../forms/CreateUserDonationCampaign';
 import React from 'react';
 
 const forms = 
@@ -27,12 +29,24 @@ const forms =
             headerStyle: { height: 0}
         }
     },
-    // CreateDonationCampaign: {
-    //     screen: CreateDonationCampaign,
-    //     navigationOptions: {
-    //         title: "",
-    //     }
-    // },
+    CreateDonationCampaign: {
+        screen: CreateDonationCampaign,
+        navigationOptions: {
+            title: "",
+        }
+    },
+    CreateVolunteerCampaign: {
+        screen: CreateVolunteerCampaign,
+        navigationOptions: {
+            title: "",
+        }
+    },
+    CreateUserDonationCampaign: {
+        screen: CreateUserDonationCampaign,
+        navigationOptions: {
+            title: "",
+        }
+    },
 
     DrawNav: {
         screen: DrawNav,

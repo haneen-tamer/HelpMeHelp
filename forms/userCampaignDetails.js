@@ -15,6 +15,7 @@ export default function App({navigation}) {
     const [ownerProfile,setOwnerProfile]=useState("org");
     let ID=navigation.getParam('ID');
     const [userCampStatus,setUserCampStatus]=useState(null);
+    const [donationType,setDonationType]=useState(navigation.getParam('dontationTypeID'))
     if(orgOwner==null)
     {
        if(userOwner!=null)
@@ -86,11 +87,11 @@ export default function App({navigation}) {
                     source={require('../images/chat.png')}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                {/* <TouchableOpacity>
                     <Image
                     style={globalStyles.topIconsStyle}
                     source={require('../images/share.png')}/>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 </View>
 
@@ -189,18 +190,22 @@ export default function App({navigation}) {
         
         
         {
-            userCampStatus==='null' &&
+            userCampStatus==='null' && donationType==1 &&
             <View style={globalStyles.buttonAlignStyle}>
-            {/* <TouchableOpacity style={globalStyles.greenButtonStyle}> 
+            <TouchableOpacity style={globalStyles.greenButtonStyle}> 
             <Text style={globalStyles.textStyle}>Join</Text>
-            </TouchableOpacity> */}
-
-            <TouchableOpacity style={globalStyles.blueButtonStyle}> 
-            <Text style={globalStyles.textStyle}>Donate Now</Text>
             </TouchableOpacity>
           
         </View>
         }
+        {userCampStatus==='null' && donationType!=1 &&
+            <View style={globalStyles.buttonAlignStyle}>
+            <TouchableOpacity style={globalStyles.blueButtonStyle}> 
+            <Text style={globalStyles.textStyle}>Donate Now</Text>
+            </TouchableOpacity>
+            </View>
+        }
+            
          {
             userCampStatus==='Pending' &&
             <View style={globalStyles.buttonAlignStyle}>
@@ -228,10 +233,11 @@ export default function App({navigation}) {
             alignSelf:'center'
         },
         OrganizationStyles:{
-            fontSize: 20,
+            fontSize: 22,
             color: "#000",
             fontWeight: "bold",
-            padding:5,
+            padding:10,
+            fontStyle:'italic'
         },  
         circuleStyle:{
 
@@ -244,7 +250,7 @@ export default function App({navigation}) {
         paddingHorizontal: 25,
         paddingTop:30,
         paddingRight:27,
-        marginLeft:55,
+        marginLeft:'25%',
         margin:15,
         fontSize: 18,
         color: '#000',

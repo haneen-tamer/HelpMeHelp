@@ -6,13 +6,17 @@ import { globalStyles } from './../shared/globalStyles';
 
 
 
-export default function ApplicantCard({item,navigation,ID}){
 
+export default function ApplicantCard({item,navigation,ID,type}){
+
+    console.log(type)
+    //onsole.log(ID)
     const [hide,setHide]=useState(false);
     const [username,setUsername]=useState(item.orgUsername)
+    console.log(item)
     const acceptApplicant=()=>
     {
-        if(username!=null){
+        if(type.substring(0,4)=="Org_"){
         setHide(true);
         fetch("http://10.0.2.2:8080/orgAcceptApplicants/"+ID+"/"+item.userName, {
             method: 'GET',
@@ -47,7 +51,7 @@ export default function ApplicantCard({item,navigation,ID}){
     }
     const rejectApplicant=()=>
     {
-        if(username!=null){
+        if(type.substring(0,4)=="Org_"){
         setHide(true);
         fetch("http://10.0.2.2:8080/orgRejectApplicants/"+ID+"/"+item.userName, {
             method: 'GET',

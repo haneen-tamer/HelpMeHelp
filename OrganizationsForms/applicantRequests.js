@@ -12,7 +12,8 @@ export default function App({navigation}) {
   const [found,setFound]=useState(false);
   const [noApplicants,setNoApplicants]=useState(false);
   const [username,setUsername]=useState(item.orgUsername)
-  console.log(item.U_username)
+  //console.log(item.U_username)
+  //console.log(username)
   useEffect(() => {
     if(username!=null){
     setFound(true);
@@ -34,6 +35,7 @@ export default function App({navigation}) {
   else
   {
     setFound(true);
+    setUsername(item.U_username)
     fetch("http://10.0.2.2:8080/AllDonationPendings/"+item.ID, {
       method: 'GET',
   })
@@ -50,7 +52,7 @@ export default function App({navigation}) {
   });
   }
   }, []);
-  console.log(user)
+ // console.log(user)
   // if(user==null)
   // {
   //   setNoApplicants(true);
@@ -65,7 +67,7 @@ export default function App({navigation}) {
           data={user} 
           renderItem={({ item }) => ( 
             
-              <ApplicantCard item={item} navigation={navigation} ID={item.ID}/>
+              <ApplicantCard item={item} navigation={navigation} ID={item.ID} type={username}/>
               
           )}
           

@@ -73,7 +73,7 @@ export default function MyCampaigns({navigation}) {
         actions={actions}
         onPressItem={(name) => {
             console.log(`here: ${name}`);
-            navigation.navigate('CreateDonationCampaign');
+            navigation.navigate('CreateDonationCampaign',{Username:username});
         }}
         overrideWithAction='true'
         color='#92E3A9'

@@ -10,7 +10,7 @@ export default function App({navigation}) {
   const [filters,setFilter]=useState(null)
   const [found,setFound]=useState(false);
   var data = new Array();
-
+console.log(username)
 useEffect(() => {
   setFound(true);
   console.log("here")

@@ -9,7 +9,7 @@ import {globalStyles} from './globalStyles'
 
 
 export default function CampaignItem({navigation,item,addUser}){
-    //console.log(item.ID)
+   
     const [orgOwner,setOrgOwner]=useState(item.orgUsername);
     if(orgOwner==null)
     {
@@ -24,9 +24,9 @@ export default function CampaignItem({navigation,item,addUser}){
     else{
         col=styles.blueStatus;
     }
-    //console.log(start)
+    console.log(orgOwner)
     
-    
+     //console.log(item.ID)
     return(
        
 <View style={styles.container}>

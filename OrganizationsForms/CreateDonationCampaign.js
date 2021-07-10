@@ -39,11 +39,12 @@ export default function App({navigation}){
 
     const [checkBoxSelection,setCheckBoxSelection]=useState(false)
     const [username,setUsername]=useState(navigation.getParam('Username'));
-  
+    const [Orgusername,setOrgUsername]=useState(navigation.getParam('Orgusername'));
     const [isPickerShow, setIsPickerShow] = useState(false);
     const [isPickerShow2, setIsPickerShow2] = useState(false);
     const [date, setDate] = useState(new Date(Date.now()));
     const [date2, setDate2] = useState(new Date(Date.now()));
+
 
     useEffect(()=>{async()=>{
         if(Platform.OS !=='web')
@@ -80,6 +81,9 @@ export default function App({navigation}){
           setEndDate(null)
         }
         console.log(donationType)
+        if(username!=null)
+        {
+          
         fetch("http://10.0.2.2:8080/userAddCampaign/"+username, {
           method:"post",
           headers:{
@@ -94,7 +98,8 @@ export default function App({navigation}){
             EndDate:endDate,
             target,
             image,
-            DonationType:donationType
+            DonationType:donationType,
+           
         })
       })
       .then(res=>res.json())
@@ -110,6 +115,41 @@ export default function App({navigation}){
       .catch((error) => {
           console.error(error);
       });
+    }
+    else{
+      fetch("http://10.0.2.2:8080/orgAddCampaign/"+Orgusername, {
+        method:"post",
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({     
+          name:campName,
+          address,
+          description,
+          process:processDesc,
+          StartDate:startDate,
+          EndDate:endDate,
+          target,
+          image,
+          DonationType:donationType,
+          QuizLink:null
+      })
+    })
+    .then(res=>res.json())
+    .then(json => {
+      
+       if(json=='Done')
+       {
+           console.log("Done")  
+       }
+        
+       
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+    }
+    navigation.navigate('orgHome');
       }
 
       const onChange = (event, value) => {
@@ -387,7 +427,7 @@ pickedDate:
   backgroundColor:'lightgrey',
  // borderBottomWidth:1,
   margin:15,
-  height:'65%',
+  height:'60%',
   width:'80%',
   //marginBottom:30,
 }

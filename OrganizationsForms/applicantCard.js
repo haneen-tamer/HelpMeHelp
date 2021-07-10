@@ -9,9 +9,10 @@ import { globalStyles } from './../shared/globalStyles';
 export default function ApplicantCard({item,navigation,ID}){
 
     const [hide,setHide]=useState(false);
-
+    const [username,setUsername]=useState(item.orgUsername)
     const acceptApplicant=()=>
     {
+        if(username!=null){
         setHide(true);
         fetch("http://10.0.2.2:8080/orgAcceptApplicants/"+ID+"/"+item.userName, {
             method: 'GET',
@@ -27,8 +28,26 @@ export default function ApplicantCard({item,navigation,ID}){
             console.error(error);
         });
     }
+    else{
+        setHide(true);
+        fetch("http://10.0.2.2:8080/approveDonationRequests/"+ID+"/"+item.userName, {
+            method: 'GET',
+        })
+        .then(res=>res.json())
+        .then(json => {
+          if(json==true)
+          {
+           console.log("Accepted")
+          }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+    }
     const rejectApplicant=()=>
     {
+        if(username!=null){
         setHide(true);
         fetch("http://10.0.2.2:8080/orgRejectApplicants/"+ID+"/"+item.userName, {
             method: 'GET',
@@ -43,6 +62,23 @@ export default function ApplicantCard({item,navigation,ID}){
         .catch((error) => {
             console.error(error);
         });
+    }
+    else{
+        setHide(true);
+        fetch("http://10.0.2.2:8080/rejectDonationRequests/"+ID+"/"+item.userName, {
+            method: 'GET',
+        })
+        .then(res=>res.json())
+        .then(json => {
+          if(json==true)
+          {
+           console.log("Rejected")
+          }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
     }
 
     return(

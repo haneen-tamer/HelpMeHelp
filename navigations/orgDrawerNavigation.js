@@ -5,6 +5,7 @@ import orgHomeStack from './orgHomeStack';
 import orgProfileStack from './orgProfileStack';
 import Start from '../forms/start';
 import Logout from '../forms/logout';
+import AllChats from '../forms/AllChats';
 
 const DrawScreens = {
     orgHome: {
@@ -17,6 +18,12 @@ const DrawScreens = {
         screen: orgProfileStack,
         navigationOptions: {
             title: "My Profile"
+        }
+    },
+    MyChats: {
+        screen: AllChats,
+        navigationOptions: {
+            title: "My Chats"
         }
     },
     Logout: {

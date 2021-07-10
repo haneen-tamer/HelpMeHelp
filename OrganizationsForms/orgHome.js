@@ -87,7 +87,7 @@ useEffect(() => {
     </View>
 }
     </ScrollView>
-    <CreateCampaignBtn navigation={navigation}/>
+    <CreateCampaignBtn navigation={navigation} username={username}/>
     
     
     </View>

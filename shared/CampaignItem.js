@@ -9,6 +9,7 @@ import {globalStyles} from './globalStyles'
 
 
 export default function CampaignItem({navigation,item,addUser}){
+    //console.log(item.ID)
     const [orgOwner,setOrgOwner]=useState(item.orgUsername);
     if(orgOwner==null)
     {
@@ -31,7 +32,7 @@ export default function CampaignItem({navigation,item,addUser}){
 <View style={styles.container}>
         
         { addUser &&
-         <TouchableOpacity onPress={()=>navigation.navigate('applicantRequests',{ID:item.ID})}>
+         <TouchableOpacity onPress={()=>navigation.navigate('applicantRequests',{item:item})}>
             <Image
             style={styles.addImageStyle}
             source={require('../images/add-group.png')}

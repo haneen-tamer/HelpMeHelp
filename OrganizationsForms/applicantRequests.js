@@ -7,13 +7,16 @@ import ApplicantCard from './applicantCard';
 
 export default function App({navigation}) {
 
-  const [ID,setID]=useState(navigation.getParam('ID'))
+  const [item,setItem]=useState(navigation.getParam('item'))
   const [user, setUser] = useState(null)
   const [found,setFound]=useState(false);
   const [noApplicants,setNoApplicants]=useState(false);
+  const [username,setUsername]=useState(item.orgUsername)
+  console.log(item.U_username)
   useEffect(() => {
+    if(username!=null){
     setFound(true);
-      fetch("http://10.0.2.2:8080/orgApplicants/"+ID, {
+      fetch("http://10.0.2.2:8080/orgApplicants/"+item.ID, {
         method: 'GET',
     })
     .then(res=>res.json())
@@ -27,6 +30,25 @@ export default function App({navigation}) {
     .catch((error) => {
         console.error(error);
     });
+  }
+  else
+  {
+    setFound(true);
+    fetch("http://10.0.2.2:8080/AllDonationPendings/"+item.ID, {
+      method: 'GET',
+  })
+  .then(res=>res.json())
+  .then(json => {
+    
+      setUser(json)
+      console.log(user)
+    
+    
+  })
+  .catch((error) => {
+      console.error(error);
+  });
+  }
   }, []);
   console.log(user)
   // if(user==null)
@@ -43,7 +65,7 @@ export default function App({navigation}) {
           data={user} 
           renderItem={({ item }) => ( 
             
-              <ApplicantCard item={item} navigation={navigation} ID={ID}/>
+              <ApplicantCard item={item} navigation={navigation} ID={item.ID}/>
               
           )}
           

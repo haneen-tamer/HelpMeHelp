@@ -18,8 +18,11 @@ export default function App({navigation}) {
     let ID=navigation.getParam('ID');
     const [userCampStatus,setUserCampStatus]=useState(null);
     const [donationType,setDonationType]=useState(navigation.getParam('dontationTypeID'))
+    const [quizLink,setQuizLink]=useState(navigation.getParam('QuizLink'))
     const [showPoPup,setShowPoPUP]=useState(false)
     const [showVolPoPup,setShowVolPoPUP]=useState(false)
+     const [amount,setAmount]=useState(0)
+    //console.log(quizLink)
     if(orgOwner==null)
     {
        if(userOwner!=null)
@@ -50,18 +53,20 @@ export default function App({navigation}) {
     //console.log(userData)
 
     useEffect(() => {
-        fetch("http://10.0.2.2:8080/userCheckCampaginStatus/"+orgOwner+"/"+ID, {
+        fetch("http://10.0.2.2:8080/userCheckCampaginStatus/"+username+"/"+ID, {
           method: 'GET',
       })
       .then(res=>res.json())
       .then(json => {
-        setUserCampStatus(json.status)
+       // console.log(json)
+        setUserCampStatus(json.st)
       })
       .catch((error) => {
           console.error(error);
       });
     }, []);
 
+//console.log(userCampStatus)
     const goToPage=()=>
     {
         if(ownerProfile=="org")
@@ -73,6 +78,60 @@ export default function App({navigation}) {
             return  navigation.navigate('orgUserProfile',{data:userData})
         }
     }
+
+    const join=()=>
+    {
+      console.log(quizLink)
+      if(quizLink !=null)
+      {
+        setShowVolPoPUP(!showVolPoPup)
+      }
+      else
+      {
+        fetch("http://10.0.2.2:8080/join/", {
+            method:"post",
+            headers:{
+              'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({     
+              campid:ID,
+              username:username
+          })
+      })
+      .then(res=>res.json())
+      .then(json => {
+      //setUserCampStatus(json.status)
+      })
+      .catch((error) => {
+          console.error(error);
+      });
+      }
+      
+    }
+
+    const donate=()=>
+    {
+      setShowPoPUP(!showPoPup)
+      fetch("http://10.0.2.2:8080/donate/", {
+            method:"post",
+            headers:{
+              'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({     
+              campid:ID,
+              username:username,
+              amount:amount
+          })
+      })
+      .then(res=>res.json())
+      .then(json => {
+        //setUserCampStatus(json.status)
+      })
+      .catch((error) => {
+          console.error(error);
+      });
+      }
+    
 
     return (
         
@@ -197,7 +256,7 @@ export default function App({navigation}) {
         {
             userCampStatus==='null' && donationType==1 &&
             <View style={globalStyles.buttonAlignStyle}>
-            <TouchableOpacity style={globalStyles.greenButtonStyle} onPress={ ()=>setShowVolPoPUP(!showVolPoPup)}> 
+            <TouchableOpacity style={globalStyles.greenButtonStyle} onPress={join}> 
             <Text style={globalStyles.textStyle}>Join</Text>
             </TouchableOpacity>
           
@@ -213,7 +272,7 @@ export default function App({navigation}) {
         }
             
          {
-            userCampStatus==='Pending' &&
+            userCampStatus==="pending" &&
             <View style={globalStyles.buttonAlignStyle}>
             <Text style={globalStyles.profileTextStyle}>Your request to join is pending</Text>
           
@@ -244,9 +303,9 @@ export default function App({navigation}) {
             <Text style={styles.modalText}>
             Save an amount to your history?
             </Text>
-            <NumberInputCard value={`Amount `} onChange={value=> setTarget(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
+            <NumberInputCard value={`Amount `} onChange={value=> setAmount(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
             <View style={globalStyles.buttonAlignStyle}>
-            <TouchableOpacity style={globalStyles.blueButtonStyle} onPress={ ()=>setShowPoPUP(!showPoPup)}> 
+            <TouchableOpacity style={globalStyles.blueButtonStyle} onPress={ donate}> 
             <Text style={globalStyles.textStyle}>Save</Text>
             </TouchableOpacity>
             </View>
@@ -255,7 +314,7 @@ export default function App({navigation}) {
       </Modal>
     </View>
         
-      
+   
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
@@ -266,6 +325,7 @@ export default function App({navigation}) {
           setShowVolPoPUP(!showVolPoPup);
         }}
       >
+        
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.OrganizationStyles}>Volunteer Process</Text>
@@ -275,11 +335,16 @@ export default function App({navigation}) {
             </Text>
             
             <View style={globalStyles.buttonAlignStyle}>
+              
+
             <TouchableOpacity style={globalStyles.blueButtonStyle} 
             > 
+            
             <Text style={globalStyles.textStyle}>Visit form</Text>
             </TouchableOpacity>
+              
             </View>
+            
             <View style={globalStyles.buttonAlignStyle}>
             <TouchableOpacity style={globalStyles.greenButtonStyle} 
             onPress={ ()=>setShowVolPoPUP(!showVolPoPup)}> 
@@ -290,7 +355,7 @@ export default function App({navigation}) {
         </View>
       </Modal>
     </View>
-       
+
         </View>
         </ScrollView>
     )};

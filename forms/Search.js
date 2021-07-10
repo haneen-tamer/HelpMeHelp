@@ -118,7 +118,7 @@ export default function Search({navigation}){
         <TextInput style={styles.searchEntry} 
         placeholder='Search...'
         onChangeText={(val) => setName(val)}
-        onSubmitEditing={()=>get_campaigns(name),}
+        onSubmitEditing={()=>get_campaigns(name)}
         autoCorrect={false}
         autoCapitalize="none"
         />

@@ -4,7 +4,7 @@ import { FloatingAction } from "react-native-floating-action";
 
 
 
-export default function CreateCampaignBtn({navigation}){
+export default function CreateCampaignBtn({navigation,username}){
 
     const actions = [{
         key:"1",
@@ -29,10 +29,10 @@ export default function CreateCampaignBtn({navigation}){
             console.log(`here: ${name}`);
         switch(name){
             case 'bt_donationCampaign':
-                navigation.navigate('CreateDonationCampaign');
+                navigation.navigate('CreateDonationCampaign',{Orgusername:username});
                 break;
             case 'bt_volunteerCampaign':
-                navigation.navigate('CreateVolunteerCampaign');
+                navigation.navigate('CreateVolunteerCampaign',{Orgusername:username});
                 break;
             default:
                 break;

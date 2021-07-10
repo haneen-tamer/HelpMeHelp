@@ -1,6 +1,7 @@
 import React ,{ useState,useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,Button,Image,Platform, Keyboard, KeyboardAvoidingView,
  ScrollView,TextInput, CheckBox, Alert, FlatList} from 'react-native';
+ import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import { globalStyles } from '../shared/globalStyles';
 import TextInputCard from './../shared/textInputCard';
@@ -8,10 +9,10 @@ import NumberInputCard from './../shared/numberInputCard';
 import DonationTypeDropdown from '../shared/DonationTypeDropdown';
 
 
-export default function App(){
+export default function App({navigation}){
     const [changeImage,setChangeImage]=useState(false);
     
-    const [image,setImage]=useState(null);
+    const [image,setImage]=useState("No Image");
     
     const [campName,setCampName]=useState('');
     const [campNameError,setCampNameError]=useState('');
@@ -27,7 +28,7 @@ export default function App(){
     const [target,setTarget]=useState('');
     const [targetError,setTargetError]=useState('');
     
-    const [address,setAddress]=useState('');
+    const [address,setAddress]=useState("No Address");
     const [addressError,setAddressError]=useState('');
     
     const [processDesc,setProcessDesc]=useState('');
@@ -37,7 +38,12 @@ export default function App(){
     const [descriptionError,setDescriptionError]=useState('');
 
     const [checkBoxSelection,setCheckBoxSelection]=useState(false)
-
+    const [username,setUsername]=useState(navigation.getParam('Username'));
+    const [Orgusername,setOrgUsername]=useState(navigation.getParam('Orgusername'));
+    const [isPickerShow, setIsPickerShow] = useState(false);
+    const [isPickerShow2, setIsPickerShow2] = useState(false);
+    const [date, setDate] = useState(new Date(Date.now()));
+    const [date2, setDate2] = useState(new Date(Date.now()));
 
 
     useEffect(()=>{async()=>{
@@ -68,9 +74,108 @@ export default function App(){
         }
       }
 
-      checkboxClicked = (key) => {
-        this.setState({ [key]: !this.state[key] })
+      const launch=()=>
+      {
+        if(checkBoxSelection)
+        {
+          setEndDate(null)
+        }
+        console.log(donationType)
+        if(username!=null)
+        {
+          
+        fetch("http://10.0.2.2:8080/userAddCampaign/"+username, {
+          method:"post",
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify({     
+            name:campName,
+            address,
+            description,
+            process:processDesc,
+            StartDate:startDate,
+            EndDate:endDate,
+            target,
+            image,
+            DonationType:donationType,
+           
+        })
+      })
+      .then(res=>res.json())
+      .then(json => {
+        
+         if(json=='Done')
+         {
+             console.log("Done")  
+         }
+          
+         
+      })
+      .catch((error) => {
+          console.error(error);
+      });
+    }
+    else{
+      fetch("http://10.0.2.2:8080/orgAddCampaign/"+Orgusername, {
+        method:"post",
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({     
+          name:campName,
+          address,
+          description,
+          process:processDesc,
+          StartDate:startDate,
+          EndDate:endDate,
+          target,
+          image,
+          DonationType:donationType,
+          QuizLink:null
+      })
+    })
+    .then(res=>res.json())
+    .then(json => {
+      
+       if(json=='Done')
+       {
+           console.log("Done")  
+       }
+        
+       
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+    }
+    navigation.navigate('orgHome');
       }
+
+      const onChange = (event, value) => {
+        setDate(value);
+        setStartDate(date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate())
+        if (Platform.OS === 'android') {
+          setIsPickerShow(false);
+        }
+      };
+      const showPicker = () => {
+        setIsPickerShow(true);
+      };
+      const onChange2 = (event, value) => {
+        setDate2(value);
+        setEndDate(date2.getFullYear() + "-" + (date2.getMonth() + 1) + "-" + date2.getDate())
+        if (Platform.OS === 'android') {
+          setIsPickerShow2(false);
+        }
+      };
+      const showPicker2 = () => {
+        setIsPickerShow2(true);
+      };
+
+      // checkboxClicked = (key) => {
+      //   this.setState({ [key]: !this.state[key] })
+      // }
 
 
       return(
@@ -106,19 +211,69 @@ export default function App(){
             </View>
             
             
-            <DonationTypeDropdown onChange={id=> setDonationType(id)} value={"Donation Type               *"}/>
+            <DonationTypeDropdown onChange={value=> setDonationType(value)} value={"Donation Type               *"}/>
             
 
             {/*Time Section */}
-            {!checkBoxSelection &&
-            <TextInputCard value={"Start date                          *"} onChange={value=> setStartDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
-            }
+            
+            {/* <TextInputCard value={"Start date                          *"} onChange={value=> setStartDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/> */}
+            
+            <View style={styles.pickedDateContainer}>
+                  <Text style={styles.pickedDate}>{date.toUTCString()}  </Text>
+                </View>
+
+                {!isPickerShow && (
+                  <View style={styles.buttonAlignStyle}>
+                     <TouchableOpacity style={styles.bluebuttonStyle} onPress={showPicker}> 
+                    <Text style={globalStyles.textStyle}>Choose Start Date</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+
+                {isPickerShow && (
+                  <DateTimePicker
+                    value={date}
+                    mode={'date'}
+                    display={Platform.OS === 'ios' ? 'spinner' : 'spinner'}
+                    onChange={onChange}
+                    style={globalStyles.RegitserdataStyle}
+                  />
+                )}
+
+
+
+
+
+
+
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{startDateError}</Text>
             </View>
-            {!checkBoxSelection &&
+            {/* {!checkBoxSelection &&
             <TextInputCard value={"End date                             *"} onChange={value=> setEndDate(value) } allow_pass={false} allow_multi={true} allow_edit={true}/>
-            }
+            } */}
+             {!checkBoxSelection &&
+            <View style={styles.pickedDateContainer}>
+                  <Text style={styles.pickedDate}>{date2.toUTCString()}  </Text>
+                </View>
+              }
+                {!isPickerShow2 && !checkBoxSelection &&(
+                  <View style={styles.buttonAlignStyle}>
+                     <TouchableOpacity style={styles.bluebuttonStyle} onPress={showPicker2}> 
+                    <Text style={globalStyles.textStyle}>Choose End Date</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+
+                {isPickerShow2 &&  (
+                  <DateTimePicker
+                    value={date2}
+                    mode={'date'}
+                    display={Platform.OS === 'ios' ? 'spinner' : 'spinner'}
+                    onChange={onChange2}
+                    style={globalStyles.RegitserdataStyle}
+                  />
+                )}
             <View style={globalStyles.rowAlginStyle}>
             <Text style={globalStyles.errorStyle}>{endDateError}</Text>
             </View>
@@ -126,7 +281,7 @@ export default function App(){
 
             <View style={{flexDirection: 'row',  marginBottom: 20}}>
             <CheckBox style={styles.checkbox} value= {checkBoxSelection} onValueChange={setCheckBoxSelection} />
-          
+            {/* ,setEndDate(value) */}
             <Text style={styles.textStyle}>On going campaign</Text>
 
             </View>
@@ -177,7 +332,7 @@ export default function App(){
             {/*Buttons Section */}
 
             <View style={globalStyles.buttonAlignStyle}>
-              <TouchableOpacity style={globalStyles.greenButtonStyle} onPress={() => Alert.alert('Launched!')}> 
+              <TouchableOpacity style={globalStyles.greenButtonStyle} onPress={launch}> 
               <Text style={globalStyles.textStyle}>Launch</Text>
               </TouchableOpacity>
             </View>
@@ -240,4 +395,40 @@ const styles = StyleSheet.create({
     paddingTop:10
     
   },
+  pickedDateContainer:{
+    fontSize:25,
+    fontWeight:"bold",
+    color:'#000',
+    backgroundColor:'lightgrey',
+   // borderBottomWidth:1,
+    margin:15,
+    height:'4%',
+    width:'80%',
+    marginBottom:30,
+    borderColor:"#64CA80",
+    borderWidth:1
+},
+bluebuttonStyle:{
+  width: '60%',
+  height: 50,
+  elevation: 8,
+  backgroundColor: "#AACCDD",
+  borderRadius: 10,
+  paddingVertical: 10,
+ marginBottom:1,
+ marginLeft:70,
+ marginTop:2
+},
+pickedDate:
+{
+  fontSize:25,
+  fontWeight:"bold",
+  color:'lightslategrey',
+  backgroundColor:'lightgrey',
+ // borderBottomWidth:1,
+  margin:15,
+  height:'60%',
+  width:'80%',
+  //marginBottom:30,
+}
 })

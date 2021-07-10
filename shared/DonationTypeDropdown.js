@@ -11,8 +11,8 @@ export default function DonationTypeDropdown({onChange,value}){
         <View style={styles.DDstyle}>
         <DropDownPicker
           items={[
-              {label: 'Money', value: '2'},{label: 'Clothes', value: '3'},{label: 'Food', value: '4'},
-              {label: 'Blood', value: '5'},{label: 'Other', value: '6'}, 
+              {label: 'Money', value: 'Money'},{label: 'Clothes', value: 'Clothes'},{label: 'Food', value: 'Money'},
+              {label: 'Blood', value: 'Blood'},{label: 'Other', value: 'Other'}, 
           ]}
           containerStyle={{height: '4.5%',width:'84%',paddingLeft:15,paddingTop:10}}
           style={{backgroundColor: 'lightgrey', borderColor:"#64CA80",

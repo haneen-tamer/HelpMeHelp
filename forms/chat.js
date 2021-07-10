@@ -14,6 +14,7 @@ export default function chat({navigation}) {
     //useState<chatItem[]>([]);
     //let username = navigation.getParam('username');
     const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('User_Username'));
+    const [org_username,setOrgUsername]=useState( navigation.dangerouslyGetParent().getParam('OrgUsername'));
     const [orgOwner,setOrgOwner]=useState(navigation.getParam('orgOwner'));
     let [refresh, setRefresh] = useState(false);
     let [refresh1, setRefresh1] = useState(false);
@@ -33,7 +34,7 @@ export default function chat({navigation}) {
             id: Math.random().toString(36).substring(7),
             text: msg,
             timeStamp: Date.now(),
-            by: 'yoyo',
+            by: orgOwner,
           }
         );
         //console.log(chatItemList);
@@ -70,6 +71,8 @@ export default function chat({navigation}) {
           
     }
     const get_messages=()=>{
+      console.log(username);
+      console.log(orgOwner);
       fetch("http://10.0.2.2:8080/oldChat/"+username+"/"+orgOwner,{
           method:"get"
       })

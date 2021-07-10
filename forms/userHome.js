@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState,useEffect } from 'react';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity , ScrollView,BackHandler} from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity , ScrollView,BackHandler,ActivityIndicator} from 'react-native';
 import CampaignItem from '../shared/CampaignItem';
 import Header from '../shared/header';
 import { SearchBar } from 'react-native-elements';
@@ -9,13 +9,13 @@ import { SearchBar } from 'react-native-elements';
 
 export default function App({navigation}) {
 
-  const [entry, setEntry] = useState("");
+  // const [entry, setEntry] = useState("");
   const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('User_Username'));
-  const [campaign,setCampagin] = useState(null);
-  const [donationType,setDonationType]=useState(null);
+  // const [campaign,setCampagin] = useState(null);
+  // const [donationType,setDonationType]=useState(null);
   const [found,setFound]=useState(false);
-  const [donationFound,setDonationFound]=useState(null);
-  const [volunteerFound,setVolunteerFound]=useState(null);
+  // const [donationFound,setDonationFound]=useState(null);
+  // const [volunteerFound,setVolunteerFound]=useState(null);
   const [donationCampaigns,setDonationCampaigns]=useState(null);
   const [volunteerCampaigns,setVolunteerCampaigns]=useState(null);
   
@@ -24,32 +24,71 @@ export default function App({navigation}) {
   // }, []);
 
   useEffect(() => {
-      fetch("http://10.0.2.2:8080/userAllCampagin", {
+    // setDonationFound(false);
+    // if(!found){
+
+    
+      fetch("http://10.0.2.2:8080/recommender/donationCampaigns/"+username, {
         method: 'GET',
     })
     .then(res=>res.json())
     .then(json => {
-       setCampagin(json)
-       if(campaign!=null)
-       {
+      //  setCampagin(json)
+      //  if(campaign!=null)
+      //  {
          //console.log(z)
-        setDonationCampaigns(prevF=>
-          {return campaign.filter(c => 
-          c.dontationTypeID==1)});
-          setVolunteerCampaigns(prevF=>
-            {return campaign.filter(c => 
-            c.dontationTypeID!=1)});
-            setFound(true);
-       }
+        setDonationCampaigns(json);
+        // setDonationFound(true);
+        // setFound(true);
+      //  }
         
-      // console.log(campaign)   
+      console.log(json)   
     })
     .catch((error) => {
         console.error(error);
     });
+
+    //volunteer
+    // setVolunteerFound(false);
+    fetch("http://10.0.2.2:8080/recommender/volunteerCampaigns/"+username, {
+      method: 'GET',
+  })
+  .then(res=>res.json())
+  .then(json => {
+    //  setCampagin(json)
+     console.log(json);
+    //  if(campaign!=null)
+    //  {
+       //console.log(z)
+        setVolunteerCampaigns(json);
+        // setVolunteerFound(true);
+        setFound(true);
+    //  }
+      
+    // console.log(campaign)   
+  })
+  .catch((error) => {
+      console.error(error);
+  });
+// }
   }, []);
   //console.log(donationCampaigns);
  // console.log(volunteerCampaigns);
+//  if (!donationFound||!volunteerFound) {
+//   return (
+//       <View style={styles.centerContainer}>
+//       <ActivityIndicator size="large" color="#5500dc" />
+//       </View>
+//   );
+//   }
+
+const renderItem = ({ item }) => ( 
+  <TouchableOpacity style={styles.container} 
+  onPress={()=>navigation.navigate('userCampaignDetails',item)}>
+<CampaignItem item={item} addUser={false} navigation={navigation}/>
+  </TouchableOpacity>
+)
+
   return (
     <ScrollView style={styles.container}>
     
@@ -70,12 +109,7 @@ export default function App({navigation}) {
           // keyExtractor={(item) => item.id} 
           data={donationCampaigns} 
           horizontal={true}
-          renderItem={({ item }) => ( 
-              <TouchableOpacity style={styles.container} 
-              onPress={()=>navigation.navigate('userCampaignDetails',item)}>
-            <CampaignItem item={item} addUser={false} navigation={navigation}/>
-              </TouchableOpacity>
-          )}
+          renderItem={renderItem}
           />
           </View>
       </View>
@@ -93,12 +127,7 @@ export default function App({navigation}) {
           // keyExtractor={(item) => item.id} 
           data={volunteerCampaigns} 
           horizontal={true}
-          renderItem={({ item }) => ( 
-              <TouchableOpacity style={styles.container} 
-              onPress={()=>navigation.navigate('userCampaignDetails',item)}>
-               <CampaignItem item={item} addUser={false} navigation={navigation}/>
-              </TouchableOpacity>
-          )}
+          renderItem={renderItem}
           />
           </View>
       </View>
@@ -145,3 +174,13 @@ const styles = StyleSheet.create({
   },
 
 });
+
+
+
+
+
+
+
+
+
+

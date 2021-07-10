@@ -33,7 +33,7 @@ export default function Search({navigation}){
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [name, setName] = useState();
-    const [temp, settemp] = useState();
+    const [temp, settemp] = useState(false);
     const renderHeader = ({title, fullData})=>{
       return (
           <View>
@@ -53,7 +53,7 @@ export default function Search({navigation}){
 
   const get_campaigns=(text)=>{
     console.log(text);
-    fetch("http://10.0.2.2:8080/search/"+0+"/"+4+"/"+text,{
+    fetch("http://10.0.2.2:8080/search/"+0+"/"+4+"/"+"s",{
           method:"get"
       })
         .then(res=>res.json())

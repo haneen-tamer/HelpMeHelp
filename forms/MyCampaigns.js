@@ -20,7 +20,7 @@ export default function MyCampaigns({navigation}) {
     const [username,setUsername]=useState( navigation.dangerouslyGetParent().getParam('User_Username'));
   console.log(username)
     useEffect(() => {
-      fetch("http://10.0.2.2:8080/userCamaginsJoined/"+username, {
+      fetch("http://10.0.2.2:8080/CampaginsMadeByUser/"+username, {
         method: 'GET',
     })
     .then(res=>res.json())
@@ -64,7 +64,7 @@ export default function MyCampaigns({navigation}) {
             data={filters} 
             renderItem={({ item }) => ( 
               <TouchableOpacity style={styles.container} onPress={()=>navigation.navigate('userCampaignDetails',item)}>
-                <CampaignItem item={item} addUser={false} navigation={navigation} />
+                <CampaignItem item={item} addUser={true} navigation={navigation} />
              </TouchableOpacity>
             )} />
             </View>
